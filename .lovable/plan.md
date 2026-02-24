@@ -1,135 +1,49 @@
 
 
-# Privacy Policy Page + Personal Data Consent Banner (Hardened)
+# Replace All CTAs with Yandex Beta Access Form
 
 ## Overview
-Add Privacy Policy PDFs, create a dedicated page, update footer links, and replace the cookie-only banner with a combined Privacy/Data consent banner -- incorporating all 5 hardening tweaks.
+Replace every placeholder CTA with a direct link to the Yandex Forms beta access form. All three review improvements incorporated.
 
-## 1. Store PDFs as Static Assets
-
-Copy uploaded files to `public/docs/`:
-- `EVERLEGENDS_PRIVACY_POLICY.pdf` (English)
-- `EVERLEGENDS_PRIVACY_POLICY_RU.pdf` (Russian)
-
-## 2. Translation Keys
-
-Add to `src/lib/translations.ts`:
-
-- `privacyPage` block: title, enVersion, ruVersion, download (mirrors `cookiePage`)
-- `privacyBanner` block with **corrected copy** (tweak #4 -- removes "by continuing you agree" phrasing since Decline is offered):
-  - Text: "We process personal data to operate the EverLegends platform, provide analytical services, and improve functionality."
-  - Followed by inline links: "Privacy Policy" and "Cookie Policy"
-  - Buttons: Accept / Decline
-- `footer.privacy` key already exists, no change needed
-
-## 3. Create Privacy Policy Page
-
-New file: `src/pages/PrivacyPolicy.tsx`
-
-Mirrors `CookiePolicy.tsx` exactly:
-- Navigation + Footer
-- Localized heading
-- Language toggle ("English version" / "Русская версия")
-- Download PDF link
-- Embedded `<iframe>` viewer
-- Locale derived from `useLanguage()` hook (tweak #5 -- same pattern as CookiePolicy, locale comes from route prefix via LanguageProvider)
-
-## 4. Add Routes
-
-In `src/App.tsx`:
-```
-/privacy-policy    -> <PrivacyPolicy />
-/ru/privacy-policy -> <PrivacyPolicy />
-```
-
-## 5. Update Footer (tweak #3 -- consistent link types)
-
-In `src/components/Footer.tsx`:
-- Replace the `<a href="#">` Privacy Policy placeholder with a `<Link>` to `/privacy-policy` or `/ru/privacy-policy`
-- Both Privacy Policy and Cookie Policy use `<Link>` (page routes with embedded viewers)
-- User Agreement stays as `<a>` (direct PDF, new tab) -- this is intentional since it has no dedicated page
-- Reorder to match requested structure: User Agreement | Privacy Policy | Cookie Policy | Beta Testing | Contact
-
-## 6. Replace Cookie Banner with Combined Consent Banner
-
-Modify `src/components/CookieBanner.tsx`:
-
-### localStorage handling (tweaks #1 and #2):
-
+## Step 1: Create `src/lib/constants.ts`
 ```ts
-function safeGetItem(key: string): string | null {
-  if (typeof window === "undefined") return null;
-  try { return localStorage.getItem(key); } catch { return null; }
-}
+export const BETA_FORM_URL = "https://forms.yandex.ru/cloud/699df00490fa7bdac2fea0cd/";
+```
+Imported via `@/lib/constants` (already resolved by tsconfig paths).
 
-function safeSetItem(key: string, value: string): void {
-  if (typeof window === "undefined") return;
-  try { localStorage.setItem(key, value); } catch {}
-}
+## Step 2: Update `src/lib/translations.ts`
+- `nav.cta`: "Request Beta Access" / "Запросить доступ"
+- `nav.joinMobile`: "Request Beta Access" / "Запросить доступ"
+- `hero.cta`: "Request Beta Access" / "Запросить доступ"
+- `download.ios`: "Request Beta Access (iOS)" / "Запросить доступ (iOS)"
+- `download.android`: "Request Beta Access (Android)" / "Запросить доступ (Android)"
+- NEW `download.betaNote`: "Closed beta. Selected participants receive early access." / "Закрытая бета. Выбранные участники получают ранний доступ."
+
+## Step 3: Update `src/components/Navigation.tsx`
+- Import `BETA_FORM_URL` from `@/lib/constants`
+- Desktop CTA: replace `href="#download"` with `href={BETA_FORM_URL}`, add `target="_blank"`, `rel="noopener noreferrer"`, `data-cta="beta-access"`
+- Mobile CTA: same changes
+
+## Step 4: Update `src/components/HeroSection.tsx`
+- Import `BETA_FORM_URL` from `@/lib/constants`
+- Hero CTA: replace `href="#download"` with `href={BETA_FORM_URL}`, add `target="_blank"`, `rel="noopener noreferrer"`, `data-cta="beta-access"`
+
+## Step 5: Update `src/components/DownloadSection.tsx`
+- Import `BETA_FORM_URL` from `@/lib/constants`
+- iOS button: replace `href="#"` with `href={BETA_FORM_URL}`, add `target="_blank"`, `rel="noopener noreferrer"`, `data-cta="beta-access"`
+- Android button: same changes
+- Keep both buttons (two distinct CTAs)
+- Add `betaNote` helper text paragraph below the buttons
+
+## Files
+```
+src/lib/constants.ts              (new)
+src/lib/translations.ts           (modified)
+src/components/Navigation.tsx     (modified)
+src/components/HeroSection.tsx    (modified)
+src/components/DownloadSection.tsx (modified)
 ```
 
-### Backward compatibility migration (tweak #2):
-On mount, if `everlegends_cookie_ack` exists but `everlegends_privacy_consent` does not:
-- Set `everlegends_privacy_consent = "accepted"`
-- Then hide banner
-- This makes the old key a one-time migration source, not a permanent dependency
-
-### New key: `everlegends_privacy_consent`
-- Values: `"accepted"` or `"declined"`
-
-### Accept behavior:
-- Store `"accepted"`, hide banner
-
-### Decline behavior:
-- Store `"declined"`, hide banner
-- Records refusal state for future analytics gating (no analytics scripts currently active)
-
-### Exported helper:
-```ts
-export function getPrivacyConsent(): "accepted" | "declined" | null {
-  return safeGetItem("everlegends_privacy_consent") as any;
-}
-```
-
-### Banner UI (tweak #4 -- corrected copy):
-```text
-+------------------------------------------------------------------+
-| We process personal data to operate the EverLegends platform,    |
-| provide analytical services, and improve functionality.          |
-| Privacy Policy and Cookie Policy.                                |
-|                                        [ Decline ]  [ Accept ]   |
-+------------------------------------------------------------------+
-```
-
-- "Privacy Policy" links to `/privacy-policy` (or `/ru/privacy-policy`)
-- "Cookie Policy" links to `/cookie-policy` (or `/ru/cookie-policy`)
-- Decline button: outline style (border, muted text)
-- Accept button: filled style (matching CTA conventions)
-- Mobile: text stacks above buttons, buttons remain side by side
-
-## 7. Registration Checkbox -- Deferred
-
-No registration page exists. Will implement when registration flow is built.
-
----
-
-## Technical Summary
-
-### Files changed:
-```
-public/docs/EVERLEGENDS_PRIVACY_POLICY.pdf       (new - from upload)
-public/docs/EVERLEGENDS_PRIVACY_POLICY_RU.pdf     (new - from upload)
-src/pages/PrivacyPolicy.tsx                        (new)
-src/lib/translations.ts                            (modified - add privacyPage + privacyBanner)
-src/components/CookieBanner.tsx                    (modified - becomes consent banner)
-src/components/Footer.tsx                          (modified - Privacy Policy link)
-src/App.tsx                                        (modified - add routes)
-```
-
-### Hardening tweaks incorporated:
-1. localStorage guarded with `typeof window` and try/catch
-2. Old `everlegends_cookie_ack` key migrated to new key on first encounter
-3. Footer links consistent: pages use `<Link>`, direct PDFs use `<a>`
-4. Banner copy removes "by continuing you agree" (inconsistent with Decline option)
-5. Locale derived from `useLanguage()` hook (route-prefix based, same as CookiePolicy)
+## Not changed
+Layout, animations, styling, footer, banner, social icons, two-button download layout.
 
