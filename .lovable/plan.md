@@ -1,107 +1,135 @@
 
 
-# Cookie Policy Page + Cookie Notice Banner
+# Privacy Policy Page + Personal Data Consent Banner (Hardened)
 
 ## Overview
-Add Cookie Policy PDFs as static assets, create a dedicated Cookie Policy page with embedded PDF viewer and language toggle, add a "Cookie Policy" link to the footer, and implement a lightweight RF-compliant cookie notice banner.
+Add Privacy Policy PDFs, create a dedicated page, update footer links, and replace the cookie-only banner with a combined Privacy/Data consent banner -- incorporating all 5 hardening tweaks.
 
 ## 1. Store PDFs as Static Assets
 
 Copy uploaded files to `public/docs/`:
-- `public/docs/EVERLEGENDS_COOKIE_POLICY.pdf` (English)
-- `public/docs/EVERLEGENDS_COOKIE_POLICY_RU.pdf` (Russian)
+- `EVERLEGENDS_PRIVACY_POLICY.pdf` (English)
+- `EVERLEGENDS_PRIVACY_POLICY_RU.pdf` (Russian)
 
-## 2. Add Translation Keys
+## 2. Translation Keys
 
-In `src/lib/translations.ts`, add:
+Add to `src/lib/translations.ts`:
 
-```ts
-cookie: {
-  policy: { en: "Cookie Policy", ru: "Политика Cookie" },
-},
-// inside footer:
-cookiePolicy: { en: "Cookie Policy", ru: "Политика Cookie" },
-// cookie banner:
-cookieBanner: {
-  text: {
-    en: "This website uses cookies to ensure platform functionality and analytics. By continuing to use EverLegends, you consent to cookie use.",
-    ru: "Этот сайт использует файлы cookie для обеспечения работы платформы и аналитики. Продолжая использовать EverLegends, вы соглашаетесь на использование cookie.",
-  },
-  learnMore: { en: "Learn more", ru: "Подробнее" },
-  ok: { en: "OK", ru: "OK" },
-},
-```
+- `privacyPage` block: title, enVersion, ruVersion, download (mirrors `cookiePage`)
+- `privacyBanner` block with **corrected copy** (tweak #4 -- removes "by continuing you agree" phrasing since Decline is offered):
+  - Text: "We process personal data to operate the EverLegends platform, provide analytical services, and improve functionality."
+  - Followed by inline links: "Privacy Policy" and "Cookie Policy"
+  - Buttons: Accept / Decline
+- `footer.privacy` key already exists, no change needed
 
-## 3. Create Cookie Policy Page
+## 3. Create Privacy Policy Page
 
-New file: `src/pages/CookiePolicy.tsx`
+New file: `src/pages/PrivacyPolicy.tsx`
 
-- Full-page layout with Navigation and Footer
-- Heading: "Cookie Policy" (localized)
-- Two clearly labeled links/buttons: "English version" / "Русская версия"
-- Each opens the respective PDF in a new tab
-- Embedded PDF viewer (`<iframe>`) showing the locale-appropriate PDF by default
-- Consistent with site branding (dark background, muted foreground text, content-max container)
+Mirrors `CookiePolicy.tsx` exactly:
+- Navigation + Footer
+- Localized heading
+- Language toggle ("English version" / "Русская версия")
+- Download PDF link
+- Embedded `<iframe>` viewer
+- Locale derived from `useLanguage()` hook (tweak #5 -- same pattern as CookiePolicy, locale comes from route prefix via LanguageProvider)
 
 ## 4. Add Routes
 
-In `src/App.tsx`, add:
+In `src/App.tsx`:
 ```
-/cookie-policy    -> <CookiePolicy />
-/ru/cookie-policy -> <CookiePolicy />
+/privacy-policy    -> <PrivacyPolicy />
+/ru/privacy-policy -> <PrivacyPolicy />
 ```
 
-## 5. Update Footer
+## 5. Update Footer (tweak #3 -- consistent link types)
 
 In `src/components/Footer.tsx`:
-- Add a "Cookie Policy" link after "Privacy Policy", using a `<Link>` (react-router) pointing to `/cookie-policy` or `/ru/cookie-policy` based on locale
-- Same styling as existing footer links, separated by pipe divider
+- Replace the `<a href="#">` Privacy Policy placeholder with a `<Link>` to `/privacy-policy` or `/ru/privacy-policy`
+- Both Privacy Policy and Cookie Policy use `<Link>` (page routes with embedded viewers)
+- User Agreement stays as `<a>` (direct PDF, new tab) -- this is intentional since it has no dedicated page
+- Reorder to match requested structure: User Agreement | Privacy Policy | Cookie Policy | Beta Testing | Contact
 
-## 6. Create Cookie Banner Component
+## 6. Replace Cookie Banner with Combined Consent Banner
 
-New file: `src/components/CookieBanner.tsx`
+Modify `src/components/CookieBanner.tsx`:
 
-Behavior:
-- On mount, check `localStorage` for key `everlegends_cookie_ack`
-- If not set, show banner; if set, render nothing
-- On "OK" click, set `localStorage` key and hide banner
-- Banner auto-dismisses after any navigation (optional, OK button is primary)
+### localStorage handling (tweaks #1 and #2):
 
-UI:
-- Fixed to bottom of screen (`fixed bottom-0 left-0 right-0 z-40`)
-- Dark surface background (`bg-card/95 backdrop-blur-md`) with top border
-- Text in `text-xs text-muted-foreground`, "Learn more" as inline link to cookie policy page
-- Small "OK" button on the right, styled with existing muted/outline conventions
-- Mobile-friendly: text wraps, button stays accessible
-- Does NOT block scrolling or interaction with the page beneath
+```ts
+function safeGetItem(key: string): string | null {
+  if (typeof window === "undefined") return null;
+  try { return localStorage.getItem(key); } catch { return null; }
+}
 
-## 7. Mount Cookie Banner
-
-In `src/pages/Index.tsx`, add `<CookieBanner />` at the bottom of the component tree (or in `App.tsx` outside Routes for global coverage -- placing in App.tsx is better so it appears on all pages including the cookie policy page itself).
-
-## Technical Details
-
-### File structure changes:
-```
-public/docs/EVERLEGENDS_COOKIE_POLICY.pdf       (new)
-public/docs/EVERLEGENDS_COOKIE_POLICY_RU.pdf     (new)
-src/pages/CookiePolicy.tsx                        (new)
-src/components/CookieBanner.tsx                   (new)
-src/lib/translations.ts                           (modified)
-src/components/Footer.tsx                         (modified)
-src/App.tsx                                       (modified)
+function safeSetItem(key: string, value: string): void {
+  if (typeof window === "undefined") return;
+  try { localStorage.setItem(key, value); } catch {}
+}
 ```
 
-### localStorage key: `everlegends_cookie_ack`
-- Value: `"1"` (simple truthy string)
-- No expiry needed for RF compliance (acknowledgement, not consent)
+### Backward compatibility migration (tweak #2):
+On mount, if `everlegends_cookie_ack` exists but `everlegends_privacy_consent` does not:
+- Set `everlegends_privacy_consent = "accepted"`
+- Then hide banner
+- This makes the old key a one-time migration source, not a permanent dependency
 
-### Cookie Banner layout (mobile + desktop):
+### New key: `everlegends_privacy_consent`
+- Values: `"accepted"` or `"declined"`
+
+### Accept behavior:
+- Store `"accepted"`, hide banner
+
+### Decline behavior:
+- Store `"declined"`, hide banner
+- Records refusal state for future analytics gating (no analytics scripts currently active)
+
+### Exported helper:
+```ts
+export function getPrivacyConsent(): "accepted" | "declined" | null {
+  return safeGetItem("everlegends_privacy_consent") as any;
+}
+```
+
+### Banner UI (tweak #4 -- corrected copy):
 ```text
-+------------------------------------------------------+
-| This website uses cookies... Learn more    [ OK ]    |
-+------------------------------------------------------+
++------------------------------------------------------------------+
+| We process personal data to operate the EverLegends platform,    |
+| provide analytical services, and improve functionality.          |
+| Privacy Policy and Cookie Policy.                                |
+|                                        [ Decline ]  [ Accept ]   |
++------------------------------------------------------------------+
 ```
 
-On mobile, text stacks above the button.
+- "Privacy Policy" links to `/privacy-policy` (or `/ru/privacy-policy`)
+- "Cookie Policy" links to `/cookie-policy` (or `/ru/cookie-policy`)
+- Decline button: outline style (border, muted text)
+- Accept button: filled style (matching CTA conventions)
+- Mobile: text stacks above buttons, buttons remain side by side
+
+## 7. Registration Checkbox -- Deferred
+
+No registration page exists. Will implement when registration flow is built.
+
+---
+
+## Technical Summary
+
+### Files changed:
+```
+public/docs/EVERLEGENDS_PRIVACY_POLICY.pdf       (new - from upload)
+public/docs/EVERLEGENDS_PRIVACY_POLICY_RU.pdf     (new - from upload)
+src/pages/PrivacyPolicy.tsx                        (new)
+src/lib/translations.ts                            (modified - add privacyPage + privacyBanner)
+src/components/CookieBanner.tsx                    (modified - becomes consent banner)
+src/components/Footer.tsx                          (modified - Privacy Policy link)
+src/App.tsx                                        (modified - add routes)
+```
+
+### Hardening tweaks incorporated:
+1. localStorage guarded with `typeof window` and try/catch
+2. Old `everlegends_cookie_ack` key migrated to new key on first encounter
+3. Footer links consistent: pages use `<Link>`, direct PDFs use `<a>`
+4. Banner copy removes "by continuing you agree" (inconsistent with Decline option)
+5. Locale derived from `useLanguage()` hook (route-prefix based, same as CookiePolicy)
 
