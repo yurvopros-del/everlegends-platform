@@ -1,9 +1,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLanguage } from "@/hooks/useLanguage";
+import { translations, t } from "@/lib/translations";
 
 const DownloadSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const locale = useLanguage();
 
   return (
     <section id="download" className="section-padding" ref={ref}>
@@ -14,9 +17,9 @@ const DownloadSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          READY TO
+          {t(translations.download.headline1, locale)}
           <br />
-          <span className="gradient-text">COMPETE?</span>
+          <span className="gradient-text">{t(translations.download.headline2, locale)}</span>
         </motion.h2>
 
         <motion.p
@@ -25,7 +28,7 @@ const DownloadSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          Join thousands of athletes proving their worth on the global stage.
+          {t(translations.download.body, locale)}
         </motion.p>
 
         <motion.div
@@ -38,13 +41,13 @@ const DownloadSection = () => {
             href="#"
             className="gradient-btn text-sm font-semibold tracking-[0.1em] uppercase px-10 py-4 rounded text-foreground transition-opacity hover:opacity-90"
           >
-            Download for iOS
+            {t(translations.download.ios, locale)}
           </a>
           <a
             href="#"
             className="border border-border text-sm font-semibold tracking-[0.1em] uppercase px-10 py-4 rounded text-foreground transition-colors hover:bg-secondary"
           >
-            Download for Android
+            {t(translations.download.android, locale)}
           </a>
         </motion.div>
       </div>

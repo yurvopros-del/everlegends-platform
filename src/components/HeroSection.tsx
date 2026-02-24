@@ -1,9 +1,12 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "@/hooks/useLanguage";
+import { translations, t } from "@/lib/translations";
 
 const HeroSection = () => {
+  const locale = useLanguage();
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Dark atmospheric background */}
       <div className="absolute inset-0 bg-background">
         <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/50 to-background" />
         <div
@@ -21,7 +24,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          The Global Merit Platform
+          {t(translations.hero.subtitle, locale)}
         </motion.p>
 
         <motion.h1
@@ -30,9 +33,9 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          WHERE MERIT IS
+          {t(translations.hero.headline1, locale)}
           <br />
-          <span className="gradient-text">THE ONLY CURRENCY</span>
+          <span className="gradient-text">{t(translations.hero.headline2, locale)}</span>
         </motion.h1>
 
         <motion.p
@@ -41,7 +44,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Athletic talent verified, ranked, and rewarded. No connections. No politics. Just performance.
+          {t(translations.hero.body, locale)}
         </motion.p>
 
         <motion.a
@@ -51,11 +54,10 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          Enter the Arena
+          {t(translations.hero.cta, locale)}
         </motion.a>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0 }}

@@ -1,10 +1,12 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useLanguage } from "@/hooks/useLanguage";
+import { translations, t } from "@/lib/translations";
 
 const PhilosophySection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const locale = useLanguage();
 
   return (
     <section className="section-padding" ref={ref}>
@@ -15,9 +17,9 @@ const PhilosophySection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          TALENT SHOULD BE
+          {t(translations.philosophy.headline1, locale)}
           <br />
-          <span className="gradient-text">REWARDED. PERIOD.</span>
+          <span className="gradient-text">{t(translations.philosophy.headline2, locale)}</span>
         </motion.h2>
 
         <motion.p
@@ -26,9 +28,7 @@ const PhilosophySection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          We built EVERLEGENDS because the world's most talented athletes
-          shouldn't need the right connections, the right zip code, or the right
-          algorithm to be seen. Merit is the only filter.
+          {t(translations.philosophy.body, locale)}
         </motion.p>
       </div>
     </section>
