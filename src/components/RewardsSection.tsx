@@ -26,16 +26,6 @@ const RewardsSection = () => {
   return (
     <section id="rewards" className="section-padding bg-surface" ref={ref}>
       <div className="content-max">
-        {/* Label */}
-        <motion.p
-          className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-4 text-center"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          {t(translations.rewards.label, locale)}
-        </motion.p>
-
         {/* Section Title */}
         <motion.h2
           className="heading-lg text-center mb-16"
