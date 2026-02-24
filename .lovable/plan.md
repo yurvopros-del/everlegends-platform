@@ -1,73 +1,101 @@
 
 
-# Colosseum Thunder Effect + Visual Flag Images
+# Dramatic Colosseum + Real Lightning Effect
 
-## 1. Colosseum "Thunder Flash" Effect
+## The Problems
+1. **Wrong image**: Current Unsplash photos show a partial/tourist view of the Colosseum. Need an aerial/reconstructed view showing the full arena scale.
+2. **Weak "thunder"**: The current effect just fades opacity up and down slightly. No visual lightning, no electricity, no drama.
 
-The Colosseum images at 10-14% opacity are being completely buried by the dark overlays. Two fixes:
+## The Solution
 
-### A. Increase Base Visibility
-- **Hero Section**: Boost opacity from `0.14` to `0.25`, soften the overlay gradients (reduce `via-background/30` to `via-background/15`)
-- **Philosophy Section**: Boost opacity from `0.10` to `0.18`, soften overlays from `via-background/60` to `via-background/40`
+### 1. Replace Colosseum Images
 
-### B. Irregular "Thunder Flash" Animation
-Add a CSS keyframe animation that periodically brightens the Colosseum image at irregular intervals, like distant lightning illuminating an arena:
+**Hero Section**: Use an aerial/bird's-eye view of the Colosseum showing the full circular arena structure:
+- `https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=1920&q=80` (aerial view of the Colosseum from above, showing the full scale)
+- Alternative: `https://images.unsplash.com/photo-1685544899658-ce38ef4d2d1c?w=1920&q=80` (dramatic reconstructed-looking wide shot)
 
-- Create a `colosseum-flash` keyframe: stays at base opacity most of the time, then briefly spikes to ~40-50% opacity for 0.3-0.5s at irregular points in a long cycle (~15s total)
-- Apply this animation to the Colosseum `<img>` elements in both sections
-- The effect is subtle and atmospheric -- not a strobe, more like distant thunder briefly revealing the arena walls
+**Philosophy Section**: Use a different dramatic wide-angle of the interior showing the full arena floor:
+- `https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1920&q=80` (wide interior showing arena scale)
 
-### Files Modified
-- `tailwind.config.ts` -- add `colosseum-flash` keyframe and animation
-- `src/components/HeroSection.tsx` -- increase opacity, soften overlays, add flash animation class
-- `src/components/PhilosophySection.tsx` -- increase opacity, soften overlays, add flash animation class
+### 2. Real Lightning Effect with CSS
 
----
+Instead of just animating opacity, create a multi-layer lightning effect:
 
-## 2. Replace Emoji Flags with Visual Flag Images
+**A. Lightning flash overlay** -- a full-screen white/blue flash layer that pulses with the thunder:
+- A `div` with a radial gradient (white center fading to transparent) that flashes from `opacity: 0` to `opacity: 0.15-0.25` at irregular intervals
+- This creates the actual "room lighting up" effect
 
-Emoji flags render as plain text glyphs and look flat. Replace them with actual flag images from a free CDN (`flagcdn.com`) which serves high-quality country flag PNGs/SVGs.
+**B. Colosseum image behavior during flash**:
+- Base state: opacity 0.15, fully grayscale, very dark
+- During flash: opacity spikes to 0.6-0.7, creating a dramatic reveal where the full arena structure becomes clearly visible for a moment
+- The flash peak is much higher than before (0.65 vs 0.45), making the Colosseum truly visible
 
-### Implementation
-- Update the `FLAGS` array to include 2-letter ISO country codes (e.g., `us`, `br`, `gb`)
-- Render each flag as an `<img>` tag: `https://flagcdn.com/w40/{code}.png` -- small, optimized, visually rich
-- Style each flag image as a rounded rectangle (~28x20px) with a subtle border and slight shadow
-- Keep the country code text label next to each flag image for context
-- Maintain the scrolling animation, edge fades, and overall layout
+**C. Electric crack lines** -- SVG lightning bolt overlays:
+- 2-3 thin, jagged SVG path elements positioned at random spots on screen
+- They flash in sync with the thunder (opacity 0 to 1 and back in ~200ms)
+- Colored with the brand gradient (cyan to purple) for a stylized electric look
+- Each bolt is a different shape and position to look natural
 
-### Visual Result
-Instead of: `🇺🇸 USA  🇧🇷 BRA` (flat text)
-Now: `[US flag image] USA  [BR flag image] BRA` (real visual flags with depth)
+### 3. Updated Animation Keyframes
 
-### Files Modified
-- `src/components/FlagTicker.tsx` -- replace emoji with `<img>` from flagcdn.com, add ISO codes, style flag images
+Replace the simple `colosseum-flash` with two new animations:
 
----
+**`arena-thunder`** (for the Colosseum image):
+- Much more dramatic opacity range: base 0.12 to peak 0.65
+- Sharper transitions (quick spike up, slightly slower fade down)
+- Same irregular timing (~15s cycle, 3 flashes at different points)
+
+**`lightning-flash`** (for the white overlay):
+- Goes from 0 to 0.2 opacity and back very quickly (~300ms)
+- Synced to the same keyframe percentages as arena-thunder
+- Creates the "room lights up" effect
+
+**`lightning-bolt`** (for the SVG crack lines):
+- opacity 0 to 1 to 0 in ~200ms
+- Slightly offset timing from the flash (bolts appear just before the full flash)
+
+### 4. Implementation in Components
+
+**HeroSection.tsx changes:**
+- Replace Unsplash URL with aerial Colosseum view
+- Add lightning flash overlay div (white/blue radial gradient)
+- Add 2-3 SVG lightning bolt elements (absolute positioned, z-index between image and text)
+- Apply `arena-thunder` animation to the image
+- Apply `lightning-flash` to the overlay
+- Apply `lightning-bolt` to the SVG elements
+- Keep overlays but soften them further so the arena is clearly revealed during flashes
+
+**PhilosophySection.tsx changes:**
+- Replace image URL with dramatic interior wide shot
+- Add a simpler version of the lightning effect (just the flash overlay, no bolt SVGs -- keep it subtler here)
+- Apply same `arena-thunder` animation with slightly lower peak values
+
+**tailwind.config.ts changes:**
+- Replace `colosseum-flash` keyframe with `arena-thunder`, `lightning-flash`, and `lightning-bolt`
+- Add corresponding animation definitions
 
 ## Technical Details
 
-### New Keyframe: `colosseum-flash` (in `tailwind.config.ts`)
-A ~15-second animation cycle with irregular brightness spikes:
-- 0% - base opacity
-- 18% - brief spike up
-- 20% - back to base
-- 55% - another brief spike
-- 57% - back to base  
-- 82% - one more spike
-- 84% - back to base
-- 100% - base opacity
+### SVG Lightning Bolts
+Hand-crafted jagged polyline paths, something like:
+```
+M 200,0 L 220,80 L 190,85 L 215,170 L 185,175 L 210,280
+```
+Thin stroke (1-2px), no fill, gradient stroke color matching the brand palette. 2-3 different bolt shapes at different positions across the hero section.
 
-This creates an organic, non-repeating feel across a 15s loop.
+### Animation Sync
+All three animations share the same 15s duration and the flash points align:
+- ~18-19%: first thunder strike
+- ~55-56%: second strike  
+- ~82-83%: third strike
 
-### Flag CDN
-Using `flagcdn.com` -- a free, reliable CDN for country flags. No API key needed, loads fast, supports multiple sizes. Each flag is a ~1-2KB PNG.
+The bolt appears ~0.3% before the flash peaks, simulating the "bolt then illumination" sequence.
 
-### Summary of File Changes
+### Files Modified
 
 | File | Changes |
 |------|---------|
-| `tailwind.config.ts` | Add `colosseum-flash` keyframe + animation |
-| `src/components/HeroSection.tsx` | Increase Colosseum opacity to 25%, soften overlays, add thunder flash animation |
-| `src/components/PhilosophySection.tsx` | Increase opacity to 18%, soften overlays, add thunder flash animation |
-| `src/components/FlagTicker.tsx` | Replace emoji flags with real flag images from flagcdn.com CDN |
+| `tailwind.config.ts` | Replace `colosseum-flash` with `arena-thunder`, `lightning-flash`, `lightning-bolt` keyframes and animations |
+| `src/components/HeroSection.tsx` | New aerial Colosseum image, lightning flash overlay, SVG lightning bolts, dramatic opacity range |
+| `src/components/PhilosophySection.tsx` | New wide-angle interior image, lightning flash overlay (no bolts), updated animation |
 
