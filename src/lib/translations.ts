@@ -100,7 +100,7 @@ export const translations = {
     headline2: { en: "COMPETE?", ru: "СОРЕВНОВАТЬСЯ?" },
     body: {
       en: "Join thousands of athletes proving their worth on the global stage.",
-      ru: "Присоединяйся к тысячам атлетов, доказывающих свою ценность на мировой арене.",
+      ru: "Стань частью поколения победителей. Докажи силу на мировой арене.",
     },
     ios: { en: "Download for iOS", ru: "Скачать для iOS" },
     android: { en: "Download for Android", ru: "Скачать для Android" },
