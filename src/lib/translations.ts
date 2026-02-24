@@ -18,8 +18,8 @@ export const translations = {
     cta: { en: "Enter the Arena", ru: "Войти на Арену" },
   },
   philosophy: {
-    headline1: { en: "TALENT AND SYSTEMATIC TRAINING SHOULD BE", ru: "ТАЛАНТ И СИСТЕМНЫЕ ТРЕНИРОВКИ ДОЛЖНЫ БЫТЬ" },
-    headline2: { en: "REWARDED. PERIOD.", ru: "ВОЗНАГРАЖДЕНЫ. ТОЧКА." },
+    headline1: { en: "MASTERY AND HARD WORK", ru: "МАСТЕРСТВО И ТРУД" },
+    headline2: { en: "SHOULD BE REWARDED. PERIOD.", ru: "ДОЛЖНЫ БЫТЬ ВОЗНАГРАЖДЕНЫ. ТОЧКА." },
     body: {
       en: "We built EVERLEGENDS because the world's most talented and hardest-training athletes shouldn't need the right connections, the right zip code, or the right algorithm to be seen. Merit and dedication are the only filters.",
       ru: "Мы создали EVERLEGENDS, потому что самые талантливые и упорно тренирующиеся атлеты мира не должны зависеть от связей, географии или алгоритмов. Мастерство и преданность делу — единственные критерии.",
