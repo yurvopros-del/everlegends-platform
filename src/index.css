@@ -140,7 +140,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: shimmer 3s ease-in-out infinite;
+    animation: shimmer 6s ease-in-out infinite;
     filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.3));
   }
 
@@ -150,7 +150,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: shimmer 3s ease-in-out 0.5s infinite;
+    animation: shimmer 6s ease-in-out infinite;
     filter: drop-shadow(0 2px 4px rgba(192, 192, 192, 0.3));
   }
 
@@ -160,7 +160,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: shimmer 3s ease-in-out 1s infinite;
+    animation: shimmer 6s ease-in-out infinite;
     filter: drop-shadow(0 2px 4px rgba(205, 127, 50, 0.3));
   }
 
@@ -170,7 +170,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: shimmer 3s ease-in-out 1.5s infinite;
+    animation: shimmer 6s ease-in-out infinite;
     filter: drop-shadow(0 2px 4px rgba(160, 174, 192, 0.2));
   }
 }
