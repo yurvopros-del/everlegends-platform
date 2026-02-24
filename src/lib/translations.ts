@@ -18,11 +18,11 @@ export const translations = {
     cta: { en: "Enter the Arena", ru: "Войти на Арену" },
   },
   philosophy: {
-    headline1: { en: "TALENT SHOULD BE", ru: "ТАЛАНТ ДОЛЖЕН БЫТЬ" },
-    headline2: { en: "REWARDED. PERIOD.", ru: "ВОЗНАГРАЖДЁН. ТОЧКА." },
+    headline1: { en: "TALENT AND SYSTEMATIC TRAINING SHOULD BE", ru: "ТАЛАНТ И СИСТЕМНЫЕ ТРЕНИРОВКИ ДОЛЖНЫ БЫТЬ" },
+    headline2: { en: "REWARDED. PERIOD.", ru: "ВОЗНАГРАЖДЕНЫ. ТОЧКА." },
     body: {
-      en: "We built EVERLEGENDS because the world's most talented athletes shouldn't need the right connections, the right zip code, or the right algorithm to be seen. Merit is the only filter.",
-      ru: "Мы создали EVERLEGENDS, потому что самые талантливые атлеты мира не должны зависеть от связей, географии или алгоритмов. Мастерство — единственный критерий.",
+      en: "We built EVERLEGENDS because the world's most talented and hardest-training athletes shouldn't need the right connections, the right zip code, or the right algorithm to be seen. Merit and dedication are the only filters.",
+      ru: "Мы создали EVERLEGENDS, потому что самые талантливые и упорно тренирующиеся атлеты мира не должны зависеть от связей, географии или алгоритмов. Мастерство и преданность делу — единственные критерии.",
     },
   },
   system: {
@@ -39,41 +39,52 @@ export const translations = {
       },
       {
         number: "02",
-        title: { en: "PROVE", ru: "ДОКАЖИ" },
+        title: { en: "WIN", ru: "ПОБЕЖДАЙ" },
         description: {
-          en: "Your performance is verified, recorded, and ranked transparently.",
-          ru: "Твои результаты верифицируются, фиксируются и ранжируются прозрачно.",
+          en: "Your performance is verified, recorded, and ranked against the world's best.",
+          ru: "Твои результаты верифицируются, фиксируются и сравниваются с лучшими в мире.",
         },
       },
       {
         number: "03",
-        title: { en: "RISE", ru: "ВОЗВЫСЬСЯ" },
+        title: { en: "BE REWARDED", ru: "ВЫИГРЫВАЙ" },
         description: {
-          en: "Earn rewards and recognition based on merit alone.",
-          ru: "Получай награды и признание исключительно за заслуги.",
+          en: "Earn real prizes and global recognition based on merit alone.",
+          ru: "Получай реальные призы и мировое признание исключительно за заслуги.",
         },
       },
     ],
   },
   rewards: {
-    label: { en: "Technical Specifications", ru: "Технические Характеристики" },
+    label: { en: "The Prize Pool", ru: "Призовой Фонд" },
     title: { en: "THE REWARD SYSTEM", ru: "СИСТЕМА НАГРАД" },
+    prizePool: { en: "$1,000,000+", ru: "$1,000,000+" },
+    prizePoolSub: { en: "TOTAL SEASONAL PRIZE POOL", ru: "ОБЩИЙ СЕЗОННЫЙ ПРИЗОВОЙ ФОНД" },
+    positions: [
+      {
+        position: "1ST",
+        prize: "$250,000",
+        label: { en: "CHAMPION", ru: "ЧЕМПИОН" },
+      },
+      {
+        position: "2ND",
+        prize: "$100,000",
+        label: { en: "ELITE", ru: "ЭЛИТА" },
+      },
+      {
+        position: "3RD",
+        prize: "$50,000",
+        label: { en: "CONTENDER", ru: "ПРЕТЕНДЕНТ" },
+      },
+    ],
     specs: [
       {
-        label: { en: "Verification", ru: "Верификация" },
-        value: { en: "Blockchain-backed performance records", ru: "Результаты, подтверждённые блокчейном" },
+        label: { en: "Weekly Challenges", ru: "Еженедельные Испытания" },
+        value: { en: "Up to $10,000 in weekly competition prizes", ru: "До $10,000 призов в еженедельных соревнованиях" },
       },
       {
-        label: { en: "Rankings", ru: "Рейтинги" },
-        value: { en: "Real-time global leaderboards", ru: "Глобальные таблицы лидеров в реальном времени" },
-      },
-      {
-        label: { en: "Rewards", ru: "Награды" },
-        value: { en: "Merit-based token distribution", ru: "Распределение токенов на основе заслуг" },
-      },
-      {
-        label: { en: "Challenges", ru: "Испытания" },
-        value: { en: "Weekly & seasonal competitions", ru: "Еженедельные и сезонные соревнования" },
+        label: { en: "Leaderboard Bonuses", ru: "Бонусы Рейтинга" },
+        value: { en: "Monthly rewards for top-ranked athletes", ru: "Ежемесячные награды для лучших атлетов" },
       },
       {
         label: { en: "Eligibility", ru: "Участие" },

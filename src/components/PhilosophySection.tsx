@@ -9,8 +9,18 @@ const PhilosophySection = () => {
   const locale = useLanguage();
 
   return (
-    <section className="section-padding" ref={ref}>
-      <div className="content-max text-center">
+    <section className="section-padding relative overflow-hidden" ref={ref}>
+      {/* Faint arena archway background */}
+      <img
+        src="https://images.unsplash.com/photo-1555992643-a09e8f2afdce?w=1200&q=60"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover grayscale opacity-[0.05]"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
+
+      <div className="content-max text-center relative z-10">
         <motion.h2
           className="heading-lg text-foreground mb-8"
           initial={{ opacity: 0, y: 40 }}
