@@ -5,24 +5,23 @@ export const translations = {
     system: { en: "The System", ru: "Система" },
     rewards: { en: "Rewards", ru: "Награды" },
     cta: { en: "Enter the Arena", ru: "На Арену" },
-    joinMobile: { en: "Join", ru: "Войти" },
+    joinMobile: { en: "Enter the Arena", ru: "На Арену" },
   },
   hero: {
-    subtitle: { en: "The Global Merit Platform", ru: "Глобальная Платформа Заслуг" },
     headline1: { en: "WHERE MERIT IS", ru: "ГДЕ МАСТЕРСТВО —" },
     headline2: { en: "THE ONLY CURRENCY", ru: "ЕДИНСТВЕННАЯ ВАЛЮТА" },
     body: {
       en: "Athletic talent verified, ranked, and rewarded. No connections. No politics. Just performance.",
       ru: "Спортивный талант верифицирован, оценён и вознаграждён. Без связей. Без политики. Только результат.",
     },
-    cta: { en: "Enter the Arena", ru: "Войти на Арену" },
+    cta: { en: "Enter the Platform", ru: "Перейти на Арену" },
   },
   philosophy: {
-    headline1: { en: "MASTERY AND HARD WORK", ru: "МАСТЕРСТВО И ТРУД" },
-    headline2: { en: "SHOULD BE REWARDED. PERIOD.", ru: "ДОЛЖНЫ БЫТЬ ВОЗНАГРАЖДЕНЫ. ТОЧКА." },
+    headline1: { en: "MASTERY. WORK. RESULTS.", ru: "МАСТЕРСТВО. ТРУД. РЕЗУЛЬТАТ." },
+    headline2: { en: "", ru: "" },
     body: {
-      en: "We built EVERLEGENDS because the world's most talented and hardest-training athletes shouldn't need the right connections, the right zip code, or the right algorithm to be seen. Merit and dedication are the only filters.",
-      ru: "Мы создали EVERLEGENDS, потому что самые талантливые и упорно тренирующиеся атлеты мира не должны зависеть от связей, географии или алгоритмов. Мастерство и преданность делу — единственные критерии.",
+      en: "EVERLEGENDS is a digital environment where submitted results are recorded, technologically verified, and compared based on objective data. Only confirmed results are reflected in the ranking.",
+      ru: "EVERLEGENDS создан как цифровая среда, где результаты фиксируются, проверяются и сравниваются на основе объективных данных. Здесь значение имеет только подтверждённый результат.",
     },
   },
   system: {
@@ -31,33 +30,32 @@ export const translations = {
     steps: [
       {
         number: "01",
-        title: { en: "COMPETE", ru: "СОРЕВНУЙСЯ" },
+        title: { en: "SUBMIT RESULTS", ru: "ПРЕДСТАВЬ РЕЗУЛЬТАТ" },
         description: {
-          en: "Enter real athletic challenges designed to measure true ability.",
-          ru: "Участвуй в реальных спортивных испытаниях, созданных для оценки истинных способностей.",
+          en: "Submit materials for analytical evaluation of a physical performance result.",
+          ru: "Представь материалы для аналитической оценки физического результата.",
         },
       },
       {
         number: "02",
-        title: { en: "WIN", ru: "ТЕХНОЛОГИЧЕСКАЯ ПРОВЕРКА" },
+        title: { en: "TECH VERIFICATION", ru: "ТЕХНОЛОГИЧЕСКАЯ ПРОВЕРКА" },
         description: {
-          en: "Your performance is verified, recorded, and ranked against the world's best.",
-          ru: "Твои результаты верифицируются, фиксируются и сравниваются с лучшими в мире.",
+          en: "Results undergo technological verification and are included in the ranking.",
+          ru: "Результаты проходят технологическую верификацию и включаются в рейтинг.",
         },
       },
       {
         number: "03",
-        title: { en: "BE REWARDED", ru: "ВЫИГРЫВАЙ" },
+        title: { en: "GAIN RECOGNITION", ru: "ПОЛУЧАЙ ПРИЗНАНИЕ" },
         description: {
-          en: "Earn real prizes and global recognition based on merit alone.",
-          ru: "Получай реальные призы и мировое признание исключительно за заслуги.",
+          en: "Separate incentive programs may be offered at the Operator's discretion.",
+          ru: "Отдельные программы поощрения могут предоставляться Оператором.",
         },
       },
     ],
   },
   rewards: {
-    label: { en: "The Prize Pool", ru: "Призовой Фонд" },
-    title: { en: "REWARDS", ru: "ПООЩРИТЕЛЬНЫЕ ПРОГРАММЫ" },
+    title: { en: "INCENTIVE PROGRAMS", ru: "ПООЩРИТЕЛЬНЫЕ ПРОГРАММЫ" },
     positions: [
       {
         position: { en: "1ST PLACE", ru: "1-Е МЕСТО" },
@@ -90,14 +88,18 @@ export const translations = {
         value: { en: "Open to all athletes worldwide", ru: "Открыто для всех атлетов мира" },
       },
       {
-        label: { en: "Integrity", ru: "Честность" },
+        label: { en: "Integrity", ru: "Контроль достоверности" },
         value: { en: "AI-powered anti-fraud detection", ru: "Антифрод-система на основе ИИ" },
       },
     ],
+    disclaimer: {
+      en: "Incentive programs are voluntary and may be changed or discontinued at the Operator's discretion.",
+      ru: "Поощрительные программы носят добровольный характер и могут быть изменены или прекращены.",
+    },
   },
   download: {
     headline1: { en: "READY TO", ru: "ГОТОВ" },
-    headline2: { en: "COMPETE?", ru: "СОРЕВНОВАТЬСЯ?" },
+    headline2: { en: "SUBMIT RESULTS?", ru: "ПРЕДСТАВИТЬ РЕЗУЛЬТАТ?" },
     body: {
       en: "Join thousands of athletes proving their worth on the global stage.",
       ru: "Стань частью поколения победителей. Докажи силу на мировой арене.",

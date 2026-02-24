@@ -22,6 +22,7 @@ const RewardsSection = () => {
   const podiumOrder = [positions[1], positions[0], positions[2]];
   const podiumMetallic = [METALLIC_CLASSES[1], METALLIC_CLASSES[0], METALLIC_CLASSES[2]];
   const podiumDelays = [SHIMMER_DELAYS[1], SHIMMER_DELAYS[0], SHIMMER_DELAYS[2]];
+  const disclaimer = t(translations.rewards.disclaimer, locale)?.trim();
 
   return (
     <section id="rewards" className="section-padding bg-surface" ref={ref}>
@@ -150,6 +151,17 @@ const RewardsSection = () => {
             </motion.div>
           ))}
         </div>
+
+        {disclaimer && (
+          <motion.p
+            className="text-xs text-muted-foreground text-center mt-8 tracking-wide"
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
+            {disclaimer}
+          </motion.p>
+        )}
       </div>
     </section>
   );
