@@ -113,6 +113,7 @@ export const translations = {
     privacy: { en: "Privacy Policy", ru: "Политика конфиденциальности" },
     terms: { en: "User Agreement", ru: "Пользовательское соглашение" },
     contact: { en: "Contact", ru: "Контакты" },
+    beta: { en: "Beta Testing", ru: "Бета-тестирование" },
   },
 } as const;
 
