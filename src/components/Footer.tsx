@@ -75,7 +75,7 @@ const Footer = () => {
             {t(translations.footer.beta, locale)}
           </a>
           <span className="text-muted-foreground/40">|</span>
-          <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
+          <a href="https://t.me/DjamalG" target="_blank" rel="noopener noreferrer" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
             {t(translations.footer.contact, locale)}
           </a>
           <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="TikTok">
