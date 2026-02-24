@@ -35,10 +35,10 @@ const Navigation = () => {
         </a>
 
         <div className="hidden md:flex items-center gap-8">
-          <a href="#system" className="text-sm font-medium tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300">
+          <a href={`${locale === "ru" ? "/ru" : "/"}#system`} className="text-sm font-medium tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300">
             {t(translations.nav.system, locale)}
           </a>
-          <a href="#rewards" className="text-sm font-medium tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300">
+          <a href={`${locale === "ru" ? "/ru" : "/"}#rewards`} className="text-sm font-medium tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300">
             {t(translations.nav.rewards, locale)}
           </a>
           <button
