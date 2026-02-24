@@ -1,88 +1,96 @@
 
 
-# Hero Banner Slider with Image Slides and Motivational Slogans
+# Premium Metallic Prize Pool with $7,000 Total
 
 ## Overview
 
-Remove the video background entirely from the Hero section. Replace it with a full-screen image slider (banner/carousel) that cycles through the 8 uploaded athletic images, each with its own unique motivational slogan and project tagline -- all bilingual (EN/RU).
+Two changes to the Rewards section: (1) replace the shy gradient text with bold 3D metallic finishes (gold/silver/bronze) with shimmer animation, and (2) add a prominent "$7,000 PER EVENT" total line. The TOP 100 prize adjusts from $20 to $10 so the math adds up to $7,000.
 
-## 1. Copy Images to Project
+## Prize Math
 
-Copy all 8 uploaded images to `src/assets/hero/`:
+| Tier | Prize | Winners | Subtotal |
+|------|-------|---------|----------|
+| 1st Place | $2,500 | 1 | $2,500 |
+| Top 2 | $1,000 | 2 | $2,000 |
+| Top 3 | $500 | 3 | $1,500 |
+| Top 100 | $10 | 100 | $1,000 |
+| **Total** | | | **$7,000** |
 
-| File | Theme |
-|------|-------|
-| `iStock-599713470.jpg` | Pull-ups / determination |
-| `iStock-601369426.jpg` | Push-ups / grit |
-| `iStock-618624716.jpg` | Trophy / victory |
-| `iStock-637772392.jpg` | High-five / team |
-| `iStock-687124332.jpg` | Plank / intensity |
-| `iStock-698615450.jpg` | Mother-daughter / legacy |
-| `iStock-918580062.jpg` | Squats / group training |
-| `iStock-966297686.jpg` | High-five / unity |
+## Visual Changes
 
-## 2. Slide Content (EN / RU)
+### 1. Metallic Prize Numbers
 
-Each slide gets a compelling headline and a short project-angle tagline:
+Replace the current cyan-blue-purple gradient on prize amounts with per-tier metallic finishes:
 
-1. **Pull-ups**: "RISE ABOVE THE NOISE" / "ПОДНИМИСЬ НАД ШУМОМ" -- "Your talent deserves a global stage." / "Твой талант заслуживает мировой сцены."
-2. **Push-ups/grit**: "BUILT THROUGH DISCIPLINE" / "ЗАКАЛЁННЫЙ ДИСЦИПЛИНОЙ" -- "No shortcuts. No excuses. Just results." / "Без обходных путей. Без оправданий. Только результат."
-3. **Trophy**: "GLORY BELONGS TO THE FEARLESS" / "СЛАВА ПРИНАДЛЕЖИТ БЕССТРАШНЫМ" -- "Real prizes for real performance." / "Реальные призы за реальные результаты."
-4. **High-five team**: "STRONGER TOGETHER" / "СИЛЬНЕЕ ВМЕСТЕ" -- "A global community united by merit." / "Глобальное сообщество, объединённое заслугами."
-5. **Plank intensity**: "OUTWORK EVERYONE" / "ПРЕВЗОЙДИ КАЖДОГО" -- "Where effort is the only currency." / "Где усилие -- единственная валюта."
-6. **Mother-daughter**: "LEGACY STARTS NOW" / "НАСЛЕДИЕ НАЧИНАЕТСЯ СЕЙЧАС" -- "Inspire the next generation of champions." / "Вдохновляй следующее поколение чемпионов."
-7. **Squats group**: "EARN YOUR RANK" / "ЗАСЛУЖИ СВОЙ РАНГ" -- "Verified. Ranked. Rewarded." / "Верифицирован. Оценён. Вознаграждён."
-8. **Unity high-five**: "THE ARENA AWAITS" / "АРЕНА ЖДЁТ" -- "Join thousands proving their worth worldwide." / "Присоединяйся к тысячам, доказывающим свою ценность."
+- **Gold (1st)**: Rich gold gradient with warm amber drop-shadow
+- **Silver (2nd)**: Cool steel-silver gradient with gray drop-shadow
+- **Bronze (3rd)**: Warm bronze gradient with copper drop-shadow
+- **Steel (Top 100)**: Subtle platinum/steel gradient
 
-## 3. Slider Implementation
+Each gets a sweeping shimmer animation (3s cycle, staggered 0.5s between tiers) -- a bright highlight band glides across the metallic text. Elegant, not flashy.
 
-### Approach
-Use `framer-motion` with `AnimatePresence` for smooth crossfade transitions between slides. Auto-advance every 6 seconds. Include dot indicators at the bottom.
+### 2. Bigger, Bolder Text
 
-### HeroSection.tsx -- Complete Rewrite
+| Element | Current | New |
+|---------|---------|-----|
+| Prize amount | `text-3xl md:text-4xl lg:text-5xl` | `text-5xl md:text-6xl lg:text-7xl` |
+| Winner count | `text-[10px]` | `text-xs md:text-sm` |
+| Position label | `text-xs` | `text-sm md:text-base` |
 
-- Remove all video code (`heroVideos` array, `useState`, `handleVideoEnded`, `<video>` element)
-- Import all 8 images from `src/assets/hero/`
-- Define a `SLIDES` array with `{ image, headline: {en, ru}, tagline: {en, ru} }` for each
-- State: `currentSlide` index, auto-advancing via `useEffect` interval (6s)
-- Render structure:
-  - Full-screen section (same as now)
-  - Background: `AnimatePresence` wrapping a `motion.img` keyed by `currentSlide`, with fade in/out + subtle scale (1.05 to 1.0 Ken Burns effect)
-  - Image styling: `object-cover`, slight darkening overlay on top (gradient from bottom + side vignettes), NO grayscale -- show the images in their natural warm tones but with a dark overlay for contrast
-  - Text overlay: slide-specific headline (large, bold) + tagline (smaller, lighter) -- animated in with staggered fade+slide
-  - Below the slide text: the existing CTA button ("Enter the Arena")
-  - Dot indicators: small circles at the bottom, clickable, active dot highlighted with the brand gradient
+### 3. Total Prize Pool Line
 
-### Visual Treatment
-- Images shown at ~55-60% brightness (dark overlay, not grayscale) to keep the warm athletic tones visible
-- Bottom gradient overlay: `from-transparent via-background/40 to-background` for seamless blend into next section
-- Side vignette: subtle `from-background/50 via-transparent to-background/50`
-- Ken Burns: each slide starts at `scale(1.05)` and slowly zooms to `scale(1.0)` over the 6s display time
+A prominent summary line below the 4-tier grid and above the specs, showing:
 
-## 4. Translation Updates
+"$7,000" (large, gradient-text styled) + "per event" label
 
-Add new translation keys in `src/lib/translations.ts` under a `heroSlides` section with all 8 slides' headlines and taglines. Remove the old single `hero.subtitle`, `hero.headline1`, `hero.headline2`, `hero.body` keys (or keep the CTA key for the button).
-
-## 5. Delete Video Files
-
-The 5 video files in `public/videos/` are no longer needed and can be removed.
+Bilingual: "Per Event" / "За Событие"
 
 ---
 
 ## Technical Details
 
-### File Changes
+### File: `src/index.css`
+
+Add metallic utility classes and shimmer keyframes:
+
+```css
+.gold-metallic {
+  background: linear-gradient(135deg, #B8860B, #FFD700, #FFF8DC, #FFD700, #B8860B);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s ease-in-out infinite;
+  filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.3));
+}
+
+.silver-metallic { /* similar, cool grays, 0.5s delay */ }
+.bronze-metallic { /* similar, warm browns, 1s delay */ }
+.steel-metallic { /* similar, blue-grays, 1.5s delay */ }
+
+@keyframes shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+```
+
+### File: `src/lib/translations.ts`
+
+- Change TOP 100 prize from `"$20"` to `"$10"`
+- Add `rewards.total` translation: `{ label: { en: "Per Event", ru: "За Событие" }, value: "$7,000" }`
+
+### File: `src/components/RewardsSection.tsx`
+
+- Map position index to metallic class: `["gold-metallic", "silver-metallic", "bronze-metallic", "steel-metallic"]`
+- Increase text sizes on prize amounts, winner counts, and position labels
+- Add a total prize pool block between the grid and specs: large "$7,000" with gradient-text + "PER EVENT" label
+- Keep all existing motion animations
+
+### Files Changed
 
 | File | Changes |
 |------|---------|
-| `src/assets/hero/*.jpg` | Copy 8 uploaded images |
-| `src/components/HeroSection.tsx` | Complete rewrite: remove video, add image slider with AnimatePresence, per-slide slogans, dot navigation, Ken Burns effect |
-| `src/lib/translations.ts` | Add `heroSlides` array with 8 headline/tagline pairs in EN+RU, keep `hero.cta` |
-| `public/videos/` | Remove 5 video files (no longer used) |
-
-### Animation Details
-- Slide transition: 0.8s crossfade with `AnimatePresence mode="wait"`
-- Ken Burns: CSS transition `transform 6s ease-out` from `scale(1.05)` to `scale(1.0)`
-- Text entrance: staggered `motion.div` with `y: 20 -> 0`, `opacity: 0 -> 1`, 0.3s delay between headline and tagline
-- Dot indicators: `w-2 h-2` circles, inactive = `bg-white/30`, active = brand gradient background
+| `src/index.css` | Add 4 metallic classes + `@keyframes shimmer` |
+| `src/lib/translations.ts` | Update TOP 100 prize to $10, add `rewards.total` translations |
+| `src/components/RewardsSection.tsx` | Apply metallic classes per tier, increase text sizes, add $7,000 total line |
 
