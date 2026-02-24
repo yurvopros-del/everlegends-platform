@@ -1,126 +1,66 @@
 
 
-# Combined Update: Wording Fixes + Colosseum Imagery + Rewards Upgrade + International Flags
+# Updates: Prize Pool, Flag Ticker, and Colosseum Fix
 
-This plan bundles all pending changes plus the new flags concept into one cohesive implementation.
+## 1. Update Prize Pool Structure
 
----
+Replace the current 3-position grid with a 4-tier layout matching your exact amounts:
 
-## 1. Fix System Section Wording
+| Position | Prize | Winners |
+|----------|-------|---------|
+| 1ST PLACE | $2,500 | One winner |
+| TOP 2 | $1,000 | Two winners |
+| TOP 3 | $500 | Three winners |
+| TOP 100 | $20 | Hundred winners |
 
-Update step titles and descriptions in `src/lib/translations.ts`:
-
-| Step | Current EN | New EN | Current RU | New RU |
-|------|-----------|--------|-----------|--------|
-| 02 | PROVE | WIN | ДОКАЖИ | ПОБЕЖДАЙ |
-| 03 | RISE | BE REWARDED | ВОЗВЫСЬСЯ | ВЫИГРЫВАЙ |
-
-Step descriptions updated to match the new verbs naturally.
-
----
-
-## 2. Fix Philosophy Headline
-
-| | Current | New |
-|---|---------|-----|
-| EN line 1 | TALENT SHOULD BE | TALENT AND SYSTEMATIC TRAINING SHOULD BE |
-| EN line 2 | REWARDED. PERIOD. | REWARDED. PERIOD. |
-| RU line 1 | ТАЛАНТ ДОЛЖЕН БЫТЬ | ТАЛАНТ И СИСТЕМНЫЕ ТРЕНИРОВКИ ДОЛЖНЫ БЫТЬ |
-| RU line 2 | ВОЗНАГРАЖДЁН. ТОЧКА. | ВОЗНАГРАЖДЕНЫ. ТОЧКА. |
-
-Body text also updated to reflect the training + talent message.
-
----
-
-## 3. Colosseum Arena Imagery
-
-### Hero Section
-- Add a high-quality desaturated Colosseum interior photo as a background layer (Unsplash CDN)
-- Apply CSS `grayscale(100%)`, opacity ~8-10%, with dark gradient overlays fading to black at all edges
-- Creates atmospheric "arena" depth without competing with text
-
-### Philosophy Section
-- Add a faint Colosseum archway image behind the statement
-- Even more subtle (opacity ~5%), fully grayscale, dark vignette overlay
-
----
-
-## 4. Rewards Section Upgrade -- Stimulating Prize Pool
-
-Transform the current dry spec-sheet into a powerful, motivating showcase:
-
-**A. Hero Prize Pool Number**
-- Large gradient-text headline: "$1,000,000+" (dominant visual element)
-- Subtitle: "TOTAL SEASONAL PRIZE POOL" / "ОБЩИЙ СЕЗОННЫЙ ПРИЗОВОЙ ФОНД"
-
-**B. Top 3 Positions Grid**
-Three columns with gradient accents:
-- 1ST -- $250,000 -- CHAMPION / ЧЕМПИОН
-- 2ND -- $100,000 -- ELITE / ЭЛИТА
-- 3RD -- $50,000 -- CONTENDER / ПРЕТЕНДЕНТ
-
-Oversized position numbers, gradient-text prize amounts, clean dividing lines.
-
-**C. Supporting Specs Below**
-Keep the label-value spec sheet style for: weekly challenges, leaderboard bonuses, eligibility, integrity.
-
----
-
-## 5. International Flags -- The Organic Approach
-
-### Concept: "Floating Flag Ticker"
-
-A **continuous horizontal scrolling ribbon** of small national flag emoji or SVG icons that drifts slowly across the screen -- like a subtle stock ticker but with flags. This appears in two strategic places:
-
-**A. Between Hero and Philosophy sections**
-- A single thin horizontal band (~24px tall) with ~40-50 small circular flag icons scrolling continuously left-to-right
-- Flags rendered as small circles (16-20px) with slight spacing, very low opacity (~30-40%) that brightens slightly on the band itself
-- The band has a subtle gradient fade on both left and right edges (fade to black) so flags appear and disappear organically
-- Scroll speed: slow and meditative (60-80 seconds for full loop), using CSS `@keyframes` animation (no JS needed)
-- A thin gradient accent line above and below the flag band
-
-**B. Inside the Rewards Section**
-- A second flag ribbon scrolling in the **opposite direction** (right-to-left), placed between the prize pool headline and the top-3 positions grid
-- Reinforces the "open to all athletes worldwide" message with visual proof
-- Same styling: small circular flags, low opacity, edge fades
-
-### Flag Implementation
-- Use a curated set of ~50 country flag SVGs (small, optimized) or Unicode flag emoji rendered in a flex row
-- Duplicated twice in the DOM for seamless infinite scroll (standard CSS ticker pattern)
-- Countries represented: a diverse global mix -- USA, Brazil, UK, Japan, Nigeria, India, Germany, South Korea, Mexico, Australia, Kenya, France, Russia, China, Saudi Arabia, South Africa, Argentina, etc.
-- Each flag rendered as a small circle with `border-radius: 50%` and `object-fit: cover`
-
-### Why This Works
-- **Organic**: flags drift in and out naturally, never static or forced
-- **Dynamic**: continuous motion adds life without being distracting
-- **Stylish**: circular flags with low opacity on dark background feel premium
-- **International**: instantly communicates "global platform" without a single word
-- **Minimal**: thin bands don't disrupt the generous whitespace between sections
-
----
-
-## Technical Details
+- Remove the "$1,000,000+" hero headline since it no longer applies
+- Change to a 4-column grid (2x2 on mobile, 4 across on desktop)
+- Each tile shows: prize amount (large gradient text), position label, and number of winners
+- Update both EN and RU translations
 
 ### Files Modified
+- `src/lib/translations.ts` -- replace `positions` array with 4 tiers, update `prizePool`/`prizePoolSub` or remove them, update specs
+- `src/components/RewardsSection.tsx` -- adjust grid from 3-col to 4-col (or 2x2 mobile), add "winners" count line per tile
+
+---
+
+## 2. Enhance Flag Ticker with Country Labels
+
+Currently the ticker shows only emoji flags at low opacity. Update to show **flag emoji + country code** together, making it more engaging:
+
+Example: `🇺🇸 USA  🇧🇷 BRA  🇬🇧 GBR  🇯🇵 JPN ...`
+
+- Add country codes next to each flag emoji
+- Increase opacity slightly (from 30% to 40-50%) for better visibility
+- Keep the same smooth scrolling animation and edge fades
+
+### Files Modified
+- `src/components/FlagTicker.tsx` -- change FLAGS array to include country codes, render both flag + code label
+
+---
+
+## 3. Fix Colosseum Visibility
+
+The Colosseum images ARE in the code (Hero at 8% opacity, Philosophy at 5% opacity), but they may be too faint or the images may not be loading. Fixes:
+
+- **Hero Section**: Increase Colosseum opacity from `0.08` to `0.12-0.15` so it's actually visible as a subtle texture
+- **Philosophy Section**: Increase from `0.05` to `0.08-0.10`
+- Lighten the overlay gradients slightly so the image isn't completely buried
+- Verify the Unsplash URLs are loading correctly; if not, use alternative reliable URLs
+
+### Files Modified
+- `src/components/HeroSection.tsx` -- increase image opacity, soften overlays
+- `src/components/PhilosophySection.tsx` -- increase image opacity, soften overlays
+
+---
+
+## Summary of All File Changes
 
 | File | Changes |
 |------|---------|
-| `src/lib/translations.ts` | Update system steps 2-3, philosophy headline/body, add prize pool and top-3 position translations |
-| `src/components/HeroSection.tsx` | Add subtle grayscale Colosseum background image layer |
-| `src/components/PhilosophySection.tsx` | Add faint arena archway background |
-| `src/components/RewardsSection.tsx` | Rebuild with prize pool hero number, top-3 grid, flag ribbon, supporting specs |
-| `src/components/SystemSection.tsx` | No structural changes (wording flows from translations) |
-| `src/index.css` | Add `@keyframes flag-scroll` animation and flag ticker utility classes |
-
-### New File
-
-| File | Purpose |
-|------|---------|
-| `src/components/FlagTicker.tsx` | Reusable scrolling flag ribbon component with ~50 country flag SVGs, CSS infinite scroll, edge fade overlays |
-
-### Pages Modified
-
-| File | Changes |
-|------|---------|
-| `src/pages/Index.tsx` | Insert `FlagTicker` component between Hero and Philosophy sections |
+| `src/lib/translations.ts` | Replace 3 positions with 4 tiers ($2500/$1000/$500/$20), update prize pool headline, add winner counts in EN+RU |
+| `src/components/RewardsSection.tsx` | 4-tier grid layout with winner counts, remove or update the big prize pool number |
+| `src/components/FlagTicker.tsx` | Add country code labels next to flag emojis, boost opacity |
+| `src/components/HeroSection.tsx` | Increase Colosseum opacity to ~12-15%, soften dark overlays |
+| `src/components/PhilosophySection.tsx` | Increase arena opacity to ~8-10%, soften dark overlays |
 
