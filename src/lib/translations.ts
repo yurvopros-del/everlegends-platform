@@ -130,6 +130,23 @@ export const translations = {
     ruVersion: { en: "Русская версия", ru: "Русская версия" },
     download: { en: "Download PDF", ru: "Скачать PDF" },
   },
+  privacyPage: {
+    title: { en: "Privacy Policy", ru: "Политика конфиденциальности" },
+    enVersion: { en: "English version", ru: "English version" },
+    ruVersion: { en: "Русская версия", ru: "Русская версия" },
+    download: { en: "Download PDF", ru: "Скачать PDF" },
+  },
+  privacyBanner: {
+    text: {
+      en: "We process personal data to operate the EverLegends platform, provide analytical services, and improve functionality.",
+      ru: "Мы обрабатываем персональные данные для работы платформы EverLegends, предоставления аналитических сервисов и улучшения функциональности.",
+    },
+    privacyLink: { en: "Privacy Policy", ru: "Политикой конфиденциальности" },
+    and: { en: "and", ru: "и" },
+    cookieLink: { en: "Cookie Policy", ru: "Политикой Cookie" },
+    accept: { en: "Accept", ru: "Принять" },
+    decline: { en: "Decline", ru: "Отклонить" },
+  },
 } as const;
 
 export function t(obj: { en: string; ru: string }, locale: Locale): string {
