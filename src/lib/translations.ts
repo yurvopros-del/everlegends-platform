@@ -107,8 +107,9 @@ export const translations = {
   },
   footer: {
     rights: { en: "All rights reserved.", ru: "Все права защищены." },
-    privacy: { en: "Privacy", ru: "Конфиденциальность" },
-    terms: { en: "Terms", ru: "Условия" },
+    operator: { en: 'Operator: LLC "CTT Etalon"', ru: 'Оператор: ООО «ЦТТ Эталон»' },
+    privacy: { en: "Privacy Policy", ru: "Политика конфиденциальности" },
+    terms: { en: "User Agreement", ru: "Пользовательское соглашение" },
     contact: { en: "Contact", ru: "Контакты" },
   },
 } as const;
