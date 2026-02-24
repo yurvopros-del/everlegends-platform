@@ -1,96 +1,144 @@
 
 
-# Premium Metallic Prize Pool with $7,000 Total
+# Prize Pool Section Overhaul
 
 ## Overview
 
-Two changes to the Rewards section: (1) replace the shy gradient text with bold 3D metallic finishes (gold/silver/bronze) with shimmer animation, and (2) add a prominent "$7,000 PER EVENT" total line. The TOP 100 prize adjusts from $20 to $10 so the math adds up to $7,000.
+Five changes: restore Top 100 prize to $20, redesign shimmer animation for organic feel, reposition the flag banner to the System/Rewards boundary, match the Prize Pool title to other section headers, and implement a podium-style layout.
 
-## Prize Math
+## 1. Restore Top 100 Prize to $20
 
-| Tier | Prize | Winners | Subtotal |
-|------|-------|---------|----------|
-| 1st Place | $2,500 | 1 | $2,500 |
-| Top 2 | $1,000 | 2 | $2,000 |
-| Top 3 | $500 | 3 | $1,500 |
-| Top 100 | $10 | 100 | $1,000 |
-| **Total** | | | **$7,000** |
+**File: `src/lib/translations.ts`**
+- Change `prize: "$10"` back to `prize: "$20"` for Top 100
+- Update `rewards.total.value` from `"$7,000"` to `"$7,500"` (new math: $2,500 + 2x$1,000 + 3x$500 + 100x$20 = $7,500)
 
-## Visual Changes
+## 2. Slower, Desynchronized Shimmer Animation
 
-### 1. Metallic Prize Numbers
+**File: `src/index.css`**
 
-Replace the current cyan-blue-purple gradient on prize amounts with per-tier metallic finishes:
+Replace the current synchronized shimmer with a slower animation and per-element randomized delays applied via inline styles in the component:
 
-- **Gold (1st)**: Rich gold gradient with warm amber drop-shadow
-- **Silver (2nd)**: Cool steel-silver gradient with gray drop-shadow
-- **Bronze (3rd)**: Warm bronze gradient with copper drop-shadow
-- **Steel (Top 100)**: Subtle platinum/steel gradient
+- Increase shimmer duration from `3s` to `6s` for a more subtle, luxurious sweep
+- Remove the fixed `animation-delay` from CSS classes (currently 0s, 0.5s, 1s, 1.5s)
+- Instead, each metallic class gets just the base animation definition without delay
 
-Each gets a sweeping shimmer animation (3s cycle, staggered 0.5s between tiers) -- a bright highlight band glides across the metallic text. Elegant, not flashy.
+**File: `src/components/RewardsSection.tsx`**
 
-### 2. Bigger, Bolder Text
+- Apply a pseudo-random `animation-delay` via inline `style` on each prize element, using values like 0s, 2.3s, 4.1s, 1.7s -- different enough to feel spontaneous
+- This ensures each prize value shimmers independently at its own rhythm
 
-| Element | Current | New |
-|---------|---------|-----|
-| Prize amount | `text-3xl md:text-4xl lg:text-5xl` | `text-5xl md:text-6xl lg:text-7xl` |
-| Winner count | `text-[10px]` | `text-xs md:text-sm` |
-| Position label | `text-xs` | `text-sm md:text-base` |
+## 3. Move Flag Banner to System/Rewards Boundary
 
-### 3. Total Prize Pool Line
+**File: `src/pages/Index.tsx`**
 
-A prominent summary line below the 4-tier grid and above the specs, showing:
+Currently the page layout is:
+```
+SystemSection
+RewardsSection (contains FlagTicker internally)
+```
 
-"$7,000" (large, gradient-text styled) + "per event" label
+The FlagTicker is rendered inside RewardsSection at the top. Move it out:
+- Remove the FlagTicker from inside `RewardsSection.tsx`
+- Place it in `Index.tsx` between `SystemSection` and `RewardsSection`
+- Use negative margins or zero spacing so it sits exactly on the dividing line between the two sections
 
-Bilingual: "Per Event" / "За Событие"
+**File: `src/components/RewardsSection.tsx`**
+- Remove the FlagTicker import and its `<motion.div>` wrapper
+
+## 4. Prize Pool Title -- Match Section Header Style
+
+Currently the Rewards section uses a small label (`text-xs tracking-[0.3em]`) but no proper heading like SystemSection has (`heading-lg`).
+
+**File: `src/components/RewardsSection.tsx`**
+- Add a section title using the `heading-lg` class (same as "THE SYSTEM" heading): `text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-[-0.02em]`
+- Display translation key `rewards.title` ("THE REWARD SYSTEM" / "СИСТЕМА НАГРАД")
+- Keep the small label above it for the "The Prize Pool" subtitle
+
+## 5. Podium Layout for Prizes
+
+Replace the flat 4-column grid with a podium hierarchy:
+
+```text
+         +----------+
+         |  $2,500  |
+         | 1ST PLACE|
+    +----+----------+----+
+    | $1,000 |      | $500  |
+    | TOP 2  |      | TOP 3 |
+    +--------+      +-------+
+         +----------+
+         |   $20    |
+         | TOP 100  |
+         +----------+
+```
+
+**Desktop (md+):**
+- Top row: 3-column grid with `grid-cols-3`
+  - Column 1 (2nd place): self-end, slightly shorter padding
+  - Column 2 (1st place): taller padding, visually elevated
+  - Column 3 (3rd place): self-end, slightly shorter padding
+- Bottom row: centered single element for Top 100
+
+**Mobile:**
+- Stack vertically: 1st, 2nd, 3rd, Top 100 -- with 1st place getting extra size emphasis
 
 ---
 
 ## Technical Details
 
-### File: `src/index.css`
+### File: `src/index.css` (shimmer changes)
 
-Add metallic utility classes and shimmer keyframes:
+Remove fixed `animation-delay` from each metallic class. Change animation duration to `6s`:
 
 ```css
 .gold-metallic {
-  background: linear-gradient(135deg, #B8860B, #FFD700, #FFF8DC, #FFD700, #B8860B);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 3s ease-in-out infinite;
-  filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.3));
+  /* same gradient */
+  animation: shimmer 6s ease-in-out infinite;
+  /* no delay -- applied via inline style */
 }
-
-.silver-metallic { /* similar, cool grays, 0.5s delay */ }
-.bronze-metallic { /* similar, warm browns, 1s delay */ }
-.steel-metallic { /* similar, blue-grays, 1.5s delay */ }
-
-@keyframes shimmer {
-  0% { background-position: 200% center; }
-  100% { background-position: -200% center; }
+.silver-metallic {
+  animation: shimmer 6s ease-in-out infinite;
 }
+.bronze-metallic {
+  animation: shimmer 6s ease-in-out infinite;
+}
+.steel-metallic {
+  animation: shimmer 6s ease-in-out infinite;
+}
+```
+
+### File: `src/components/RewardsSection.tsx` (full restructure)
+
+- Remove FlagTicker import and rendering
+- Add heading with `heading-lg` class
+- Replace flat grid with podium layout:
+  - Podium top row: `grid grid-cols-3` on md+, with 2nd | 1st | 3rd order
+  - 1st place gets larger vertical padding (`py-16 md:py-20`) and biggest text
+  - 2nd and 3rd get `self-end` alignment with less padding (`py-10 md:py-14`)
+  - Top 100 row: centered below, full width, smaller styling
+- Apply pseudo-random animation delays via inline style: `style={{ animationDelay: '0s' }}`, `'2.3s'`, `'4.1s'`, `'1.7s'`
+
+### File: `src/pages/Index.tsx`
+
+Move FlagTicker between SystemSection and RewardsSection with edge-fades that blend from the System section's `bg-background` on the left to the Rewards section's `bg-surface` context:
+
+```tsx
+<SystemSection />
+<FlagTicker direction="right" />
+<RewardsSection />
 ```
 
 ### File: `src/lib/translations.ts`
 
-- Change TOP 100 prize from `"$20"` to `"$10"`
-- Add `rewards.total` translation: `{ label: { en: "Per Event", ru: "За Событие" }, value: "$7,000" }`
+- `prize: "$20"` for Top 100
+- `total.value: "$7,500"`
 
-### File: `src/components/RewardsSection.tsx`
-
-- Map position index to metallic class: `["gold-metallic", "silver-metallic", "bronze-metallic", "steel-metallic"]`
-- Increase text sizes on prize amounts, winner counts, and position labels
-- Add a total prize pool block between the grid and specs: large "$7,000" with gradient-text + "PER EVENT" label
-- Keep all existing motion animations
-
-### Files Changed
+### Files Changed Summary
 
 | File | Changes |
 |------|---------|
-| `src/index.css` | Add 4 metallic classes + `@keyframes shimmer` |
-| `src/lib/translations.ts` | Update TOP 100 prize to $10, add `rewards.total` translations |
-| `src/components/RewardsSection.tsx` | Apply metallic classes per tier, increase text sizes, add $7,000 total line |
+| `src/lib/translations.ts` | Restore Top 100 to $20, update total to $7,500 |
+| `src/index.css` | Slow shimmer to 6s, remove fixed delays from metallic classes |
+| `src/components/RewardsSection.tsx` | Remove FlagTicker, add heading-lg title, podium layout, inline animation delays |
+| `src/pages/Index.tsx` | Add FlagTicker between SystemSection and RewardsSection |
 
