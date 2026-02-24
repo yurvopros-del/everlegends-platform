@@ -76,10 +76,14 @@ export const translations = {
       },
       {
         position: { en: "TOP 100", ru: "ТОП-100" },
-        prize: "$20",
+        prize: "$10",
         winners: { en: "Hundred winners", ru: "Сто победителей" },
       },
     ],
+    total: {
+      value: "$7,000",
+      label: { en: "Per Event", ru: "За Событие" },
+    },
     specs: [
       {
         label: { en: "Eligibility", ru: "Участие" },
