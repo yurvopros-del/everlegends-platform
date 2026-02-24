@@ -57,7 +57,7 @@ export const translations = {
   },
   rewards: {
     label: { en: "The Prize Pool", ru: "Призовой Фонд" },
-    title: { en: "THE REWARD SYSTEM", ru: "СИСТЕМА НАГРАД" },
+    title: { en: "REWARDS", ru: "НАГРАДЫ" },
     positions: [
       {
         position: { en: "1ST PLACE", ru: "1-Е МЕСТО" },
