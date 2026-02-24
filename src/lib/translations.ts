@@ -39,7 +39,7 @@ export const translations = {
       },
       {
         number: "02",
-        title: { en: "WIN", ru: "ПОБЕЖДАЙ" },
+        title: { en: "WIN", ru: "ТЕХНОЛОГИЧЕСКАЯ ПРОВЕРКА" },
         description: {
           en: "Your performance is verified, recorded, and ranked against the world's best.",
           ru: "Твои результаты верифицируются, фиксируются и сравниваются с лучшими в мире.",
@@ -57,7 +57,7 @@ export const translations = {
   },
   rewards: {
     label: { en: "The Prize Pool", ru: "Призовой Фонд" },
-    title: { en: "REWARDS", ru: "НАГРАДЫ" },
+    title: { en: "REWARDS", ru: "ПООЩРИТЕЛЬНЫЕ ПРОГРАММЫ" },
     positions: [
       {
         position: { en: "1ST PLACE", ru: "1-Е МЕСТО" },
