@@ -101,7 +101,7 @@ export const translations = {
     headline1: { en: "READY TO", ru: "ГОТОВ" },
     headline2: { en: "SUBMIT RESULTS?", ru: "ПРЕДСТАВИТЬ РЕЗУЛЬТАТ?" },
     body: {
-      en: "Join thousands of athletes proving their worth on the global stage.",
+      en: "Step onto the global stage with your performance.",
       ru: "Стань частью поколения победителей. Докажи силу на мировой арене.",
     },
     ios: { en: "Download for iOS", ru: "Скачать для iOS" },
