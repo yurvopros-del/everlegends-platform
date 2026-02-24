@@ -1,6 +1,11 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
+const USER_AGREEMENT_PATH = Object.freeze({
+  en: "/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf",
+  ru: "/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT_RU.pdf",
+} as const);
+
 const TikTokIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.75a8.18 8.18 0 0 0 4.76 1.52V6.84a4.84 4.84 0 0 1-1-.15z" />
@@ -26,7 +31,13 @@ const Footer = () => {
 
         {/* Links + socials */}
         <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-          <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
+          <a
+            href={USER_AGREEMENT_PATH[locale]}
+            target="_blank"
+            rel="noopener noreferrer"
+            type="application/pdf"
+            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+          >
             {t(translations.footer.terms, locale)}
           </a>
           <span className="text-muted-foreground/40">|</span>
