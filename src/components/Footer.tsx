@@ -48,9 +48,12 @@ const Footer = () => {
             {t(translations.footer.terms, locale)}
           </a>
           <span className="text-muted-foreground/40">|</span>
-          <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
+          <Link
+            to={locale === "ru" ? "/ru/privacy-policy" : "/privacy-policy"}
+            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+          >
             {t(translations.footer.privacy, locale)}
-          </a>
+          </Link>
           <span className="text-muted-foreground/40">|</span>
           <Link
             to={locale === "ru" ? "/ru/cookie-policy" : "/cookie-policy"}
@@ -58,10 +61,6 @@ const Footer = () => {
           >
             {t(translations.footer.cookiePolicy, locale)}
           </Link>
-          <span className="text-muted-foreground/40">|</span>
-          <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
-            {t(translations.footer.contact, locale)}
-          </a>
           <span className="text-muted-foreground/40">|</span>
           <a
             href={betaHref}
@@ -74,6 +73,10 @@ const Footer = () => {
               β
             </span>
             {t(translations.footer.beta, locale)}
+          </a>
+          <span className="text-muted-foreground/40">|</span>
+          <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
+            {t(translations.footer.contact, locale)}
           </a>
           <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="TikTok">
             <TikTokIcon />
