@@ -18,18 +18,22 @@ const Footer = () => {
 
   return (
     <footer className="border-t border-border py-12">
-      <div className="content-max flex flex-col md:flex-row items-center justify-between gap-6">
-        <span className="text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground">
-          © {new Date().getFullYear()} EVERLEGENDS. {t(translations.footer.rights, locale)}
+      <div className="content-max flex flex-col items-center gap-6">
+        {/* Operator line */}
+        <span className="text-xs font-medium tracking-[0.1em] text-muted-foreground">
+          {t(translations.footer.operator, locale)}
         </span>
 
-        <div className="flex items-center gap-6">
-          <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
-            {t(translations.footer.privacy, locale)}
-          </a>
+        {/* Links + socials */}
+        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
           <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
             {t(translations.footer.terms, locale)}
           </a>
+          <span className="text-muted-foreground/40">|</span>
+          <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
+            {t(translations.footer.privacy, locale)}
+          </a>
+          <span className="text-muted-foreground/40">|</span>
           <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
             {t(translations.footer.contact, locale)}
           </a>
@@ -40,6 +44,11 @@ const Footer = () => {
             <TelegramIcon />
           </a>
         </div>
+
+        {/* Copyright */}
+        <span className="text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground">
+          © {new Date().getFullYear()} EVERLEGENDS. {t(translations.footer.rights, locale)}
+        </span>
       </div>
     </footer>
   );
