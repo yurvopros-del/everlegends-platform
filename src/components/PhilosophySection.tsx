@@ -10,32 +10,6 @@ const PhilosophySection = () => {
 
   return (
     <section className="section-padding relative overflow-hidden" ref={ref}>
-      {/* Dramatic interior wide-angle */}
-      <img
-        src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1200&q=60"
-        alt=""
-        className="absolute inset-0 w-full h-full object-cover grayscale animate-arena-thunder"
-        style={
-          {
-            "--flash-base": "0.10",
-            "--flash-mid": "0.30",
-            "--flash-peak": "0.50",
-          } as React.CSSProperties
-        }
-        aria-hidden="true"
-      />
-
-      {/* Lightning flash overlay (subtler) */}
-      <div
-        className="absolute inset-0 animate-lightning-flash"
-        style={{
-          background:
-            "radial-gradient(ellipse at 50% 50%, rgba(200,220,255,0.8) 0%, rgba(150,180,255,0.2) 40%, transparent 70%)",
-          opacity: 0,
-        }}
-        aria-hidden="true"
-      />
-
       <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/30 to-background/70" />
       <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
 

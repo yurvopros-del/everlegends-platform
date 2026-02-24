@@ -1,74 +1,37 @@
+import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
-const LightningBolt = ({ d, className }: { d: string; className?: string }) => (
-  <svg
-    className={`absolute pointer-events-none animate-lightning-bolt ${className}`}
-    viewBox="0 0 400 800"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-  >
-    <defs>
-      <linearGradient id="boltGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stopColor="hsl(var(--gradient-start))" />
-        <stop offset="100%" stopColor="hsl(var(--gradient-end))" />
-      </linearGradient>
-    </defs>
-    <path
-      d={d}
-      stroke="url(#boltGrad)"
-      strokeWidth="2"
-      strokeLinecap="round"
-      filter="drop-shadow(0 0 6px hsl(var(--gradient-start) / 0.6))"
-    />
-  </svg>
-);
+const heroVideos = [
+  "/videos/hero-1.mp4",
+  "/videos/hero-2.mp4",
+  "/videos/hero-3.mov",
+  "/videos/hero-4.mov",
+  "/videos/hero-5.mov",
+];
 
 const HeroSection = () => {
   const locale = useLanguage();
+  const [currentVideo, setCurrentVideo] = useState(0);
+
+  const handleVideoEnded = useCallback(() => {
+    setCurrentVideo((prev) => (prev + 1) % heroVideos.length);
+  }, []);
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-background">
-        {/* Colosseum background - aerial view */}
-        <img
-          src="https://images.unsplash.com/photo-1604580864964-0462f5d5b1a8?w=1920&q=80"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover grayscale animate-arena-thunder"
-          style={
-            {
-              "--flash-base": "0.12",
-              "--flash-mid": "0.4",
-              "--flash-peak": "0.65",
-            } as React.CSSProperties
-          }
+        {/* Video background */}
+        <video
+          key={currentVideo}
+          className="absolute inset-0 w-full h-full object-cover grayscale opacity-40"
+          src={heroVideos[currentVideo]}
+          autoPlay
+          muted
+          playsInline
+          onEnded={handleVideoEnded}
           aria-hidden="true"
-        />
-
-        {/* Lightning flash overlay */}
-        <div
-          className="absolute inset-0 animate-lightning-flash"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 40%, rgba(200,220,255,1) 0%, rgba(150,180,255,0.3) 40%, transparent 70%)",
-          }}
-          aria-hidden="true"
-        />
-
-        {/* SVG Lightning bolts */}
-        <LightningBolt
-          d="M 180,0 L 200,90 L 170,95 L 195,190 L 165,195 L 190,310 L 160,315 L 185,420"
-          className="w-[200px] h-[500px] top-0 left-[15%] opacity-0"
-        />
-        <LightningBolt
-          d="M 220,0 L 200,70 L 230,75 L 205,160 L 235,165 L 210,270 L 240,275 L 215,380"
-          className="w-[180px] h-[450px] top-[-20px] right-[20%] opacity-0"
-        />
-        <LightningBolt
-          d="M 200,0 L 190,60 L 215,65 L 195,140 L 220,145 L 200,240"
-          className="w-[150px] h-[300px] top-[10px] left-[55%] opacity-0"
         />
 
         {/* Soft overlays */}
