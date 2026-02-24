@@ -1,66 +1,73 @@
 
 
-# Updates: Prize Pool, Flag Ticker, and Colosseum Fix
+# Colosseum Thunder Effect + Visual Flag Images
 
-## 1. Update Prize Pool Structure
+## 1. Colosseum "Thunder Flash" Effect
 
-Replace the current 3-position grid with a 4-tier layout matching your exact amounts:
+The Colosseum images at 10-14% opacity are being completely buried by the dark overlays. Two fixes:
 
-| Position | Prize | Winners |
-|----------|-------|---------|
-| 1ST PLACE | $2,500 | One winner |
-| TOP 2 | $1,000 | Two winners |
-| TOP 3 | $500 | Three winners |
-| TOP 100 | $20 | Hundred winners |
+### A. Increase Base Visibility
+- **Hero Section**: Boost opacity from `0.14` to `0.25`, soften the overlay gradients (reduce `via-background/30` to `via-background/15`)
+- **Philosophy Section**: Boost opacity from `0.10` to `0.18`, soften overlays from `via-background/60` to `via-background/40`
 
-- Remove the "$1,000,000+" hero headline since it no longer applies
-- Change to a 4-column grid (2x2 on mobile, 4 across on desktop)
-- Each tile shows: prize amount (large gradient text), position label, and number of winners
-- Update both EN and RU translations
+### B. Irregular "Thunder Flash" Animation
+Add a CSS keyframe animation that periodically brightens the Colosseum image at irregular intervals, like distant lightning illuminating an arena:
+
+- Create a `colosseum-flash` keyframe: stays at base opacity most of the time, then briefly spikes to ~40-50% opacity for 0.3-0.5s at irregular points in a long cycle (~15s total)
+- Apply this animation to the Colosseum `<img>` elements in both sections
+- The effect is subtle and atmospheric -- not a strobe, more like distant thunder briefly revealing the arena walls
 
 ### Files Modified
-- `src/lib/translations.ts` -- replace `positions` array with 4 tiers, update `prizePool`/`prizePoolSub` or remove them, update specs
-- `src/components/RewardsSection.tsx` -- adjust grid from 3-col to 4-col (or 2x2 mobile), add "winners" count line per tile
+- `tailwind.config.ts` -- add `colosseum-flash` keyframe and animation
+- `src/components/HeroSection.tsx` -- increase opacity, soften overlays, add flash animation class
+- `src/components/PhilosophySection.tsx` -- increase opacity, soften overlays, add flash animation class
 
 ---
 
-## 2. Enhance Flag Ticker with Country Labels
+## 2. Replace Emoji Flags with Visual Flag Images
 
-Currently the ticker shows only emoji flags at low opacity. Update to show **flag emoji + country code** together, making it more engaging:
+Emoji flags render as plain text glyphs and look flat. Replace them with actual flag images from a free CDN (`flagcdn.com`) which serves high-quality country flag PNGs/SVGs.
 
-Example: `🇺🇸 USA  🇧🇷 BRA  🇬🇧 GBR  🇯🇵 JPN ...`
+### Implementation
+- Update the `FLAGS` array to include 2-letter ISO country codes (e.g., `us`, `br`, `gb`)
+- Render each flag as an `<img>` tag: `https://flagcdn.com/w40/{code}.png` -- small, optimized, visually rich
+- Style each flag image as a rounded rectangle (~28x20px) with a subtle border and slight shadow
+- Keep the country code text label next to each flag image for context
+- Maintain the scrolling animation, edge fades, and overall layout
 
-- Add country codes next to each flag emoji
-- Increase opacity slightly (from 30% to 40-50%) for better visibility
-- Keep the same smooth scrolling animation and edge fades
+### Visual Result
+Instead of: `🇺🇸 USA  🇧🇷 BRA` (flat text)
+Now: `[US flag image] USA  [BR flag image] BRA` (real visual flags with depth)
 
 ### Files Modified
-- `src/components/FlagTicker.tsx` -- change FLAGS array to include country codes, render both flag + code label
+- `src/components/FlagTicker.tsx` -- replace emoji with `<img>` from flagcdn.com, add ISO codes, style flag images
 
 ---
 
-## 3. Fix Colosseum Visibility
+## Technical Details
 
-The Colosseum images ARE in the code (Hero at 8% opacity, Philosophy at 5% opacity), but they may be too faint or the images may not be loading. Fixes:
+### New Keyframe: `colosseum-flash` (in `tailwind.config.ts`)
+A ~15-second animation cycle with irregular brightness spikes:
+- 0% - base opacity
+- 18% - brief spike up
+- 20% - back to base
+- 55% - another brief spike
+- 57% - back to base  
+- 82% - one more spike
+- 84% - back to base
+- 100% - base opacity
 
-- **Hero Section**: Increase Colosseum opacity from `0.08` to `0.12-0.15` so it's actually visible as a subtle texture
-- **Philosophy Section**: Increase from `0.05` to `0.08-0.10`
-- Lighten the overlay gradients slightly so the image isn't completely buried
-- Verify the Unsplash URLs are loading correctly; if not, use alternative reliable URLs
+This creates an organic, non-repeating feel across a 15s loop.
 
-### Files Modified
-- `src/components/HeroSection.tsx` -- increase image opacity, soften overlays
-- `src/components/PhilosophySection.tsx` -- increase image opacity, soften overlays
+### Flag CDN
+Using `flagcdn.com` -- a free, reliable CDN for country flags. No API key needed, loads fast, supports multiple sizes. Each flag is a ~1-2KB PNG.
 
----
-
-## Summary of All File Changes
+### Summary of File Changes
 
 | File | Changes |
 |------|---------|
-| `src/lib/translations.ts` | Replace 3 positions with 4 tiers ($2500/$1000/$500/$20), update prize pool headline, add winner counts in EN+RU |
-| `src/components/RewardsSection.tsx` | 4-tier grid layout with winner counts, remove or update the big prize pool number |
-| `src/components/FlagTicker.tsx` | Add country code labels next to flag emojis, boost opacity |
-| `src/components/HeroSection.tsx` | Increase Colosseum opacity to ~12-15%, soften dark overlays |
-| `src/components/PhilosophySection.tsx` | Increase arena opacity to ~8-10%, soften dark overlays |
+| `tailwind.config.ts` | Add `colosseum-flash` keyframe + animation |
+| `src/components/HeroSection.tsx` | Increase Colosseum opacity to 25%, soften overlays, add thunder flash animation |
+| `src/components/PhilosophySection.tsx` | Increase opacity to 18%, soften overlays, add thunder flash animation |
+| `src/components/FlagTicker.tsx` | Replace emoji flags with real flag images from flagcdn.com CDN |
 
