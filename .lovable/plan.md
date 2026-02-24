@@ -1,49 +1,39 @@
 
 
-# Replace All CTAs with Yandex Beta Access Form
+# Remove TikTok and Telegram Social Icons from Footer
 
-## Overview
-Replace every placeholder CTA with a direct link to the Yandex Forms beta access form. All three review improvements incorporated.
+## Scope
+Minimal, surgical removal in `src/components/Footer.tsx`. No layout, styling, or structural changes.
 
-## Step 1: Create `src/lib/constants.ts`
-```ts
-export const BETA_FORM_URL = "https://forms.yandex.ru/cloud/699df00490fa7bdac2fea0cd/";
-```
-Imported via `@/lib/constants` (already resolved by tsconfig paths).
+## Change 1 -- Remove unused SVG component definitions (lines 15-25)
 
-## Step 2: Update `src/lib/translations.ts`
-- `nav.cta`: "Request Beta Access" / "Запросить доступ"
-- `nav.joinMobile`: "Request Beta Access" / "Запросить доступ"
-- `hero.cta`: "Request Beta Access" / "Запросить доступ"
-- `download.ios`: "Request Beta Access (iOS)" / "Запросить доступ (iOS)"
-- `download.android`: "Request Beta Access (Android)" / "Запросить доступ (Android)"
-- NEW `download.betaNote`: "Closed beta. Selected participants receive early access." / "Закрытая бета. Выбранные участники получают ранний доступ."
+Delete the `TikTokIcon` and `TelegramIcon` component definitions entirely. These are local to this file and not used elsewhere.
 
-## Step 3: Update `src/components/Navigation.tsx`
-- Import `BETA_FORM_URL` from `@/lib/constants`
-- Desktop CTA: replace `href="#download"` with `href={BETA_FORM_URL}`, add `target="_blank"`, `rel="noopener noreferrer"`, `data-cta="beta-access"`
-- Mobile CTA: same changes
+## Change 2 -- Remove icon link elements (lines 81-86)
 
-## Step 4: Update `src/components/HeroSection.tsx`
-- Import `BETA_FORM_URL` from `@/lib/constants`
-- Hero CTA: replace `href="#download"` with `href={BETA_FORM_URL}`, add `target="_blank"`, `rel="noopener noreferrer"`, `data-cta="beta-access"`
+Delete the two `<a>` elements wrapping the icons:
 
-## Step 5: Update `src/components/DownloadSection.tsx`
-- Import `BETA_FORM_URL` from `@/lib/constants`
-- iOS button: replace `href="#"` with `href={BETA_FORM_URL}`, add `target="_blank"`, `rel="noopener noreferrer"`, `data-cta="beta-access"`
-- Android button: same changes
-- Keep both buttons (two distinct CTAs)
-- Add `betaNote` helper text paragraph below the buttons
-
-## Files
-```
-src/lib/constants.ts              (new)
-src/lib/translations.ts           (modified)
-src/components/Navigation.tsx     (modified)
-src/components/HeroSection.tsx    (modified)
-src/components/DownloadSection.tsx (modified)
+```tsx
+// DELETE these 6 lines:
+<a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="TikTok">
+  <TikTokIcon />
+</a>
+<a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Telegram">
+  <TelegramIcon />
+</a>
 ```
 
-## Not changed
-Layout, animations, styling, footer, banner, social icons, two-button download layout.
+The parent `<div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">` container remains intact with the navigation links inside it.
 
+## What is NOT changed
+- Footer layout containers, spacing, styling
+- Navigation links (Terms, Privacy, Cookie, Beta, Contact)
+- Copyright block
+- Separator characters
+- All imports from external packages
+- Component name and export
+
+## File
+```
+src/components/Footer.tsx   (modified)
+```
