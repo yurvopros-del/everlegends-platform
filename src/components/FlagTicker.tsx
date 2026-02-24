@@ -1,17 +1,17 @@
 const FLAGS = [
-  { flag: "🇺🇸", code: "USA" }, { flag: "🇧🇷", code: "BRA" }, { flag: "🇬🇧", code: "GBR" }, { flag: "🇯🇵", code: "JPN" },
-  { flag: "🇳🇬", code: "NGA" }, { flag: "🇮🇳", code: "IND" }, { flag: "🇩🇪", code: "GER" }, { flag: "🇰🇷", code: "KOR" },
-  { flag: "🇲🇽", code: "MEX" }, { flag: "🇦🇺", code: "AUS" }, { flag: "🇰🇪", code: "KEN" }, { flag: "🇫🇷", code: "FRA" },
-  { flag: "🇷🇺", code: "RUS" }, { flag: "🇨🇳", code: "CHN" }, { flag: "🇸🇦", code: "KSA" }, { flag: "🇿🇦", code: "RSA" },
-  { flag: "🇦🇷", code: "ARG" }, { flag: "🇨🇦", code: "CAN" }, { flag: "🇮🇹", code: "ITA" }, { flag: "🇪🇸", code: "ESP" },
-  { flag: "🇵🇱", code: "POL" }, { flag: "🇹🇷", code: "TUR" }, { flag: "🇸🇪", code: "SWE" }, { flag: "🇳🇴", code: "NOR" },
-  { flag: "🇳🇱", code: "NED" }, { flag: "🇵🇹", code: "POR" }, { flag: "🇨🇴", code: "COL" }, { flag: "🇪🇬", code: "EGY" },
-  { flag: "🇵🇭", code: "PHI" }, { flag: "🇹🇭", code: "THA" }, { flag: "🇯🇲", code: "JAM" }, { flag: "🇬🇭", code: "GHA" },
-  { flag: "🇨🇭", code: "SUI" }, { flag: "🇦🇹", code: "AUT" }, { flag: "🇭🇷", code: "CRO" }, { flag: "🇷🇸", code: "SRB" },
-  { flag: "🇺🇦", code: "UKR" }, { flag: "🇨🇿", code: "CZE" }, { flag: "🇷🇴", code: "ROU" }, { flag: "🇭🇺", code: "HUN" },
-  { flag: "🇮🇱", code: "ISR" }, { flag: "🇦🇪", code: "UAE" }, { flag: "🇮🇩", code: "INA" }, { flag: "🇻🇳", code: "VIE" },
-  { flag: "🇨🇱", code: "CHI" }, { flag: "🇵🇪", code: "PER" }, { flag: "🇲🇦", code: "MAR" }, { flag: "🇩🇰", code: "DEN" },
-  { flag: "🇫🇮", code: "FIN" }, { flag: "🇮🇪", code: "IRL" },
+  { iso: "us", code: "USA" }, { iso: "br", code: "BRA" }, { iso: "gb", code: "GBR" }, { iso: "jp", code: "JPN" },
+  { iso: "ng", code: "NGA" }, { iso: "in", code: "IND" }, { iso: "de", code: "GER" }, { iso: "kr", code: "KOR" },
+  { iso: "mx", code: "MEX" }, { iso: "au", code: "AUS" }, { iso: "ke", code: "KEN" }, { iso: "fr", code: "FRA" },
+  { iso: "ru", code: "RUS" }, { iso: "cn", code: "CHN" }, { iso: "sa", code: "KSA" }, { iso: "za", code: "RSA" },
+  { iso: "ar", code: "ARG" }, { iso: "ca", code: "CAN" }, { iso: "it", code: "ITA" }, { iso: "es", code: "ESP" },
+  { iso: "pl", code: "POL" }, { iso: "tr", code: "TUR" }, { iso: "se", code: "SWE" }, { iso: "no", code: "NOR" },
+  { iso: "nl", code: "NED" }, { iso: "pt", code: "POR" }, { iso: "co", code: "COL" }, { iso: "eg", code: "EGY" },
+  { iso: "ph", code: "PHI" }, { iso: "th", code: "THA" }, { iso: "jm", code: "JAM" }, { iso: "gh", code: "GHA" },
+  { iso: "ch", code: "SUI" }, { iso: "at", code: "AUT" }, { iso: "hr", code: "CRO" }, { iso: "rs", code: "SRB" },
+  { iso: "ua", code: "UKR" }, { iso: "cz", code: "CZE" }, { iso: "ro", code: "ROU" }, { iso: "hu", code: "HUN" },
+  { iso: "il", code: "ISR" }, { iso: "ae", code: "UAE" }, { iso: "id", code: "INA" }, { iso: "vn", code: "VIE" },
+  { iso: "cl", code: "CHI" }, { iso: "pe", code: "PER" }, { iso: "ma", code: "MAR" }, { iso: "dk", code: "DEN" },
+  { iso: "fi", code: "FIN" }, { iso: "ie", code: "IRL" },
 ];
 
 interface FlagTickerProps {
@@ -36,11 +36,17 @@ const FlagTicker = ({ direction = "left" }: FlagTickerProps) => {
         {[...FLAGS, ...FLAGS].map((item, i) => (
           <span
             key={i}
-            className="inline-flex items-center gap-1.5 mx-4 text-sm opacity-45 select-none"
+            className="inline-flex items-center gap-2 mx-5 select-none"
             aria-hidden="true"
           >
-            <span className="text-base">{item.flag}</span>
-            <span className="text-[10px] font-semibold tracking-[0.15em] text-muted-foreground">{item.code}</span>
+            <img
+              src={`https://flagcdn.com/w40/${item.iso}.png`}
+              srcSet={`https://flagcdn.com/w80/${item.iso}.png 2x`}
+              alt={item.code}
+              className="w-7 h-5 object-cover rounded-sm shadow-sm border border-white/10"
+              loading="lazy"
+            />
+            <span className="text-[10px] font-semibold tracking-[0.15em] text-muted-foreground opacity-70">{item.code}</span>
           </span>
         ))}
       </div>
