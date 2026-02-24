@@ -4,7 +4,7 @@ export const translations = {
   nav: {
     system: { en: "The System", ru: "Система" },
     rewards: { en: "Rewards", ru: "Награды" },
-    cta: { en: "Request Beta Access", ru: "ЗАПРОСИТЬ B ДОСТУП" },
+    cta: { en: "Request Beta Access", ru: "ЗАПРОСИТЬ Beta ДОСТУП" },
     joinMobile: { en: "Request Beta Access", ru: "Запросить доступ" },
   },
   hero: {
