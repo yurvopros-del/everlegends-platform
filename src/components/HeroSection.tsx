@@ -8,7 +8,15 @@ const HeroSection = () => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-background">
+        {/* Colosseum background */}
+        <img
+          src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=1920&q=80"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover grayscale opacity-[0.08]"
+          aria-hidden="true"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/50 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-background" />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
