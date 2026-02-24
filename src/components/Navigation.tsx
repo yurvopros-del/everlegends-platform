@@ -4,6 +4,7 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 import { useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.png";
+import { BETA_FORM_URL } from "@/lib/constants";
 
 const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -48,7 +49,10 @@ const Navigation = () => {
             {locale === "en" ? "RU" : "EN"}
           </button>
           <a
-            href="#download"
+            href={BETA_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta="beta-access"
             className="gradient-btn text-sm font-semibold tracking-[0.08em] uppercase px-6 py-2.5 rounded text-foreground transition-opacity hover:opacity-90"
           >
             {t(translations.nav.cta, locale)}
@@ -63,7 +67,10 @@ const Navigation = () => {
             {locale === "en" ? "RU" : "EN"}
           </button>
           <a
-            href="#download"
+            href={BETA_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta="beta-access"
             className="gradient-btn text-xs font-semibold tracking-[0.08em] uppercase px-4 py-2 rounded text-foreground"
           >
             {t(translations.nav.joinMobile, locale)}

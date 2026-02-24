@@ -4,8 +4,8 @@ export const translations = {
   nav: {
     system: { en: "The System", ru: "Система" },
     rewards: { en: "Rewards", ru: "Награды" },
-    cta: { en: "Enter the Arena", ru: "На Арену" },
-    joinMobile: { en: "Enter the Arena", ru: "На Арену" },
+    cta: { en: "Request Beta Access", ru: "Запросить доступ" },
+    joinMobile: { en: "Request Beta Access", ru: "Запросить доступ" },
   },
   hero: {
     headline1: { en: "WHERE MERIT IS", ru: "ГДЕ МАСТЕРСТВО —" },
@@ -14,7 +14,7 @@ export const translations = {
       en: "Athletic talent verified, ranked, and rewarded. No connections. No politics. Just performance.",
       ru: "Спортивный талант верифицирован, оценён и вознаграждён. Без связей. Без политики. Только результат.",
     },
-    cta: { en: "Enter the Platform", ru: "Перейти на Арену" },
+    cta: { en: "Request Beta Access", ru: "Запросить доступ" },
   },
   philosophy: {
     headline1: { en: "MASTERY. WORK. RESULTS.", ru: "МАСТЕРСТВО. ТРУД. РЕЗУЛЬТАТ." },
@@ -104,8 +104,9 @@ export const translations = {
       en: "Showcase your performance on the global stage.",
       ru: "Стань частью поколения победителей. Докажи силу на мировой арене.",
     },
-    ios: { en: "Download for iOS", ru: "Скачать для iOS" },
-    android: { en: "Download for Android", ru: "Скачать для Android" },
+    ios: { en: "Request Beta Access (iOS)", ru: "Запросить доступ (iOS)" },
+    android: { en: "Request Beta Access (Android)", ru: "Запросить доступ (Android)" },
+    betaNote: { en: "Closed beta. Selected participants receive early access.", ru: "Закрытая бета. Выбранные участники получают ранний доступ." },
   },
   footer: {
     rights: { en: "All rights reserved.", ru: "Все права защищены." },
