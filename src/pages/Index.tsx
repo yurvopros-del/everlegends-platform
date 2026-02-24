@@ -15,6 +15,7 @@ const Index = () => {
       <FlagTicker direction="left" />
       <PhilosophySection />
       <SystemSection />
+      <FlagTicker direction="right" />
       <RewardsSection />
       <DownloadSection />
       <Footer />
