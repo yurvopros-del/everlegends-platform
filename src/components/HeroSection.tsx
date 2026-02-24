@@ -55,14 +55,36 @@ const SLIDES = [
   },
 ];
 
+const imageTransition = {
+  duration: 0.9,
+  ease: [0.25, 0.1, 0.25, 1] as const,
+};
+
 const HeroSection = () => {
   const locale = useLanguage();
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [sweepKey, setSweepKey] = useState(0);
 
+  // Auto-advance slides
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
     }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Preload next slide image
+  useEffect(() => {
+    const nextIndex = (currentSlide + 1) % SLIDES.length;
+    const img = new window.Image();
+    img.src = SLIDES[nextIndex].image;
+  }, [currentSlide]);
+
+  // Periodic light sweep
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSweepKey((prev) => prev + 1);
+    }, 10000);
     return () => clearInterval(timer);
   }, []);
 
@@ -74,64 +96,81 @@ const HeroSection = () => {
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background images */}
-      <div className="absolute inset-0 bg-background">
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={currentSlide}
+      {/* Branded gradient placeholder — never black */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[hsl(240,6%,6%)] via-[hsl(217,20%,12%)] to-[hsl(260,15%,10%)]" />
+
+      {/* Cross-depth image transitions */}
+      <AnimatePresence>
+        <motion.div
+          key={currentSlide}
+          className="absolute inset-0"
+          initial={{ opacity: 0.3, scale: 1.05, filter: "blur(12px) brightness(0.45)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px) brightness(0.45)" }}
+          exit={{ opacity: 0, scale: 0.97, filter: "blur(4px) brightness(0.45)" }}
+          transition={imageTransition}
+        >
+          <img
             src={slide.image}
             alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ filter: "brightness(0.45)" }}
-            initial={{ opacity: 0, scale: 1.08 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              opacity: { duration: 0.8 },
-              scale: { duration: 6, ease: "easeOut" },
-            }}
+            className="absolute inset-0 w-full h-full object-cover animate-[hero-breathe_15s_ease-in-out_infinite_0.9s]"
             aria-hidden="true"
           />
-        </AnimatePresence>
+        </motion.div>
+      </AnimatePresence>
 
-        {/* Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/30 to-background" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50" />
-      </div>
+      {/* Gradient overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/30 to-background z-[1]" />
+      <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 z-[1]" />
 
-      {/* Content */}
+      {/* Subtle light sweep */}
+      <motion.div
+        key={`sweep-${sweepKey}`}
+        className="absolute inset-0 z-[2] pointer-events-none"
+        initial={{ x: "-100%" }}
+        animate={{ x: "100%" }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+        style={{
+          background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%)",
+        }}
+      />
+
+      {/* Content with staggered entrance */}
       <div className="relative z-10 content-max text-center">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.3 }}
           >
-            <h1 className="heading-xl text-foreground mb-4">
+            <motion.h1
+              className="heading-xl text-foreground mb-4"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.12 }}
+            >
               <span className="gradient-text">{slide.headline[locale]}</span>
-            </h1>
+            </motion.h1>
             <motion.p
               className="body-text max-w-lg mx-auto mb-12 text-muted-foreground"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              transition={{ duration: 0.45, delay: 0.37 }}
             >
               {slide.tagline[locale]}
             </motion.p>
+            <motion.a
+              href="#download"
+              className="inline-block gradient-btn text-sm md:text-base font-semibold tracking-[0.1em] uppercase px-10 py-4 rounded text-foreground transition-opacity hover:opacity-90"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.52 }}
+            >
+              {t(translations.hero.cta, locale)}
+            </motion.a>
           </motion.div>
         </AnimatePresence>
-
-        <motion.a
-          href="#download"
-          className="inline-block gradient-btn text-sm md:text-base font-semibold tracking-[0.1em] uppercase px-10 py-4 rounded text-foreground transition-opacity hover:opacity-90"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-        >
-          {t(translations.hero.cta, locale)}
-        </motion.a>
       </div>
 
       {/* Dot indicators */}
