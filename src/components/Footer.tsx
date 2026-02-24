@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
@@ -50,6 +51,13 @@ const Footer = () => {
           <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
             {t(translations.footer.privacy, locale)}
           </a>
+          <span className="text-muted-foreground/40">|</span>
+          <Link
+            to={locale === "ru" ? "/ru/cookie-policy" : "/cookie-policy"}
+            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+          >
+            {t(translations.footer.cookiePolicy, locale)}
+          </Link>
           <span className="text-muted-foreground/40">|</span>
           <a href="#" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
             {t(translations.footer.contact, locale)}

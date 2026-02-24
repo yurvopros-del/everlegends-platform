@@ -114,6 +114,21 @@ export const translations = {
     terms: { en: "User Agreement", ru: "Пользовательское соглашение" },
     contact: { en: "Contact", ru: "Контакты" },
     beta: { en: "Beta Testing", ru: "Бета-тестирование" },
+    cookiePolicy: { en: "Cookie Policy", ru: "Политика Cookie" },
+  },
+  cookieBanner: {
+    text: {
+      en: "This website uses cookies to ensure platform functionality and analytics. By continuing to use EverLegends, you consent to cookie use.",
+      ru: "Этот сайт использует файлы cookie для обеспечения работы платформы и аналитики. Продолжая использовать EverLegends, вы соглашаетесь на использование cookie.",
+    },
+    learnMore: { en: "Learn more", ru: "Подробнее" },
+    ok: { en: "OK", ru: "OK" },
+  },
+  cookiePage: {
+    title: { en: "Cookie Policy", ru: "Политика Cookie" },
+    enVersion: { en: "English version", ru: "English version" },
+    ruVersion: { en: "Русская версия", ru: "Русская версия" },
+    download: { en: "Download PDF", ru: "Скачать PDF" },
   },
 } as const;
 
