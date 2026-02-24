@@ -7,6 +7,7 @@ const PhilosophySection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const locale = useLanguage();
+  const h2 = t(translations.philosophy.headline2, locale)?.trim();
 
   return (
     <section className="section-padding relative overflow-hidden" ref={ref}>
@@ -21,8 +22,12 @@ const PhilosophySection = () => {
           transition={{ duration: 0.8 }}
         >
           {t(translations.philosophy.headline1, locale)}
-          <br />
-          <span className="gradient-text">{t(translations.philosophy.headline2, locale)}</span>
+          {h2 && (
+            <>
+              <br />
+              <span className="gradient-text">{h2}</span>
+            </>
+          )}
         </motion.h2>
 
         <motion.p

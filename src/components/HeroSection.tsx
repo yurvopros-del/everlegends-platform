@@ -15,8 +15,8 @@ import slide8 from "@/assets/hero/iStock-966297686.jpg";
 const SLIDES = [
   {
     image: slide1,
-    headline: { en: "RISE ABOVE THE NOISE", ru: "ПОДНИМИСЬ НАД ШУМОМ" },
-    tagline: { en: "Your talent deserves a global stage.", ru: "Твой талант заслуживает мировой сцены." },
+    headline: { en: "ONLY THE STRONGEST STAND OUT", ru: "ВЫХОДЯТ СИЛЬНЕЙШИЕ" },
+    tagline: { en: "Your results deserve recognition.", ru: "Результат должен быть признан." },
   },
   {
     image: slide2,
@@ -31,27 +31,27 @@ const SLIDES = [
   {
     image: slide4,
     headline: { en: "STRONGER TOGETHER", ru: "СИЛЬНЕЕ ВМЕСТЕ" },
-    tagline: { en: "A global community united by merit.", ru: "Глобальное сообщество, объединённое заслугами." },
+    tagline: { en: "A global community united by results.", ru: "Сильнейшие объединяются результатом." },
   },
   {
     image: slide5,
-    headline: { en: "OUTWORK EVERYONE", ru: "ПРЕВЗОЙДИ КАЖДОГО" },
-    tagline: { en: "Where effort is the only currency.", ru: "Где усилие — единственная валюта." },
+    headline: { en: "PROVE YOUR LEVEL", ru: "ДОКАЖИ УРОВЕНЬ" },
+    tagline: { en: "Only verified results are counted.", ru: "Здесь учитывается только результат." },
   },
   {
     image: slide6,
     headline: { en: "LEGACY STARTS NOW", ru: "НАСЛЕДИЕ НАЧИНАЕТСЯ СЕЙЧАС" },
-    tagline: { en: "Inspire the next generation of champions.", ru: "Вдохновляй следующее поколение чемпионов." },
+    tagline: { en: "Your results shape the future of the ranking.", ru: "Твой результат формирует будущее рейтинга." },
   },
   {
     image: slide7,
-    headline: { en: "EARN YOUR RANK", ru: "ЗАСЛУЖИ СВОЙ РАНГ" },
-    tagline: { en: "Verified. Ranked. Rewarded.", ru: "Верифицирован. Оценён. Вознаграждён." },
+    headline: { en: "TAKE YOUR PLACE IN THE RANKING", ru: "ЗАЙМИ СВОЁ МЕСТО В РЕЙТИНГЕ" },
+    tagline: { en: "Verified. Recorded. Ranked.", ru: "Проверено. Оценено. Зафиксировано." },
   },
   {
     image: slide8,
     headline: { en: "THE ARENA AWAITS", ru: "АРЕНА ЖДЁТ" },
-    tagline: { en: "Join thousands proving their worth worldwide.", ru: "Присоединяйся к тысячам, доказывающим свою ценность." },
+    tagline: { en: "Thousands already record results worldwide.", ru: "Тысячи уже фиксируют результаты по всему миру." },
   },
 ];
 
@@ -184,7 +184,7 @@ const HeroSection = () => {
                 ? "gradient-btn w-6"
                 : "bg-foreground/30 hover:bg-foreground/50"
             }`}
-            aria-label={`Slide ${i + 1}`}
+            aria-label={`${locale === "ru" ? "Слайд" : "Slide"} ${i + 1}`}
           />
         ))}
       </div>
