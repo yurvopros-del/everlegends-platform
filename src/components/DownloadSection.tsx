@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
+import { BETA_FORM_URL } from "@/lib/constants";
 
 const DownloadSection = () => {
   const ref = useRef(null);
@@ -38,18 +39,33 @@ const DownloadSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
         >
           <a
-            href="#"
+            href={BETA_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta="beta-access"
             className="gradient-btn text-sm font-semibold tracking-[0.1em] uppercase px-10 py-4 rounded text-foreground transition-opacity hover:opacity-90"
           >
             {t(translations.download.ios, locale)}
           </a>
           <a
-            href="#"
+            href={BETA_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cta="beta-access"
             className="border border-border text-sm font-semibold tracking-[0.1em] uppercase px-10 py-4 rounded text-foreground transition-colors hover:bg-secondary"
           >
             {t(translations.download.android, locale)}
           </a>
         </motion.div>
+
+        <motion.p
+          className="body-text text-muted-foreground text-sm mt-6"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.6 }}
+        >
+          {t(translations.download.betaNote, locale)}
+        </motion.p>
       </div>
     </section>
   );

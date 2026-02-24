@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
+import { BETA_FORM_URL } from "@/lib/constants";
 import slide1 from "@/assets/hero/iStock-599713470.jpg";
 import slide2 from "@/assets/hero/iStock-601369426.jpg";
 import slide3 from "@/assets/hero/iStock-618624716.jpg";
@@ -161,7 +162,10 @@ const HeroSection = () => {
               {slide.tagline[locale]}
             </motion.p>
             <motion.a
-              href="#download"
+              href={BETA_FORM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cta="beta-access"
               className="inline-block gradient-btn text-sm md:text-base font-semibold tracking-[0.1em] uppercase px-10 py-4 rounded text-foreground transition-opacity hover:opacity-90"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
