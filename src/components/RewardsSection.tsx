@@ -14,7 +14,7 @@ const RewardsSection = () => {
       <div className="content-max">
         {/* Label */}
         <motion.p
-          className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-4 text-center"
+          className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-12 text-center"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6 }}
@@ -22,51 +22,37 @@ const RewardsSection = () => {
           {t(translations.rewards.label, locale)}
         </motion.p>
 
-        {/* Prize Pool Hero */}
+        {/* Flag ticker */}
         <motion.div
-          className="text-center mb-4"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={isInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.1 }}
-        >
-          <h2 className="text-6xl md:text-8xl lg:text-9xl font-black gradient-text leading-none tracking-tight">
-            {t(translations.rewards.prizePool, locale)}
-          </h2>
-          <p className="text-xs md:text-sm font-medium tracking-[0.3em] uppercase text-muted-foreground mt-4">
-            {t(translations.rewards.prizePoolSub, locale)}
-          </p>
-        </motion.div>
-
-        {/* Flag ticker between headline and positions */}
-        <motion.div
-          className="my-10"
+          className="mb-12"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <FlagTicker direction="right" />
         </motion.div>
 
-        {/* Top 3 Positions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 mb-16">
+        {/* 4-tier Prize Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 mb-16">
           {translations.rewards.positions.map((pos, i) => (
             <motion.div
-              key={pos.position}
+              key={i}
               className={`text-center py-10 md:py-12 ${
-                i < 2 ? "border-b md:border-b-0 md:border-r border-border" : ""
-              }`}
+                i < 3 ? "border-b md:border-b-0 md:border-r border-border" : ""
+              } ${i < 2 ? "border-r border-border md:border-r" : ""}`}
+              style={{ borderRight: i === 1 || i === 3 ? 'none' : undefined }}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.3 + i * 0.15 }}
+              transition={{ duration: 0.7, delay: 0.3 + i * 0.12 }}
             >
-              <span className="text-xs font-medium tracking-[0.3em] text-muted-foreground block mb-3">
-                {pos.position}
-              </span>
-              <span className="text-3xl md:text-4xl lg:text-5xl font-black gradient-text block mb-3">
+              <span className="text-3xl md:text-4xl lg:text-5xl font-black gradient-text block mb-2">
                 {pos.prize}
               </span>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-foreground/70">
-                {t(pos.label, locale)}
+              <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-muted-foreground block mb-1">
+                {t(pos.winners, locale)}
+              </span>
+              <span className="text-xs font-medium tracking-[0.3em] text-foreground/70 block">
+                {t(pos.position, locale)}
               </span>
             </motion.div>
           ))}

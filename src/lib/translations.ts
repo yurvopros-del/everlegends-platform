@@ -58,34 +58,29 @@ export const translations = {
   rewards: {
     label: { en: "The Prize Pool", ru: "Призовой Фонд" },
     title: { en: "THE REWARD SYSTEM", ru: "СИСТЕМА НАГРАД" },
-    prizePool: { en: "$1,000,000+", ru: "$1,000,000+" },
-    prizePoolSub: { en: "TOTAL SEASONAL PRIZE POOL", ru: "ОБЩИЙ СЕЗОННЫЙ ПРИЗОВОЙ ФОНД" },
     positions: [
       {
-        position: "1ST",
-        prize: "$250,000",
-        label: { en: "CHAMPION", ru: "ЧЕМПИОН" },
+        position: { en: "1ST PLACE", ru: "1-Е МЕСТО" },
+        prize: "$2,500",
+        winners: { en: "One winner", ru: "Один победитель" },
       },
       {
-        position: "2ND",
-        prize: "$100,000",
-        label: { en: "ELITE", ru: "ЭЛИТА" },
+        position: { en: "TOP 2", ru: "ТОП-2" },
+        prize: "$1,000",
+        winners: { en: "Two winners", ru: "Два победителя" },
       },
       {
-        position: "3RD",
-        prize: "$50,000",
-        label: { en: "CONTENDER", ru: "ПРЕТЕНДЕНТ" },
+        position: { en: "TOP 3", ru: "ТОП-3" },
+        prize: "$500",
+        winners: { en: "Three winners", ru: "Три победителя" },
+      },
+      {
+        position: { en: "TOP 100", ru: "ТОП-100" },
+        prize: "$20",
+        winners: { en: "Hundred winners", ru: "Сто победителей" },
       },
     ],
     specs: [
-      {
-        label: { en: "Weekly Challenges", ru: "Еженедельные Испытания" },
-        value: { en: "Up to $10,000 in weekly competition prizes", ru: "До $10,000 призов в еженедельных соревнованиях" },
-      },
-      {
-        label: { en: "Leaderboard Bonuses", ru: "Бонусы Рейтинга" },
-        value: { en: "Monthly rewards for top-ranked athletes", ru: "Ежемесячные награды для лучших атлетов" },
-      },
       {
         label: { en: "Eligibility", ru: "Участие" },
         value: { en: "Open to all athletes worldwide", ru: "Открыто для всех атлетов мира" },
