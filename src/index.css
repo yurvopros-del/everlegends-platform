@@ -67,6 +67,12 @@
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', sans-serif;
   }
+
+  :lang(ru) {
+    word-break: keep-all;
+    overflow-wrap: normal;
+    hyphens: none;
+  }
 }
 
 @layer utilities {
