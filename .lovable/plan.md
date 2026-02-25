@@ -1,39 +1,60 @@
 
 
-# Remove TikTok and Telegram Social Icons from Footer
+# Global Russian Typography Safeguard
 
-## Scope
-Minimal, surgical removal in `src/components/Footer.tsx`. No layout, styling, or structural changes.
+## Problem
+Russian words break mid-character (e.g., "ТЕХНОЛОГИЧЕСКА / Я"), which is unacceptable for Cyrillic typography.
 
-## Change 1 -- Remove unused SVG component definitions (lines 15-25)
+## Solution
+Add a CSS rule in `src/index.css` using the `:lang(ru)` selector, and set `lang="ru"` on the page wrapper when the Russian locale is active.
 
-Delete the `TikTokIcon` and `TelegramIcon` component definitions entirely. These are local to this file and not used elsewhere.
+## Changes
 
-## Change 2 -- Remove icon link elements (lines 81-86)
+### 1. `src/index.css` -- Add Cyrillic typography rule
 
-Delete the two `<a>` elements wrapping the icons:
+Add to the `@layer base` block:
+
+```css
+:lang(ru) {
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+```
+
+This prevents mid-word breaking for all elements under a `lang="ru"` container, while leaving English completely unaffected.
+
+### 2. `src/pages/Index.tsx` -- Set `lang` attribute on page root
+
+Use the `useLanguage()` hook to conditionally set `lang="ru"` on the `<main>` element:
 
 ```tsx
-// DELETE these 6 lines:
-<a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="TikTok">
-  <TikTokIcon />
-</a>
-<a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Telegram">
-  <TelegramIcon />
-</a>
+const locale = useLanguage();
+return (
+  <main className="bg-background min-h-screen" lang={locale}>
+    ...
+  </main>
+);
 ```
 
-The parent `<div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">` container remains intact with the navigation links inside it.
+### 3. `src/pages/CookiePolicy.tsx` and `src/pages/PrivacyPolicy.tsx`
+
+Apply the same `lang={locale}` pattern to their root elements for consistency.
+
+### 4. `src/components/SystemSection.tsx` -- Remove now-redundant fix
+
+Remove the `break-words overflow-visible` classes from the heading that were added as a local fix, since the global rule now handles this properly.
+
+## Files Modified
+```
+src/index.css              (add :lang(ru) rule)
+src/pages/Index.tsx        (add lang={locale} to <main>)
+src/pages/CookiePolicy.tsx (add lang={locale})
+src/pages/PrivacyPolicy.tsx(add lang={locale})
+src/components/SystemSection.tsx (remove redundant classes)
+```
 
 ## What is NOT changed
-- Footer layout containers, spacing, styling
-- Navigation links (Terms, Privacy, Cookie, Beta, Contact)
-- Copyright block
-- Separator characters
-- All imports from external packages
-- Component name and export
-
-## File
-```
-src/components/Footer.tsx   (modified)
-```
+- Fonts, font sizes, layout spacing
+- English typography behavior
+- Component structure or naming
