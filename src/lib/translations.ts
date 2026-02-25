@@ -16,6 +16,40 @@ export const translations = {
     },
     cta: { en: "Request Beta Access", ru: "Запросить доступ" },
   },
+  heroSlides: [
+    {
+      headline: { en: "ONLY THE STRONGEST STAND OUT", ru: "ВЫХОДЯТ СИЛЬНЕЙШИЕ" },
+      tagline: { en: "Your results deserve recognition.", ru: "Результат должен быть признан." },
+    },
+    {
+      headline: { en: "BUILT THROUGH DISCIPLINE", ru: "ЗАКАЛЁННЫЙ ДИСЦИПЛИНОЙ" },
+      tagline: { en: "No shortcuts. No excuses. Just results.", ru: "Без обходных путей. Без оправданий. Только результат." },
+    },
+    {
+      headline: { en: "GLORY BELONGS TO THE FEARLESS", ru: "СЛАВА ПРИНАДЛЕЖИТ БЕССТРАШНЫМ" },
+      tagline: { en: "Real prizes for real performance.", ru: "Реальные призы за реальные результаты." },
+    },
+    {
+      headline: { en: "STRONGER TOGETHER", ru: "СИЛЬНЕЕ ВМЕСТЕ" },
+      tagline: { en: "A global community united by results.", ru: "Сильнейшие выходят на одну арену." },
+    },
+    {
+      headline: { en: "PROVE YOUR LEVEL", ru: "ДОКАЖИ УРОВЕНЬ" },
+      tagline: { en: "Only verified results are counted.", ru: "Здесь учитывается только результат." },
+    },
+    {
+      headline: { en: "LEGACY STARTS NOW", ru: "ИСТОРИЯ НАЧИНАЕТСЯ С ПОСТУПКОВ!" },
+      tagline: { en: "Your results shape the future of the ranking.", ru: "Твой результат — твоя история. Войди в рейтинг!" },
+    },
+    {
+      headline: { en: "TAKE YOUR PLACE IN THE RANKING", ru: "ЗАЙМИ СВОЁ МЕСТО В РЕЙТИНГЕ" },
+      tagline: { en: "Verified. Recorded. Ranked.", ru: "Проверено. Оценено. Зафиксировано." },
+    },
+    {
+      headline: { en: "THE ARENA AWAITS", ru: "ТВОЙ ВЫХОД НА АРЕНУ!" },
+      tagline: { en: "Thousands already record results worldwide.", ru: "Сильные результаты видят во всём мире." },
+    },
+  ],
   philosophy: {
     headline1: { en: "MASTERY. WORK. RESULTS.", ru: "МАСТЕРСТВО. ТРУД. РЕЗУЛЬТАТ." },
     headline2: { en: "", ru: "" },
@@ -33,7 +67,7 @@ export const translations = {
         title: { en: "SUBMIT RESULTS", ru: "ПРЕДСТАВЬ РЕЗУЛЬТАТ" },
         description: {
           en: "Submit materials for analytical evaluation of a physical performance result.",
-          ru: "Представь материалы для аналитической оценки физического результата.",
+          ru: "Покажи, на что способен! Отправь свой результат на проверку и закрепись в рейтинге.",
         },
       },
       {
@@ -41,7 +75,7 @@ export const translations = {
         title: { en: "TECH VERIFICATION", ru: "ТЕХНОЛОГИЧЕСКАЯ ПРОВЕРКА" },
         description: {
           en: "Results undergo technological verification and are included in the ranking.",
-          ru: "Результаты проходят технологическую верификацию и включаются в рейтинг.",
+          ru: "Каждый результат проходит независимую проверку.",
         },
       },
       {
