@@ -16,14 +16,14 @@ import CookieBanner from "./components/CookieBanner";
 const queryClient = new QueryClient();
 
 export default function App() {
-  // In production this becomes "/everlegends-platform/" because of vite.config.ts base.
+  // In production (GitHub Pages project site) this is "/everlegends-platform/"
   const basename = import.meta.env.BASE_URL;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <LanguageProvider>
-          <BrowserRouter basename={basename}>
+    <BrowserRouter basename={basename}>
+      <LanguageProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
@@ -35,9 +35,9 @@ export default function App() {
 
             <Toaster />
             <Sonner />
-          </BrowserRouter>
-        </LanguageProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </LanguageProvider>
+    </BrowserRouter>
   );
 }
