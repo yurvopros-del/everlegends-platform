@@ -58,7 +58,7 @@ const PrivacyPolicy = () => {
         <iframe
           key={viewLang}
           src={PRIVACY_PDF[viewLang]}
-          title="Privacy Policy"
+          title={t(translations.privacyPage.title, locale)}
           className="w-full rounded border border-border"
           style={{ height: "calc(100vh - 260px)", minHeight: "500px" }}
         />

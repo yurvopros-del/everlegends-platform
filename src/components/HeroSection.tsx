@@ -148,7 +148,7 @@ const HeroSection = () => {
                 ? "gradient-btn w-6"
                 : "bg-foreground/30 hover:bg-foreground/50"
             }`}
-            aria-label={`${locale === "ru" ? "Слайд" : "Slide"} ${i + 1}`}
+            aria-label={`${t(translations.hero.slideLabel, locale)} ${i + 1}`}
           />
         ))}
       </div>
