@@ -58,7 +58,7 @@ const CookiePolicy = () => {
         <iframe
           key={viewLang}
           src={COOKIE_PDF[viewLang]}
-          title="Cookie Policy"
+          title={t(translations.cookiePage.title, locale)}
           className="w-full rounded border border-border"
           style={{ height: "calc(100vh - 260px)", minHeight: "500px" }}
         />

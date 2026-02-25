@@ -15,6 +15,7 @@ export const translations = {
       ru: "Спортивный талант верифицирован, оценён и вознаграждён. Без связей. Без политики. Только результат.",
     },
     cta: { en: "Request Beta Access", ru: "Запросить доступ" },
+    slideLabel: { en: "Slide", ru: "Слайд" },
   },
   heroSlides: [
     {
@@ -181,6 +182,10 @@ export const translations = {
     cookieLink: { en: "Cookie Policy", ru: "Политикой Cookie" },
     accept: { en: "Accept", ru: "Принять" },
     decline: { en: "Decline", ru: "Отклонить" },
+  },
+  notFound: {
+    message: { en: "Oops! Page not found", ru: "Страница не найдена" },
+    backHome: { en: "Return to Home", ru: "Вернуться на главную" },
   },
 } as const;
 
