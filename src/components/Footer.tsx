@@ -2,18 +2,19 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
+// IMPORTANT: GitHub Pages project site needs the repo subpath prefix.
+// Vite exposes it as import.meta.env.BASE_URL ("/everlegends-platform/" in production).
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, ""); // "/everlegends-platform"
+
 const USER_AGREEMENT_PATH = Object.freeze({
-  en: "/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf",
-  ru: "/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT_RU.pdf",
+  en: `${BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf`,
+  ru: `${BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT_RU.pdf`,
 } as const);
 
 const BETA_TESTING_PATH = Object.freeze({
-  en: "/docs/EVERLEGENDS_BETA_TESTING_RULES.pdf",
-  ru: "/docs/EVERLEGENDS_BETA_TESTING_RULES_RU.pdf",
+  en: `${BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES.pdf`,
+  ru: `${BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES_RU.pdf`,
 } as const);
-
-
-
 
 const Footer = () => {
   const locale = useLanguage();
@@ -30,7 +31,7 @@ const Footer = () => {
         {/* Links + socials */}
         <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
           <a
-            href={USER_AGREEMENT_PATH[locale]}
+            href={USER_AGREEMENT_PATH[locale] ?? USER_AGREEMENT_PATH.en}
             target="_blank"
             rel="noopener noreferrer"
             type="application/pdf"
@@ -66,7 +67,12 @@ const Footer = () => {
             {t(translations.footer.beta, locale)}
           </a>
           <span className="text-muted-foreground/40">|</span>
-          <a href="https://t.me/DjamalG" target="_blank" rel="noopener noreferrer" className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors">
+          <a
+            href="https://t.me/DjamalG"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+          >
             {t(translations.footer.contact, locale)}
           </a>
         </div>
