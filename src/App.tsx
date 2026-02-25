@@ -16,8 +16,7 @@ import CookieBanner from "./components/CookieBanner";
 const queryClient = new QueryClient();
 
 const App = () => {
-  // Vite sets this to "/everlegends-platform/" in production because of vite.config.ts base.
-  const basename = import.meta.env.BASE_URL;
+  const basename = import.meta.env.BASE_URL; // "/everlegends-platform/" in production
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -28,8 +27,6 @@ const App = () => {
               <Route path="/" element={<Index />} />
               <Route path="/cookie-policy" element={<CookiePolicy />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
 
