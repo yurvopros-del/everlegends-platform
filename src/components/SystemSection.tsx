@@ -43,7 +43,7 @@ const SystemSection = () => {
               <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground mb-4 block">
                 {step.number}
               </span>
-              <h3 className="heading-md gradient-text mb-4">{t(step.title, locale)}</h3>
+              <h3 className="text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-[-0.02em] gradient-text mb-4">{t(step.title, locale)}</h3>
               <p className="body-text text-sm md:text-base">{t(step.description, locale)}</p>
             </motion.div>
           ))}
