@@ -1,12 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>EverLegends</title>
     <script>
-      var path = window.location.pathname;
-      var newPath = "/everlegends-platform/#" + path.replace("/everlegends-platform", "");
-      window.location.replace(newPath);
+      var l = window.location;
+      var base = "/everlegends-platform";
+      if (!l.pathname.startsWith(base)) base = "";
+      l.replace(base + "/?p=" + encodeURIComponent(l.pathname + l.search + l.hash));
     </script>
   </head>
   <body></body>
