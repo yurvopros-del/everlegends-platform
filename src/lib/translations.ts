@@ -19,7 +19,7 @@ export const translations = {
   },
   heroSlides: [
     {
-      headline: { en: "ONLY THE STRONGEST STAND OUT", ru: "ВЫХОДЯТ СИЛЬНЕЙШИЕ" },
+      headline: { en: "ONLY THE STRONGEST STAND OUT", ru: "НА АРЕНУ ВЫХОДЯТ СИЛЬНЕЙШИЕ" },
       tagline: { en: "Your results deserve recognition.", ru: "Результат должен быть признан." },
     },
     {
