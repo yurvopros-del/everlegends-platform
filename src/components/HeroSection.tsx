@@ -13,48 +13,7 @@ import slide6 from "@/assets/hero/iStock-698615450.jpg";
 import slide7 from "@/assets/hero/iStock-918580062.jpg";
 import slide8 from "@/assets/hero/iStock-966297686.jpg";
 
-const SLIDES = [
-  {
-    image: slide1,
-    headline: { en: "ONLY THE STRONGEST STAND OUT", ru: "ВЫХОДЯТ СИЛЬНЕЙШИЕ" },
-    tagline: { en: "Your results deserve recognition.", ru: "Результат должен быть признан." },
-  },
-  {
-    image: slide2,
-    headline: { en: "BUILT THROUGH DISCIPLINE", ru: "ЗАКАЛЁННЫЙ ДИСЦИПЛИНОЙ" },
-    tagline: { en: "No shortcuts. No excuses. Just results.", ru: "Без обходных путей. Без оправданий. Только результат." },
-  },
-  {
-    image: slide3,
-    headline: { en: "GLORY BELONGS TO THE FEARLESS", ru: "СЛАВА ПРИНАДЛЕЖИТ БЕССТРАШНЫМ" },
-    tagline: { en: "Real prizes for real performance.", ru: "Реальные призы за реальные результаты." },
-  },
-  {
-    image: slide4,
-    headline: { en: "STRONGER TOGETHER", ru: "СИЛЬНЕЕ ВМЕСТЕ" },
-    tagline: { en: "A global community united by results.", ru: "Сильнейшие объединяются результатом." },
-  },
-  {
-    image: slide5,
-    headline: { en: "PROVE YOUR LEVEL", ru: "ДОКАЖИ УРОВЕНЬ" },
-    tagline: { en: "Only verified results are counted.", ru: "Здесь учитывается только результат." },
-  },
-  {
-    image: slide6,
-    headline: { en: "LEGACY STARTS NOW", ru: "НАСЛЕДИЕ НАЧИНАЕТСЯ СЕЙЧАС" },
-    tagline: { en: "Your results shape the future of the ranking.", ru: "Твой результат формирует будущее рейтинга." },
-  },
-  {
-    image: slide7,
-    headline: { en: "TAKE YOUR PLACE IN THE RANKING", ru: "ЗАЙМИ СВОЁ МЕСТО В РЕЙТИНГЕ" },
-    tagline: { en: "Verified. Recorded. Ranked.", ru: "Проверено. Оценено. Зафиксировано." },
-  },
-  {
-    image: slide8,
-    headline: { en: "THE ARENA AWAITS", ru: "АРЕНА ЖДЁТ" },
-    tagline: { en: "Thousands already record results worldwide.", ru: "Тысячи уже фиксируют результаты по всему миру." },
-  },
-];
+const SLIDE_IMAGES = [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8];
 
 const imageTransition = {
   duration: 0.9,
@@ -69,16 +28,16 @@ const HeroSection = () => {
   // Auto-advance slides
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % SLIDES.length);
+      setCurrentSlide((prev) => (prev + 1) % SLIDE_IMAGES.length);
     }, 6000);
     return () => clearInterval(timer);
   }, []);
 
   // Preload next slide image
   useEffect(() => {
-    const nextIndex = (currentSlide + 1) % SLIDES.length;
+    const nextIndex = (currentSlide + 1) % SLIDE_IMAGES.length;
     const img = new window.Image();
-    img.src = SLIDES[nextIndex].image;
+    img.src = SLIDE_IMAGES[nextIndex];
   }, [currentSlide]);
 
   // Periodic light sweep
@@ -93,7 +52,8 @@ const HeroSection = () => {
     setCurrentSlide(index);
   }, []);
 
-  const slide = SLIDES[currentSlide];
+  const slideImage = SLIDE_IMAGES[currentSlide];
+  const slideText = translations.heroSlides[currentSlide];
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -111,7 +71,7 @@ const HeroSection = () => {
           transition={imageTransition}
         >
           <img
-            src={slide.image}
+            src={slideImage}
             alt=""
             className="absolute inset-0 w-full h-full object-cover animate-[hero-breathe_15s_ease-in-out_infinite_0.9s]"
             aria-hidden="true"
@@ -151,7 +111,7 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.12 }}
             >
-              <span className="gradient-text">{slide.headline[locale]}</span>
+              <span className="gradient-text">{t(slideText.headline, locale)}</span>
             </motion.h1>
             <motion.p
               className="body-text max-w-lg mx-auto mb-12 text-muted-foreground"
@@ -159,7 +119,7 @@ const HeroSection = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.37 }}
             >
-              {slide.tagline[locale]}
+              {t(slideText.tagline, locale)}
             </motion.p>
             <motion.a
               href={BETA_FORM_URL}
@@ -179,7 +139,7 @@ const HeroSection = () => {
 
       {/* Dot indicators */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        {SLIDES.map((_, i) => (
+        {SLIDE_IMAGES.map((_, i) => (
           <button
             key={i}
             onClick={() => goToSlide(i)}
