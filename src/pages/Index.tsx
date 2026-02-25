@@ -6,10 +6,12 @@ import SystemSection from "@/components/SystemSection";
 import RewardsSection from "@/components/RewardsSection";
 import DownloadSection from "@/components/DownloadSection";
 import Footer from "@/components/Footer";
+import { useLanguage } from "@/hooks/useLanguage";
 
 const Index = () => {
+  const locale = useLanguage();
   return (
-    <main className="bg-background min-h-screen">
+    <main className="bg-background min-h-screen" lang={locale}>
       <Navigation />
       <HeroSection />
       <FlagTicker direction="left" />

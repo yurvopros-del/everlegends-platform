@@ -14,7 +14,7 @@ const CookiePolicy = () => {
   const [viewLang, setViewLang] = useState<"en" | "ru">(locale);
 
   return (
-    <div className="bg-background min-h-screen flex flex-col">
+    <div className="bg-background min-h-screen flex flex-col" lang={locale}>
       <Navigation />
 
       <div className="content-max flex-1 pt-28 pb-16">
