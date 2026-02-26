@@ -2,32 +2,24 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+// Deterministic GitHub Pages project-site prefix for static docs.
+// Avoids edge cases where import.meta.env.BASE_URL becomes "/" in the deployed bundle.
+const GH_BASE = "/everlegends-platform";
 
 const USER_AGREEMENT_PATH = Object.freeze({
-  en: `${BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf`,
-  ru: `${BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT_RU.pdf`,
+  en: `${GH_BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf`,
+  ru: `${GH_BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT_RU.pdf`,
 } as const);
 
 const BETA_TESTING_PATH = Object.freeze({
-  en: `${BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES.pdf`,
-  ru: `${BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES_RU.pdf`,
+  en: `${GH_BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES.pdf`,
+  ru: `${GH_BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES_RU.pdf`,
 } as const);
 
 const Footer = () => {
   const locale = useLanguage();
   const betaHref = BETA_TESTING_PATH[locale] ?? BETA_TESTING_PATH.en;
   const termsHref = USER_AGREEMENT_PATH[locale] ?? USER_AGREEMENT_PATH.en;
-
-  // DEBUG (remove after confirm): shows exactly what URLs the browser will open
-  if (typeof window !== "undefined") {
-    // eslint-disable-next-line no-console
-    console.log("[Footer] BASE_URL =", import.meta.env.BASE_URL);
-    // eslint-disable-next-line no-console
-    console.log("[Footer] termsHref =", termsHref);
-    // eslint-disable-next-line no-console
-    console.log("[Footer] betaHref  =", betaHref);
-  }
 
   return (
     <footer className="border-t border-border py-12">
