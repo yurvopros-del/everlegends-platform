@@ -13,22 +13,6 @@
   url.searchParams.delete("lang");
   window.history.replaceState(null, "", url.pathname + url.search + url.hash);
 })();
-;(() => {
-  try {
-    const el = document.createElement("div");
-    el.id = "EVERLEGENDS_BOOT_OK";
-    el.textContent = "BOOT OK";
-    el.style.position = "fixed";
-    el.style.top = "8px";
-    el.style.left = "8px";
-    el.style.zIndex = "2147483647";
-    el.style.padding = "6px 10px";
-    el.style.background = "rgba(255,255,0,0.9)";
-    el.style.color = "#000";
-    el.style.font = "12px/1.2 Arial, sans-serif";
-    document.body.appendChild(el);
-  } catch {}
-})();
 // --- GH Pages deep-link decoder (?p=...) ---
 // MUST NOT reload the page, otherwise /ru/index.html -> /?p=... -> /ru/index.html loops.
 (() => {
@@ -100,6 +84,7 @@ try {
 } catch (err) {
   showFatal(err);
 }
+
 
 
 
