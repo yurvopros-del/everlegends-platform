@@ -3,13 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EVERLEGENDS — Where Merit Is The Only Currency</title>
+    <title>EverLegends</title>
     <script>
-      try { localStorage.setItem("locale","ru"); } catch (e) {}
+      (function () {
+        var base = "/everlegends-platform";
+        try {
+          localStorage.setItem("locale","ru");
+          localStorage.setItem("lang","ru");
+          localStorage.setItem("i18nextLng","ru");
+        } catch (e) {}
+        // Go to the canonical route that definitely exists.
+        window.location.replace(base + "/");
+      })();
     </script>
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/everlegends-platform/assets/index-P5yMKxF8.js"></script>
-  </body>
+  <body></body>
 </html>
