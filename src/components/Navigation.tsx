@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
@@ -12,29 +12,27 @@ const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const base = useMemo(() => {
-    // "/everlegends-platform/" in prod; "/" in dev
-    return import.meta.env.BASE_URL;
-  }, []);
-
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const goHomeHash = (hash: string) => {
-    const target = `${base}#${hash}`; // base already ends with "/"
-    // If we are already on home, just set hash + scroll
-    if (location.pathname === "/" || location.pathname === "/ru") {
-      window.location.hash = `#${hash}`;
-      const el = document.getElementById(hash);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  const homePath = locale === "ru" ? "/ru" : "/";
+
+  const jumpTo = (id: "system" | "rewards") => {
+    // If we are not on home, first route to home, then set hash (scroll handler will do the rest)
+    if (location.pathname !== "/" && location.pathname !== "/ru") {
+      navigate(homePath);
+      window.setTimeout(() => {
+        window.location.hash = `#${id}`;
+      }, 0);
       return;
     }
-    // Otherwise, do a hard navigation to home with correct base + hash
-    window.location.assign(target);
+
+    // Already on home => set hash directly
+    window.location.hash = `#${id}`;
   };
 
   const switchLang = () => {
@@ -50,26 +48,22 @@ const Navigation = () => {
       }`}
     >
       <div className="content-max h-16 flex items-center justify-between">
-        <button
-          type="button"
-          onClick={() => navigate("/")}
-          className="flex items-center gap-3"
-          aria-label="EverLegends home"
-        >
+        <button type="button" onClick={() => navigate(homePath)} className="flex items-center gap-3" aria-label="EverLegends home">
           <img src={logo} alt="EverLegends" className="h-7 w-auto" />
         </button>
 
         <nav className="hidden md:flex items-center gap-6">
           <button
             type="button"
-            onClick={() => goHomeHash("system")}
+            onClick={() => jumpTo("system")}
             className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
             {t(translations.nav.system, locale)}
           </button>
+
           <button
             type="button"
-            onClick={() => goHomeHash("rewards")}
+            onClick={() => jumpTo("rewards")}
             className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
             {t(translations.nav.rewards, locale)}
