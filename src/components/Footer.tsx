@@ -2,8 +2,6 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
-// IMPORTANT: GitHub Pages project sites require repo subpath prefix for static files.
-// In production this is "/everlegends-platform/" because vite.config.ts base is set.
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const USER_AGREEMENT_PATH = Object.freeze({
@@ -21,15 +19,23 @@ const Footer = () => {
   const betaHref = BETA_TESTING_PATH[locale] ?? BETA_TESTING_PATH.en;
   const termsHref = USER_AGREEMENT_PATH[locale] ?? USER_AGREEMENT_PATH.en;
 
+  // DEBUG (remove after confirm): shows exactly what URLs the browser will open
+  if (typeof window !== "undefined") {
+    // eslint-disable-next-line no-console
+    console.log("[Footer] BASE_URL =", import.meta.env.BASE_URL);
+    // eslint-disable-next-line no-console
+    console.log("[Footer] termsHref =", termsHref);
+    // eslint-disable-next-line no-console
+    console.log("[Footer] betaHref  =", betaHref);
+  }
+
   return (
     <footer className="border-t border-border py-12">
       <div className="content-max flex flex-col items-center gap-6">
-        {/* Operator line */}
         <span className="text-xs font-medium tracking-[0.1em] text-muted-foreground">
           {t(translations.footer.operator, locale)}
         </span>
 
-        {/* Links + socials */}
         <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
           <a
             href={termsHref}
@@ -78,7 +84,6 @@ const Footer = () => {
           </a>
         </div>
 
-        {/* Copyright */}
         <span className="text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground">
           © {new Date().getFullYear()} EVERLEGENDS. {t(translations.footer.rights, locale)}
         </span>
