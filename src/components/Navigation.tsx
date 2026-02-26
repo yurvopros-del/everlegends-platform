@@ -19,15 +19,35 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const homePath = locale === "ru" ? "/ru" : "/";
+  // Always build absolute in-site URLs from Vite BASE_URL (GitHub Pages project subpath safe)
+  const base = import.meta.env.BASE_URL; // e.g. "/everlegends-platform/"
+  const homeHref = locale === "ru" ? `${base}ru/` : base;
+
+  const goHome = () => {
+    // Use hard navigation for RU to avoid SPA /ru route issues entirely.
+    if (locale === "ru") {
+      window.location.assign(`${base}ru/`);
+      return;
+    }
+    // EN can safely SPA-navigate to "/"
+    navigate("/");
+  };
 
   const jumpTo = (id: "system" | "rewards") => {
-    // If we are not on home, first route to home, then set hash (scroll handler will do the rest)
-    if (location.pathname !== "/" && location.pathname !== "/ru") {
-      navigate(homePath);
-      window.setTimeout(() => {
-        window.location.hash = `#${id}`;
-      }, 0);
+    // If we're not on the home route, go home first then apply hash.
+    // For RU we hard-navigate to /ru/ (server fallback does the right thing); for EN we SPA.
+    const isHomeEn = location.pathname === "/";
+    const isHomeRu = location.pathname === "/ru" || location.pathname === "/ru/";
+
+    if (!isHomeEn && !isHomeRu) {
+      if (locale === "ru") {
+        window.location.assign(`${base}ru/#${id}`);
+      } else {
+        navigate("/");
+        window.setTimeout(() => {
+          window.location.hash = `#${id}`;
+        }, 0);
+      }
       return;
     }
 
@@ -36,7 +56,14 @@ const Navigation = () => {
   };
 
   const switchLang = () => {
-    navigate(locale === "en" ? "/ru" : "/");
+    // Deterministic fix:
+    // - Switching to RU must be a HARD navigation to /ru/ so server-side 404 fallback handles it.
+    // - Switching back to EN goes to BASE_URL (root).
+    if (locale === "en") {
+      window.location.assign(`${base}ru/`);
+    } else {
+      window.location.assign(base);
+    }
   };
 
   return (
@@ -48,7 +75,12 @@ const Navigation = () => {
       }`}
     >
       <div className="content-max h-16 flex items-center justify-between">
-        <button type="button" onClick={() => navigate(homePath)} className="flex items-center gap-3" aria-label="EverLegends home">
+        <button
+          type="button"
+          onClick={goHome}
+          className="flex items-center gap-3"
+          aria-label="EverLegends home"
+        >
           <img src={logo} alt="EverLegends" className="h-7 w-auto" />
         </button>
 
