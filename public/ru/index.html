@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EverLegends</title>
+    <meta http-equiv="refresh" content="0; url=/everlegends-platform/" />
     <script>
       (function () {
         var base = "/everlegends-platform";
@@ -12,10 +13,13 @@
           localStorage.setItem("lang","ru");
           localStorage.setItem("i18nextLng","ru");
         } catch (e) {}
-        // Go to the canonical route that definitely exists.
-        window.location.replace(base + "/");
+        // JS redirect as an extra fallback (meta refresh should already do it).
+        try { window.location.replace(base + "/"); } catch (e) {}
       })();
     </script>
   </head>
-  <body></body>
+  <body style="font-family:Arial, sans-serif; padding:16px;">
+    <div>Redirecting… If it does not redirect, click:</div>
+    <div style="margin-top:8px;"><a href="/everlegends-platform/">Open EverLegends</a></div>
+  </body>
 </html>
