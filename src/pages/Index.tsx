@@ -1,14 +1,38 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+﻿import Navigation from "@/components/Navigation";
+import HeroSection from "@/components/HeroSection";
+import FlagTicker from "@/components/FlagTicker";
+import PhilosophySection from "@/components/PhilosophySection";
+import SystemSection from "@/components/SystemSection";
+import RewardsSection from "@/components/RewardsSection";
+import DownloadSection from "@/components/DownloadSection";
+import Footer from "@/components/Footer";
+import { useLanguage } from "@/hooks/useLanguage";
 
-const Index = () => {
+export default function Index() {
+  // keep hook call so locale stays computed (even if not used here)
+  useLanguage();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background text-foreground">
+      <Navigation />
+      <main>
+        <HeroSection />
+        <FlagTicker direction="left" />
+        <PhilosophySection />
+
+        <section id="system">
+          <SystemSection />
+        </section>
+
+        <FlagTicker direction="right" />
+
+        <section id="rewards">
+          <RewardsSection />
+        </section>
+
+        <DownloadSection />
+        <Footer />
+      </main>
     </div>
   );
-};
-
-export default Index;
+}
