@@ -1,18 +1,20 @@
-﻿import Navigation from "@/components/Navigation";
+﻿import { useState } from "react";
+import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
 const GH_BASE = "/everlegends-platform";
 
-const COOKIE_PDF = Object.freeze({
+const COOKIE_PDF = {
   en: `${GH_BASE}/docs/EVERLEGENDS_COOKIE_POLICY.pdf`,
   ru: `${GH_BASE}/docs/EVERLEGENDS_COOKIE_POLICY_RU.pdf`,
-} as const);
+} as const;
 
 export default function CookiePolicy() {
   const locale = useLanguage();
-  const pdfSrc = COOKIE_PDF[locale] ?? COOKIE_PDF.en;
+  const [viewLang, setViewLang] = useState<"en" | "ru">(locale === "ru" ? "ru" : "en");
+  const pdfSrc = COOKIE_PDF[viewLang] ?? COOKIE_PDF.en;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -21,6 +23,41 @@ export default function CookiePolicy() {
         <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
           {t(translations.cookiePage.title, locale)}
         </h1>
+
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setViewLang("en")}
+            className={`text-xs tracking-[0.1em] uppercase px-3 py-1.5 rounded border transition-colors ${
+              viewLang === "en"
+                ? "border-primary text-foreground"
+                : "border-border text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {t(translations.cookiePage.enVersion, locale)}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setViewLang("ru")}
+            className={`text-xs tracking-[0.1em] uppercase px-3 py-1.5 rounded border transition-colors ${
+              viewLang === "ru"
+                ? "border-primary text-foreground"
+                : "border-border text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {t(translations.cookiePage.ruVersion, locale)}
+          </button>
+
+          <a
+            href={pdfSrc}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-auto text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+          >
+            ↓ {t(translations.cookiePage.download, locale)}
+          </a>
+        </div>
 
         <div className="mt-6 w-full overflow-hidden rounded-lg border border-border">
           <iframe
