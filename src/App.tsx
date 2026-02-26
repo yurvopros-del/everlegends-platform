@@ -2,8 +2,8 @@
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { LanguageProvider } from "@/hooks/useLanguage";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { LanguageProvider, useLanguage } from "@/hooks/useLanguage";
 import ScrollToHash from "@/components/ScrollToHash";
 import AppErrorBoundary from "@/components/AppErrorBoundary";
 
@@ -15,6 +15,23 @@ import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
 
+function DebugHUD() {
+  const loc = useLocation();
+  const locale = useLanguage();
+  const base = import.meta.env.BASE_URL;
+
+  return (
+    <div style={{ position: "fixed", left: 8, bottom: 8, zIndex: 999999, padding: 10, borderRadius: 8, background: "rgba(0,0,0,0.75)", color: "#fff", font: "12px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" }}>
+      <div><b>DEBUG</b></div>
+      <div>base: {base}</div>
+      <div>path: {loc.pathname}</div>
+      <div>hash: {loc.hash || "(none)"}</div>
+      <div>search: {loc.search || "(none)"}</div>
+      <div>locale: {locale}</div>
+    </div>
+  );
+}
+
 export default function App() {
   const basename = import.meta.env.BASE_URL; // "/everlegends-platform/" on GitHub Pages
 
@@ -25,12 +42,13 @@ export default function App() {
           <TooltipProvider>
             <AppErrorBoundary>
               <ScrollToHash />
+              <DebugHUD />
+
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
 
-                {/* RU aliases */}
                 <Route path="/ru" element={<Index />} />
                 <Route path="/ru/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/ru/cookie-policy" element={<CookiePolicy />} />
@@ -38,6 +56,7 @@ export default function App() {
 
                 <Route path="*" element={<NotFound />} />
               </Routes>
+
               <CookieBanner />
               <Toaster />
               <Sonner />
