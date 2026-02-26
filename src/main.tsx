@@ -1,4 +1,28 @@
-﻿import React from "react";
+﻿// --- GH Pages deep-link decoder (?p=...) ---
+// MUST NOT reload the page, otherwise /ru/index.html -> /?p=... -> /ru/index.html loops.
+(() => {
+  const url = new URL(window.location.href);
+  const p = url.searchParams.get("p");
+  if (!p) return;
+
+  url.searchParams.delete("p");
+
+  let decoded = "";
+  try { decoded = decodeURIComponent(p); } catch { decoded = p; }
+
+  try {
+    const asUrl = new URL(decoded);
+    decoded = asUrl.pathname + asUrl.search + asUrl.hash;
+  } catch {}
+
+  if (!decoded.startsWith("/")) decoded = "/" + decoded;
+
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  if (!decoded.startsWith(base + "/")) decoded = base + decoded;
+
+  window.history.replaceState(null, "", decoded);
+})();
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
@@ -45,3 +69,4 @@ try {
 } catch (err) {
   showFatal(err);
 }
+
