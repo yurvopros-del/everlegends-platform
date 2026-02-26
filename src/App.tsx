@@ -26,7 +26,15 @@ function RuProbe() {
     </div>
   );
 }
-
+function RuEntry() {
+  // Force RU locale then redirect to the canonical landing route.
+  try {
+    localStorage.setItem("locale", "ru");
+    localStorage.setItem("lang", "ru");
+    localStorage.setItem("i18nextLng", "ru");
+  } catch {}
+  return <Navigate to="/" replace />;
+}
 export default function App() {
   const basename = import.meta.env.BASE_URL;
   return (
@@ -37,7 +45,9 @@ export default function App() {
             <AppErrorBoundary>
               <ScrollToHash />
 <Routes>
-                <Route path="/" element={<Index />} />
+                
+          <Route path="/ru/*" element={<RuEntry />} />
+<Route path="/" element={<Index />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
 
@@ -58,4 +68,5 @@ export default function App() {
     </BrowserRouter>
   );
 }
+
 
