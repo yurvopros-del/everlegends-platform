@@ -1,21 +1,15 @@
 ﻿<!doctype html>
-<html>
+<html lang="ru">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>EverLegends</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EVERLEGENDS — Where Merit Is The Only Currency</title>
     <script>
-      (function () {
-        var base = "/everlegends-platform";
-        try {
-          localStorage.setItem("locale", "ru");
-          localStorage.setItem("lang", "ru");
-          localStorage.setItem("i18nextLng", "ru");
-        } catch (e) {}
-        // Redirect to the canonical SPA entry (/) with a lang hint (main.tsx will clean it).
-        window.location.replace(base + "/?lang=ru");
-      })();
+      try { localStorage.setItem("locale","ru"); } catch (e) {}
     </script>
   </head>
-  <body></body>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/everlegends-platform/assets/index-P5yMKxF8.js"></script>
+  </body>
 </html>
