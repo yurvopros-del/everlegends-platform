@@ -1,4 +1,19 @@
 ﻿;(() => {
+  // EVERLEGENDS_RU_PATH_NORMALIZE
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  const p = window.location.pathname;
+
+  if (p === base + "/ru" || p === base + "/ru/") {
+    try {
+      localStorage.setItem("locale","ru");
+      localStorage.setItem("lang","ru");
+      localStorage.setItem("i18nextLng","ru");
+    } catch {}
+
+    window.history.replaceState(null, "", base + "/" + window.location.search + window.location.hash);
+  }
+})();
+;(() => {
   // EVERLEGENDS_LANG_HANDLER
   const url = new URL(window.location.href);
   const lang = url.searchParams.get("lang");
@@ -84,6 +99,7 @@ try {
 } catch (err) {
   showFatal(err);
 }
+
 
 
 
