@@ -1,8 +1,9 @@
-import React from "react";
+﻿import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 
+// GitHub Pages SPA fallback decoder (paired with public/404.html)
 const params = new URLSearchParams(window.location.search);
 const p = params.get("p");
 if (p) {
