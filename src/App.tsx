@@ -19,7 +19,8 @@ function DebugHUD() {
   const loc = useLocation();
   const locale = useLanguage();
   const base = import.meta.env.BASE_URL;
-  return (`r`n<div style={{ position: "fixed", left: 8, bottom: 8, zIndex: 999999, padding: 10, borderRadius: 8, background: "rgba(0,0,0,0.75)", color: "#fff", font: "12px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" }}>`r`n{window.location.pathname.endsWith("/ru") && (`r`n  <div id="EVERLEGENDS_RU_RENDER_OK" style={{position:"fixed",bottom:8,left:8,zIndex:2147483647,padding:"10px 14px",background:"rgba(0,255,0,0.9)",color:"#000",font:"bold 14px/1.2 Arial"}}>RU RENDER OK</div>`r`n)}
+  return (
+    <div style={{ position: "fixed", left: 8, bottom: 8, zIndex: 999999, padding: 10, borderRadius: 8, background: "rgba(0,0,0,0.75)", color: "#fff", font: "12px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" }}>
       <div><b>DEBUG</b></div>
       <div>base: {base}</div>
       <div>path: {loc.pathname}</div>
@@ -32,7 +33,8 @@ function DebugHUD() {
 
 function RuProbe() {
   const locale = useLanguage();
-  return (`r`n<div>`r`n{window.location.pathname.endsWith("/ru") && (`r`n  <div id="EVERLEGENDS_RU_RENDER_OK" style={{position:"fixed",bottom:8,left:8,zIndex:2147483647,padding:"10px 14px",background:"rgba(0,255,0,0.9)",color:"#000",font:"bold 14px/1.2 Arial"}}>RU RENDER OK</div>`r`n)}
+  return (
+    <div>
       <div style={{ position: "fixed", top: 80, left: 8, zIndex: 999999, padding: 10, borderRadius: 8, background: "rgba(255,0,0,0.85)", color: "#fff", font: "12px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" }}>
         RU ROUTE HIT (locale: {locale})
       </div>
@@ -73,4 +75,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-
