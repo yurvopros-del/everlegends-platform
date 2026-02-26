@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
-// IMPORTANT: GitHub Pages project site needs the repo subpath prefix.
-// Vite exposes it as import.meta.env.BASE_URL ("/everlegends-platform/" in production).
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, ""); // "/everlegends-platform"
+// IMPORTANT: GitHub Pages project sites require repo subpath prefix for static files.
+// In production this is "/everlegends-platform/" because vite.config.ts base is set.
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const USER_AGREEMENT_PATH = Object.freeze({
   en: `${BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf`,
@@ -19,6 +19,7 @@ const BETA_TESTING_PATH = Object.freeze({
 const Footer = () => {
   const locale = useLanguage();
   const betaHref = BETA_TESTING_PATH[locale] ?? BETA_TESTING_PATH.en;
+  const termsHref = USER_AGREEMENT_PATH[locale] ?? USER_AGREEMENT_PATH.en;
 
   return (
     <footer className="border-t border-border py-12">
@@ -31,7 +32,7 @@ const Footer = () => {
         {/* Links + socials */}
         <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
           <a
-            href={USER_AGREEMENT_PATH[locale] ?? USER_AGREEMENT_PATH.en}
+            href={termsHref}
             target="_blank"
             rel="noopener noreferrer"
             type="application/pdf"
