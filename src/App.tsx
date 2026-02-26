@@ -19,7 +19,6 @@ function DebugHUD() {
   const loc = useLocation();
   const locale = useLanguage();
   const base = import.meta.env.BASE_URL;
-
   return (
     <div style={{ position: "fixed", left: 8, bottom: 8, zIndex: 999999, padding: 10, borderRadius: 8, background: "rgba(0,0,0,0.75)", color: "#fff", font: "12px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" }}>
       <div><b>DEBUG</b></div>
@@ -32,9 +31,20 @@ function DebugHUD() {
   );
 }
 
-export default function App() {
-  const basename = import.meta.env.BASE_URL; // "/everlegends-platform/" on GitHub Pages
+function RuProbe() {
+  const locale = useLanguage();
+  return (
+    <div>
+      <div style={{ position: "fixed", top: 80, left: 8, zIndex: 999999, padding: 10, borderRadius: 8, background: "rgba(255,0,0,0.85)", color: "#fff", font: "12px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" }}>
+        RU ROUTE HIT (locale: {locale})
+      </div>
+      <Index />
+    </div>
+  );
+}
 
+export default function App() {
+  const basename = import.meta.env.BASE_URL;
   return (
     <BrowserRouter basename={basename}>
       <LanguageProvider>
@@ -43,20 +53,18 @@ export default function App() {
             <AppErrorBoundary>
               <ScrollToHash />
               <DebugHUD />
-
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
 
-                <Route path="/ru" element={<Index />} />
+                <Route path="/ru" element={<RuProbe />} />
                 <Route path="/ru/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/ru/cookie-policy" element={<CookiePolicy />} />
                 <Route path="/ru/" element={<Navigate to="/ru" replace />} />
 
                 <Route path="*" element={<NotFound />} />
               </Routes>
-
               <CookieBanner />
               <Toaster />
               <Sonner />
