@@ -1,4 +1,19 @@
 ﻿;(() => {
+  // EVERLEGENDS_LANG_HANDLER
+  const url = new URL(window.location.href);
+  const lang = url.searchParams.get("lang");
+  if (!lang) return;
+
+  try {
+    localStorage.setItem("locale", lang);
+    localStorage.setItem("lang", lang);
+    localStorage.setItem("i18nextLng", lang);
+  } catch {}
+
+  url.searchParams.delete("lang");
+  window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+})();
+;(() => {
   try {
     const el = document.createElement("div");
     el.id = "EVERLEGENDS_BOOT_OK";
@@ -85,5 +100,6 @@ try {
 } catch (err) {
   showFatal(err);
 }
+
 
 

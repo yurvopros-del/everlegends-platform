@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>EverLegends</title>
     <script>
-      var l = window.location;
-      var base = "/everlegends-platform";
-      var target = base + "/?p=" + encodeURIComponent(base + "/ru" + l.search + l.hash);
-      l.replace(target);
+      (function () {
+        var base = "/everlegends-platform";
+        try {
+          localStorage.setItem("locale", "ru");
+          localStorage.setItem("lang", "ru");
+          localStorage.setItem("i18nextLng", "ru");
+        } catch (e) {}
+        // Redirect to the canonical SPA entry (/) with a lang hint (main.tsx will clean it).
+        window.location.replace(base + "/?lang=ru");
+      })();
     </script>
   </head>
   <body></body>
