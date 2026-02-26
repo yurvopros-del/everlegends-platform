@@ -4,27 +4,32 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
+// GitHub Pages project site: prefix static docs with BASE_URL ("/everlegends-platform/")
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+
 const COOKIE_PDF = {
-  en: "/docs/EVERLEGENDS_COOKIE_POLICY.pdf",
-  ru: "/docs/EVERLEGENDS_COOKIE_POLICY_RU.pdf",
+  en: `${BASE}/docs/EVERLEGENDS_COOKIE_POLICY.pdf`,
+  ru: `${BASE}/docs/EVERLEGENDS_COOKIE_POLICY_RU.pdf`,
 } as const;
 
 const CookiePolicy = () => {
   const locale = useLanguage();
   const [viewLang, setViewLang] = useState<"en" | "ru">(locale);
 
+  const pdfSrc = COOKIE_PDF[viewLang] ?? COOKIE_PDF.en;
+
   return (
-    <div className="bg-background min-h-screen flex flex-col" lang={locale}>
+    <div className="min-h-screen bg-background text-foreground">
       <Navigation />
 
-      <div className="content-max flex-1 pt-28 pb-16">
-        <h1 className="heading-md text-foreground mb-8">
+      <main className="content-max py-12">
+        <h1 className="text-2xl md:text-3xl font-semibold tracking-tight">
           {t(translations.cookiePage.title, locale)}
         </h1>
 
-        {/* Language toggle + download */}
-        <div className="flex flex-wrap items-center gap-3 mb-6">
+        <div className="mt-6 flex flex-wrap items-center gap-3">
           <button
+            type="button"
             onClick={() => setViewLang("en")}
             className={`text-xs tracking-[0.1em] uppercase px-3 py-1.5 rounded border transition-colors ${
               viewLang === "en"
@@ -34,7 +39,9 @@ const CookiePolicy = () => {
           >
             {t(translations.cookiePage.enVersion, locale)}
           </button>
+
           <button
+            type="button"
             onClick={() => setViewLang("ru")}
             className={`text-xs tracking-[0.1em] uppercase px-3 py-1.5 rounded border transition-colors ${
               viewLang === "ru"
@@ -46,7 +53,7 @@ const CookiePolicy = () => {
           </button>
 
           <a
-            href={COOKIE_PDF[viewLang]}
+            href={pdfSrc}
             download
             className="ml-auto text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
@@ -54,15 +61,14 @@ const CookiePolicy = () => {
           </a>
         </div>
 
-        {/* Embedded PDF */}
-        <iframe
-          key={viewLang}
-          src={COOKIE_PDF[viewLang]}
-          title={t(translations.cookiePage.title, locale)}
-          className="w-full rounded border border-border"
-          style={{ height: "calc(100vh - 260px)", minHeight: "500px" }}
-        />
-      </div>
+        <div className="mt-6 w-full overflow-hidden rounded-lg border border-border">
+          <iframe
+            title={t(translations.cookiePage.title, locale)}
+            src={pdfSrc}
+            className="w-full h-[75vh]"
+          />
+        </div>
+      </main>
 
       <Footer />
     </div>
