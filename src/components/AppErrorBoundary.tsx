@@ -19,7 +19,7 @@ export default class AppErrorBoundary extends React.Component<Props, State> {
     if (this.state.error) {
       return (
         <div style={{ padding: 16, fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" }}>
-          <div style={{ fontWeight: 700, marginBottom: 8 }}>EverLegends runtime error</div>
+          <div style={{ fontWeight: 700, marginBottom: 8 }}>ФиксАкт Спорт runtime error</div>
           <div style={{ whiteSpace: "pre-wrap" }}>{String(this.state.error?.message || this.state.error)}</div>
         </div>
       );

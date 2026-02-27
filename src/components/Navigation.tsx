@@ -73,21 +73,21 @@ const Navigation = () => {
         scrolled ? "bg-background/80 backdrop-blur border-b border-border" : "bg-transparent"
       }`}
     >
-      <div className="content-max h-16 flex items-center justify-between">
+      <div className="content-max h-14 md:h-[72px] flex items-center justify-between">
         <button
           type="button"
           onClick={goHome}
           className="flex items-center gap-3"
-          aria-label="FixAct Sport home"
+          aria-label="ФиксАкт Спорт — главная"
         >
-          <img src={logo} alt="FixAct Sport" className="h-7 w-auto" />
+          <img src={logo} alt="ФиксАкт Спорт" className="h-6 md:h-7 w-auto" />
         </button>
 
         <nav className="hidden md:flex items-center gap-6">
           <button
             type="button"
             onClick={() => jumpTo("system")}
-            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
             {t(translations.nav.system, locale)}
           </button>
@@ -95,7 +95,7 @@ const Navigation = () => {
           <button
             type="button"
             onClick={() => jumpTo("rewards")}
-            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
             {t(translations.nav.rewards, locale)}
           </button>
@@ -103,7 +103,7 @@ const Navigation = () => {
           <button
             type="button"
             onClick={switchLang}
-            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
             {locale === "en" ? "RU" : "EN"}
           </button>
@@ -112,7 +112,7 @@ const Navigation = () => {
             href={BETA_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
             {t(translations.nav.cta, locale)}
           </a>
@@ -122,7 +122,7 @@ const Navigation = () => {
           <button
             type="button"
             onClick={switchLang}
-            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
             {locale === "en" ? "RU" : "EN"}
           </button>
@@ -131,7 +131,7 @@ const Navigation = () => {
             href={BETA_FORM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
+            className="text-sm tracking-[0.08em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
             {t(translations.nav.joinMobile, locale)}
           </a>
