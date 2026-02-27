@@ -19,16 +19,12 @@ export const translations = {
   },
   heroSlides: [
     {
-      headline: { en: "TAKE YOUR PLACE IN THE RANKING", ru: "ЗАЙМИ СВОЁ МЕСТО В РЕЙТИНГЕ" },
-      tagline: { en: "Verified. Recorded. Ranked.", ru: "Проверено. Оценено. Зафиксировано." },
+      headline: { en: "GLORY BELONGS TO THE FEARLESS", ru: "СЛАВА ПРИНАДЛЕЖИТ БЕССТРАШНЫМ" },
+      tagline: { en: "Real prizes for real performance.", ru: "Реальные призы за реальные результаты." },
     },
     {
-      headline: { en: "OWN THE TEMPO", ru: "ПОЙМАЙ СВОЙ РИТМ" },
-      tagline: { en: "Find your flow. Command the pulse of the match.", ru: "Диктуй темп игры. Будь дирижером на поле." },
-    },
-    {
-      headline: { en: "CLAIM YOUR STATUS", ru: "ВРЕМЯ ПОКАЗАТЬ КЛАСС" },
-      tagline: { en: "Your score is your verified technical ID. Step up.", ru: "Твой рейтинг — твои повышенные шансы пропуска в большой футбол." },
+      headline: { en: "THE ARENA AWAITS", ru: "ТВОЙ ВЫХОД НА АРЕНУ!" },
+      tagline: { en: "Thousands already record results worldwide.", ru: "Сильные результаты видят во всём мире." },
     },
     {
       headline: { en: "HEAD UP, GAME ON", ru: "УМНЫЙ КОНТРОЛЬ" },
@@ -43,12 +39,16 @@ export const translations = {
       tagline: { en: "Every touch is the signature of a master.", ru: "Каждое касание — как почерк мастера." },
     },
     {
-      headline: { en: "BUILT THROUGH DISCIPLINE", ru: "ЗАКАЛЁННЫЙ ДИСЦИПЛИНОЙ" },
-      tagline: { en: "No shortcuts. No excuses. Just results.", ru: "Без обходных путей. Без оправданий. Только результат." },
+      headline: { en: "TAKE YOUR PLACE IN THE RANKING", ru: "ЗАЙМИ СВОЁ МЕСТО В РЕЙТИНГЕ" },
+      tagline: { en: "Verified. Recorded. Ranked.", ru: "Проверено. Оценено. Зафиксировано." },
     },
     {
-      headline: { en: "GLORY BELONGS TO THE FEARLESS", ru: "СЛАВА ПРИНАДЛЕЖИТ БЕССТРАШНЫМ" },
-      tagline: { en: "Real prizes for real performance.", ru: "Реальные призы за реальные результаты." },
+      headline: { en: "CLAIM YOUR STATUS", ru: "ВРЕМЯ ПОКАЗАТЬ КЛАСС" },
+      tagline: { en: "Your score is your verified technical ID. Step up.", ru: "Твой рейтинг — твои повышенные шансы пропуска в большой футбол." },
+    },
+    {
+      headline: { en: "OWN THE TEMPO", ru: "ПОЙМАЙ СВОЙ РИТМ" },
+      tagline: { en: "Find your flow. Command the pulse of the match.", ru: "Диктуй темп игры. Будь дирижером на поле." },
     },
   ],
   philosophy: {
