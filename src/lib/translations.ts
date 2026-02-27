@@ -19,8 +19,28 @@ export const translations = {
   },
   heroSlides: [
     {
-      headline: { en: "ONLY THE STRONGEST STAND OUT", ru: "НА АРЕНУ ВЫХОДЯТ СИЛЬНЕЙШИЕ" },
-      tagline: { en: "Your results deserve recognition.", ru: "Результат должен быть признан." },
+      headline: { en: "TAKE YOUR PLACE IN THE RANKING", ru: "ЗАЙМИ СВОЁ МЕСТО В РЕЙТИНГЕ" },
+      tagline: { en: "Verified. Recorded. Ranked.", ru: "Проверено. Оценено. Зафиксировано." },
+    },
+    {
+      headline: { en: "OWN THE TEMPO", ru: "ПОЙМАЙ СВОЙ РИТМ" },
+      tagline: { en: "Find your flow. Command the pulse of the match.", ru: "Диктуй темп игры. Будь дирижером на поле." },
+    },
+    {
+      headline: { en: "CLAIM YOUR STATUS", ru: "ВРЕМЯ ПОКАЗАТЬ КЛАСС" },
+      tagline: { en: "Your score is your verified technical ID. Step up.", ru: "Твой рейтинг — твои повышенные шансы пропуска в большой футбол." },
+    },
+    {
+      headline: { en: "HEAD UP, GAME ON", ru: "УМНЫЙ КОНТРОЛЬ" },
+      tagline: { en: "The ball obeys the composed. Control the chaos.", ru: "Думай головой. Мяч послушен, когда разум спокоен." },
+    },
+    {
+      headline: { en: "AMBIDEXTROUS POWER", ru: "ТЕХНИЧЕСКАЯ ГАРМОНИЯ" },
+      tagline: { en: "A true footballer has no weak foot. Only two weapons.", ru: "У футболиста нет «слабой» ноги. Есть вторая рабочая." },
+    },
+    {
+      headline: { en: "THE CLASSICAL SCHOOL", ru: "ЧИСТОТА ШКОЛЫ" },
+      tagline: { en: "Every touch is the signature of a master.", ru: "Каждое касание — как почерк мастера." },
     },
     {
       headline: { en: "BUILT THROUGH DISCIPLINE", ru: "ЗАКАЛЁННЫЙ ДИСЦИПЛИНОЙ" },
@@ -29,26 +49,6 @@ export const translations = {
     {
       headline: { en: "GLORY BELONGS TO THE FEARLESS", ru: "СЛАВА ПРИНАДЛЕЖИТ БЕССТРАШНЫМ" },
       tagline: { en: "Real prizes for real performance.", ru: "Реальные призы за реальные результаты." },
-    },
-    {
-      headline: { en: "STRONGER TOGETHER", ru: "СИЛЬНЕЕ ВМЕСТЕ" },
-      tagline: { en: "A global community united by results.", ru: "Сильнейшие выходят на одну арену." },
-    },
-    {
-      headline: { en: "PROVE YOUR LEVEL", ru: "ДОКАЖИ УРОВЕНЬ" },
-      tagline: { en: "Only verified results are counted.", ru: "Здесь учитывается только результат." },
-    },
-    {
-      headline: { en: "LEGACY STARTS NOW", ru: "ИСТОРИЯ НАЧИНАЕТСЯ С ПОСТУПКОВ!" },
-      tagline: { en: "Your results shape the future of the ranking.", ru: "Твой результат — твоя история. Войди в рейтинг!" },
-    },
-    {
-      headline: { en: "TAKE YOUR PLACE IN THE RANKING", ru: "ЗАЙМИ СВОЁ МЕСТО В РЕЙТИНГЕ" },
-      tagline: { en: "Verified. Recorded. Ranked.", ru: "Проверено. Оценено. Зафиксировано." },
-    },
-    {
-      headline: { en: "THE ARENA AWAITS", ru: "ТВОЙ ВЫХОД НА АРЕНУ!" },
-      tagline: { en: "Thousands already record results worldwide.", ru: "Сильные результаты видят во всём мире." },
     },
   ],
   philosophy: {
