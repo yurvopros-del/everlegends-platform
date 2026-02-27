@@ -1,44 +1,33 @@
 
 
-# Implement User Agreement + Beta Testing Branded Pages
+# Fix PDF 404s: Replace Hardcoded GH_BASE with Vite Base Path
 
 ## Overview
-Create two new legal document pages and update routing/footer, cloning the CookiePolicy.tsx pattern 1:1. Beta badge uses `β`. No existing pages modified.
+All 4 legal document pages hardcode `GH_BASE = "/everlegends-platform"` for PDF paths, causing 404s when deployed at a different base. Fix by creating a shared `BASE_PATH` helper derived from Vite's `import.meta.env.BASE_URL`.
 
----
+## Changes (5 files: 1 new, 4 edited)
 
-## Changes (5 files: 2 new, 3 edited)
-
-### 1. `src/lib/translations.ts` -- Add 2 blocks
-Add `userAgreementPage` and `betaTestingPage` translation objects (same shape as `cookiePage`) after `privacyPage`.
-
-### 2. `src/pages/UserAgreement.tsx` -- New file
-Clone of `CookiePolicy.tsx` with `USER_AGREEMENT_PDF` constant pointing to `EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf` / `_RU.pdf`, using `translations.userAgreementPage`.
-
-### 3. `src/pages/BetaTesting.tsx` -- New file
-Same clone with `BETA_TESTING_PDF` pointing to `EVERLEGENDS_BETA_TESTING_RULES.pdf` / `_RU.pdf`, using `translations.betaTestingPage`.
-
-### 4. `src/App.tsx` -- Add 4 routes + 2 imports
-```text
-/user-agreement    -> <UserAgreement />
-/beta-testing      -> <BetaTesting />
-/ru/user-agreement -> <UserAgreement />
-/ru/beta-testing   -> <BetaTesting />
+### 1. `src/lib/basePath.ts` -- New file
+```ts
+export const BASE_PATH = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
 ```
-Placed before the `/ru/*` catch-all.
 
-### 5. `src/components/Footer.tsx` -- Convert 2 links
-- Remove dead `USER_AGREEMENT_PATH`, `BETA_TESTING_PATH` constants and their `termsHref`/`betaHref` variables
-- User Agreement: `<a>` becomes `<Link to={locale === "ru" ? "/ru/user-agreement" : "/user-agreement"}>`
-- Beta Testing: `<a>` becomes `<Link>` with `β` badge (Greek beta, not "B")
-- Link order preserved: User Agreement | Privacy Policy | Cookie Policy | Beta Testing | Contact
+### 2. `src/pages/CookiePolicy.tsx` -- Edit
+- Remove `const GH_BASE = "/everlegends-platform";`
+- Add `import { BASE_PATH } from "@/lib/basePath";`
+- Change PDF constant to use `${BASE_PATH}/docs/...`
+
+### 3. `src/pages/PrivacyPolicy.tsx` -- Edit
+- Same: remove GH_BASE, import BASE_PATH, update PDF constant
+
+### 4. `src/pages/UserAgreement.tsx` -- Edit
+- Same: remove GH_BASE, import BASE_PATH, update PDF constant
+
+### 5. `src/pages/BetaTesting.tsx` -- Edit
+- Same: remove GH_BASE, import BASE_PATH, update PDF constant
 
 ## What does NOT change
-- PrivacyPolicy.tsx, CookiePolicy.tsx -- untouched
-- All existing translations -- untouched
-- Layout, Navigation, animations -- untouched
-- PDF files in public/docs/ -- untouched
-
-## Future optimization (noted, not included)
-Abstract all 4 legal pages into a reusable `<LegalDocumentPage />` component to eliminate duplication. Deferred -- not required for correctness.
+- Routing, translations, Footer, Navigation -- untouched
+- Page structure, styling, iframe, viewLang, toggles -- untouched
+- PDF files in `public/docs/` -- untouched
 
