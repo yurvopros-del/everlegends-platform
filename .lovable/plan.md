@@ -1,75 +1,44 @@
 
 
-# Reorder Hero Slider: Remove 2.avif, Add 10.avif, New 8-Slide Order
+# Implement User Agreement + Beta Testing Branded Pages
 
 ## Overview
-Remove the "BUILT THROUGH DISCIPLINE" slide (from 2.avif), introduce 10.avif (uploaded as `10-2.avif`), and reorder all 8 slides to the new narrative sequence. No layout, animation, or logic changes.
+Create two new legal document pages and update routing/footer, cloning the CookiePolicy.tsx pattern 1:1. Beta badge uses `β`. No existing pages modified.
 
 ---
 
-## Step 1 -- Replace asset files in `src/assets/hero/`
+## Changes (5 files: 2 new, 3 edited)
 
-Since we are shuffling existing files (sources become targets), we must use a safe copy order to avoid overwriting a source before it is consumed. The uploaded `user-uploads://10-2.avif` provides the new 10.avif image.
+### 1. `src/lib/translations.ts` -- Add 2 blocks
+Add `userAgreementPage` and `betaTestingPage` translation objects (same shape as `cookiePage`) after `privacyPage`.
 
-New mapping (all 8 files overwritten in place):
+### 2. `src/pages/UserAgreement.tsx` -- New file
+Clone of `CookiePolicy.tsx` with `USER_AGREEMENT_PDF` constant pointing to `EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf` / `_RU.pdf`, using `translations.userAgreementPage`.
 
-| Target file | Source | Description |
-|---|---|---|
-| hero_01.avif | Current hero_08.avif (11.avif) | Cup |
-| hero_02.avif | user-uploads://10-2.avif | Kids (NEW) |
-| hero_03.avif | Current hero_04.avif (8.avif) | Kids |
-| hero_04.avif | Current hero_05.avif (6.avif) | Kids |
-| hero_05.avif | Current hero_06.avif (5.avif) | Kids |
-| hero_06.avif | Current hero_01.avif (3.avif) | Women |
-| hero_07.avif | Current hero_03.avif (4.avif) | Men |
-| hero_08.avif | Current hero_02.avif (1.avif) | Women |
+### 3. `src/pages/BetaTesting.tsx` -- New file
+Same clone with `BETA_TESTING_PDF` pointing to `EVERLEGENDS_BETA_TESTING_RULES.pdf` / `_RU.pdf`, using `translations.betaTestingPage`.
 
-Since multiple files reference each other as both source and target, we copy each source to its new target using the original upload files where available. For the shuffled files, we rely on the original uploaded images (which are still available from prior uploads) to avoid circular overwrites:
-- hero_01 from `user-uploads://11.avif`
-- hero_02 from `user-uploads://10-2.avif`
-- hero_03 from `user-uploads://8.avif`
-- hero_04 from `user-uploads://6.avif`
-- hero_05 from `user-uploads://5.avif`
-- hero_06 from `user-uploads://3.avif`
-- hero_07 from `user-uploads://4.avif`
-- hero_08 from `user-uploads://1.avif`
+### 4. `src/App.tsx` -- Add 4 routes + 2 imports
+```text
+/user-agreement    -> <UserAgreement />
+/beta-testing      -> <BetaTesting />
+/ru/user-agreement -> <UserAgreement />
+/ru/beta-testing   -> <BetaTesting />
+```
+Placed before the `/ru/*` catch-all.
 
-This avoids circular dependency entirely -- each write comes from the original upload, not from another hero_XX file.
+### 5. `src/components/Footer.tsx` -- Convert 2 links
+- Remove dead `USER_AGREEMENT_PATH`, `BETA_TESTING_PATH` constants and their `termsHref`/`betaHref` variables
+- User Agreement: `<a>` becomes `<Link to={locale === "ru" ? "/ru/user-agreement" : "/user-agreement"}>`
+- Beta Testing: `<a>` becomes `<Link>` with `β` badge (Greek beta, not "B")
+- Link order preserved: User Agreement | Privacy Policy | Cookie Policy | Beta Testing | Contact
 
----
+## What does NOT change
+- PrivacyPolicy.tsx, CookiePolicy.tsx -- untouched
+- All existing translations -- untouched
+- Layout, Navigation, animations -- untouched
+- PDF files in public/docs/ -- untouched
 
-## Step 2 -- `src/components/HeroSection.tsx` (NO changes)
-
-Imports already reference `hero_01.avif` through `hero_08.avif` and `SLIDE_IMAGES` has length 8. Filenames are stable -- only the underlying image data changes. No code edits needed.
-
-Verification: confirm no stale JPG imports exist (there are none currently).
-
----
-
-## Step 3 -- `src/lib/translations.ts` -- replace `heroSlides` array
-
-Replace lines 20-53 (the `heroSlides` array contents) with 8 objects in the new order:
-
-1. GLORY BELONGS TO THE FEARLESS / СЛАВА ПРИНАДЛЕЖИТ БЕССТРАШНЫМ
-2. THE ARENA AWAITS / ТВОЙ ВЫХОД НА АРЕНУ! (new slide text)
-3. HEAD UP, GAME ON / УМНЫЙ КОНТРОЛЬ
-4. AMBIDEXTROUS POWER / ТЕХНИЧЕСКАЯ ГАРМОНИЯ
-5. THE CLASSICAL SCHOOL / ЧИСТОТА ШКОЛЫ
-6. TAKE YOUR PLACE IN THE RANKING / ЗАЙМИ СВОЁ МЕСТО В РЕЙТИНГЕ
-7. CLAIM YOUR STATUS / ВРЕМЯ ПОКАЗАТЬ КЛАСС
-8. OWN THE TEMPO / ПОЙМАЙ СВОЙ РИТМ
-
-"BUILT THROUGH DISCIPLINE" is removed entirely. `translations.hero` block is untouched.
-
----
-
-## Step 4 -- Verification
-
-- Total slides: 8
-- Dot count: 8 (SLIDE_IMAGES.length)
-- First slide: Cup (11.avif as hero_01)
-- Slides 2-5: kids-first order (10, 8, 6, 5)
-- 2.avif completely gone (no heroSlides entry, file overwritten)
-- 1.avif (hero_08) and 3.avif (hero_06) not adjacent (separated by hero_07)
-- No old JPG imports in HeroSection.tsx
+## Future optimization (noted, not included)
+Abstract all 4 legal pages into a reusable `<LegalDocumentPage />` component to eliminate duplication. Deferred -- not required for correctness.
 
