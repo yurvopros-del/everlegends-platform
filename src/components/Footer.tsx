@@ -1,25 +1,9 @@
-﻿import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
-// Deterministic GitHub Pages project-site prefix for static docs.
-// Avoids edge cases where import.meta.env.BASE_URL becomes "/" in the deployed bundle.
-const GH_BASE = "/everlegends-platform";
-
-const USER_AGREEMENT_PATH = Object.freeze({
-  en: `${GH_BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf`,
-  ru: `${GH_BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT_RU.pdf`,
-} as const);
-
-const BETA_TESTING_PATH = Object.freeze({
-  en: `${GH_BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES.pdf`,
-  ru: `${GH_BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES_RU.pdf`,
-} as const);
-
 const Footer = () => {
   const locale = useLanguage();
-  const betaHref = BETA_TESTING_PATH[locale] ?? BETA_TESTING_PATH.en;
-  const termsHref = USER_AGREEMENT_PATH[locale] ?? USER_AGREEMENT_PATH.en;
 
   return (
     <footer className="border-t border-border py-12">
@@ -29,15 +13,12 @@ const Footer = () => {
         </span>
 
         <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
-          <a
-            href={termsHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            type="application/pdf"
+          <Link
+            to={locale === "ru" ? "/ru/user-agreement" : "/user-agreement"}
             className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors"
           >
             {t(translations.footer.terms, locale)}
-          </a>
+          </Link>
           <span className="text-muted-foreground/40">|</span>
           <Link
             to={locale === "ru" ? "/ru/privacy-policy" : "/privacy-policy"}
@@ -53,18 +34,15 @@ const Footer = () => {
             {t(translations.footer.cookiePolicy, locale)}
           </Link>
           <span className="text-muted-foreground/40">|</span>
-          <a
-            href={betaHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            type="application/pdf"
+          <Link
+            to={locale === "ru" ? "/ru/beta-testing" : "/beta-testing"}
             className="text-xs tracking-[0.1em] uppercase text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1.5"
           >
             <span className="text-[10px] leading-none px-1 py-0.5 rounded border border-muted-foreground/30 font-medium">
               β
             </span>
             {t(translations.footer.beta, locale)}
-          </a>
+          </Link>
           <span className="text-muted-foreground/40">|</span>
           <a
             href="https://t.me/DjamalG"
