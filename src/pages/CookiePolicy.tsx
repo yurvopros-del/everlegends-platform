@@ -3,12 +3,11 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
-
-const GH_BASE = "/everlegends-platform";
+import { BASE_PATH } from "@/lib/basePath";
 
 const COOKIE_PDF = {
-  en: `${GH_BASE}/docs/EVERLEGENDS_COOKIE_POLICY.pdf`,
-  ru: `${GH_BASE}/docs/EVERLEGENDS_COOKIE_POLICY_RU.pdf`,
+  en: `${BASE_PATH}/docs/EVERLEGENDS_COOKIE_POLICY.pdf`,
+  ru: `${BASE_PATH}/docs/EVERLEGENDS_COOKIE_POLICY_RU.pdf`,
 } as const;
 
 export default function CookiePolicy() {

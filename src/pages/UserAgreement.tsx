@@ -3,12 +3,11 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
-
-const GH_BASE = "/everlegends-platform";
+import { BASE_PATH } from "@/lib/basePath";
 
 const USER_AGREEMENT_PDF = {
-  en: `${GH_BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf`,
-  ru: `${GH_BASE}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT_RU.pdf`,
+  en: `${BASE_PATH}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT.pdf`,
+  ru: `${BASE_PATH}/docs/EVERLEGENDS_PLATFORM_USER_AGREEMENT_RU.pdf`,
 } as const;
 
 export default function UserAgreement() {
