@@ -1,110 +1,74 @@
 
 
-# System Section Update -- Execution-Ready Plan
+# Header Proportions + Nav Text + Brand Rename — Final Execution
 
-## Pre-flight checks (both passed)
+## 1. Navigation.tsx (9 edits)
 
-1. **`t()` compatibility with bullets**: `t()` accepts `{ en: string; ru: string }` and returns the locale string. Each bullet element is `{ en: string, ru: string }` -- identical shape. No issue.
-2. **Import naming**: `SystemSection.tsx` line 4 imports `translations` and `t` from `@/lib/translations`. The plan references `translations.system.pool` and calls `t(...)`. Naming is consistent.
+### Header proportions + a11y
+| Line | Current | New |
+|------|---------|-----|
+| 76 | `content-max h-16 flex items-center justify-between` | `content-max h-14 md:h-[72px] flex items-center justify-between` |
+| 81 | `aria-label="FixAct Sport home"` | `aria-label="ФиксАкт Спорт — главная"` |
+| 83 | `alt="FixAct Sport" className="h-7 w-auto"` | `alt="ФиксАкт Спорт" className="h-6 md:h-7 w-auto"` |
 
----
+### Nav text size (6 lines)
+Lines 90, 98, 106, 115, 125, 134: `text-xs tracking-[0.1em]` -> `text-sm tracking-[0.08em]`
 
-## Change 1: `src/lib/translations.ts` (lines 65-90)
+## 2. translations.ts (7 text replacements)
 
-Replace the `system.steps` array and add `pool` sibling.
+| Line | Change |
+|------|--------|
+| 58 | `EVERLEGENDS is a digital` -> `ФиксАкт Спорт is a digital` |
+| 59 | `EVERLEGENDS создан` -> `ФиксАкт Спорт создан` |
+| 96 | `ATTESTATION INDEX EVERLEGENDS` -> `ATTESTATION INDEX — ФиксАкт Спорт` |
+| 96 | `АТТЕСТАЦИОННЫЙ ИНДЕКС EVERLEGENDS` -> `АТТЕСТАЦИОННЫЙ ИНДЕКС — ФиксАкт Спорт` |
+| 190 | `to use EverLegends` -> `to use ФиксАкт Спорт` |
+| 191 | `использовать EverLegends` -> `использовать ФиксАкт Спорт` |
+| 222 | `the EverLegends platform` -> `the ФиксАкт Спорт platform` |
+| 223 | `платформы EverLegends` -> `платформы ФиксАкт Спорт` |
 
-### Updated `steps` array (3 items):
+Em-dash format for Step 03 title to avoid aggressive all-caps Cyrillic.
 
-**Step 01 -- DIGITAL ANALYSIS**
-- title: EN "DIGITAL ANALYSIS" / RU "ЦИФРОВОЙ АНАЛИЗ"
-- description: EN "Each test is processed automatically..." / RU "Каждый тест проходит..."
-- bullets: 5 items (biomechanical correctness, tempo stability, technical variation, weak-foot usage, dynamic resilience)
-- footer: none
+## 3. Footer.tsx (1 edit)
 
-**Step 02 -- EXPERT VALIDATION**
-- title: EN "EXPERT VALIDATION" / RU "ЭКСПЕРТНАЯ ВАЛИДАЦИЯ"
-- description: EN "The system uses a two-layer verification..." / RU "Система использует двухконтурную..."
-- bullets: 2 items (anti-fraud analysis, professional referee validation)
-- footer: EN "This builds trust in the final metric." / RU "Это обеспечивает доверие к итоговому показателю."
+Line 58: `EVERLEGENDS.` -> `ФиксАкт Спорт.` (mixed case for consistency with the brand style used elsewhere)
 
-**Step 03 -- ATTESTATION INDEX EVERLEGENDS**
-- title: EN "ATTESTATION INDEX EVERLEGENDS" / RU "АТТЕСТАЦИОННЫЙ ИНДЕКС EVERLEGENDS"
-- description: EN "The final index is calculated to 0.001 precision..." / RU "Итоговый индекс рассчитывается с точностью до 0,001..."
-- bullets: 5 items (quantitative output, technical variation, tempo stability, fatigue resistance, progress dynamics)
-- footer: EN "The index can be used for independent selection..." / RU "Индекс используется для независимой селекции..."
+## 4. AppErrorBoundary.tsx (1 edit)
 
-### New `pool` object (sibling to `steps`):
+Line 22: `EverLegends runtime error` -> `ФиксАкт Спорт runtime error`
 
-```text
-system: {
-  label: ...,   // unchanged
-  title: ...,   // unchanged
-  steps: [...], // updated above
-  pool: {       // NEW
-    title:   { en: "ATTESTATION POOL", ru: "АТТЕСТАЦИОННЫЙ ПУЛ" },
-    body:    { en: "Each attestation cycle is formed dynamically.", ru: "Каждый аттестационный цикл формируется динамически." },
-    bullets: [ 3 {en,ru} items ],
-    footer:  { en: "Distribution is performed automatically...", ru: "Распределение происходит автоматически..." },
-  },
-}
+## 5. 404.html (1 edit)
+
+Line 6: `<title>EverLegends</title>` -> `<title>ФиксАкт Спорт</title>` (redirect logic on lines 7-24 untouched)
+
+## 6. index.html (title + 5 meta tags)
+
+Line 22: `<title>EVERLEGENDS — Where Merit Is The Only Currency</title>` -> `<title>ФиксАкт Спорт — Where Merit Is The Only Currency</title>`
+
+Insert after line 24 (after apple-touch-icon):
+```html
+<meta property="og:title" content="ФиксАкт Спорт — Where Merit Is The Only Currency" />
+<meta property="og:description" content="Athletic talent verified, ranked, and rewarded." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ФиксАкт Спорт" />
+<meta name="twitter:card" content="summary_large_image" />
 ```
 
----
+## Explicitly NOT changed
 
-## Change 2: `src/components/SystemSection.tsx`
+- localStorage keys (`everlegends_cookie_ack`, `everlegends_privacy_consent`) -- preserves existing user consents
+- Variable names, file names, PDF paths, routing paths, BASE_URL
+- Redirect logic in index.html and 404.html
+- Package name, technical comments, environment variables
 
-### A) Extend column rendering (after line 47)
+## Files summary
 
-Insert conditional bullets + footer inside the existing `.map()` loop, right after the `<p>` body text:
-
-```tsx
-{step.bullets && (
-  <ul className="mt-3 space-y-1 list-disc list-inside body-text text-sm md:text-base">
-    {step.bullets.map((b, j) => <li key={j}>{t(b, locale)}</li>)}
-  </ul>
-)}
-{step.footer && (
-  <p className="body-text text-sm md:text-base mt-3">{t(step.footer, locale)}</p>
-)}
-```
-
-### B) Add Attestation Pool block (after line 50, after grid `</div>`)
-
-```tsx
-<motion.div
-  className="mt-16 md:mt-20 md:px-10"
-  initial={{ opacity: 0, y: 30 }}
-  animate={isInView ? { opacity: 1, y: 0 } : {}}
-  transition={{ duration: 0.7, delay: 0.7 }}
->
-  <h3 className="text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-[-0.02em] gradient-text mb-4">
-    {t(translations.system.pool.title, locale)}
-  </h3>
-  <p className="body-text text-sm md:text-base">
-    {t(translations.system.pool.body, locale)}
-  </p>
-  <ul className="mt-3 space-y-1 list-disc list-inside body-text text-sm md:text-base">
-    {translations.system.pool.bullets.map((b, i) => (
-      <li key={i}>{t(b, locale)}</li>
-    ))}
-  </ul>
-  <p className="body-text text-sm md:text-base mt-3">
-    {t(translations.system.pool.footer, locale)}
-  </p>
-</motion.div>
-```
-
----
-
-## Scope
-
-| Item | Value |
-|------|-------|
-| Files changed | 2 |
-| Files created/deleted | 0 |
-| Type updates needed | None (no explicit types exist) |
-| Grid layout | Untouched |
-| Routing / BASE_PATH | Untouched |
-| PDF / localStorage | Untouched |
-| CTA / buttons added | None |
+| File | Edit count |
+|------|------------|
+| Navigation.tsx | 9 |
+| translations.ts | 7 |
+| Footer.tsx | 1 |
+| AppErrorBoundary.tsx | 1 |
+| index.html | title + 5 meta |
+| 404.html | 1 |
 
