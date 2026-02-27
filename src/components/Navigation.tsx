@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from "@/assets/fixact-sport-logo.png";
+import logoRu from "@/assets/fixact-sport-logo.svg";
+import logoEn from "@/assets/logo-en.svg";
 import { BETA_FORM_URL } from "@/lib/constants";
 
 const Navigation = () => {
@@ -11,6 +12,8 @@ const Navigation = () => {
   const locale = useLanguage();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const logo = locale === "en" ? logoEn : logoRu;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -78,9 +81,13 @@ const Navigation = () => {
           type="button"
           onClick={goHome}
           className="flex items-center gap-3"
-          aria-label="ФиксАкт Спорт — главная"
+          aria-label={locale === "en" ? "FIXACT SPORT — home" : "ФиксАкт Спорт — главная"}
         >
-          <img src={logo} alt="ФиксАкт Спорт" className="h-6 md:h-7 w-auto" />
+          <img
+            src={logo}
+            alt={locale === "en" ? "FIXACT SPORT" : "ФиксАкт Спорт"}
+            className="h-6 md:h-7 w-auto"
+          />
         </button>
 
         <nav className="hidden md:flex items-center gap-6">
