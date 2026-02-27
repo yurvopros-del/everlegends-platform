@@ -45,9 +45,39 @@ const SystemSection = () => {
               </span>
               <h3 className="text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-[-0.02em] gradient-text mb-4">{t(step.title, locale)}</h3>
               <p className="body-text text-sm md:text-base">{t(step.description, locale)}</p>
+              {step.bullets && (
+                <ul className="mt-3 space-y-1 list-disc list-inside body-text text-sm md:text-base">
+                  {step.bullets.map((b, j) => <li key={j}>{t(b, locale)}</li>)}
+                </ul>
+              )}
+              {'footer' in step && step.footer && (
+                <p className="body-text text-sm md:text-base mt-3">{t(step.footer, locale)}</p>
+              )}
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          className="mt-16 md:mt-20 md:px-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.7 }}
+        >
+          <h3 className="text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-[-0.02em] gradient-text mb-4">
+            {t(translations.system.pool.title, locale)}
+          </h3>
+          <p className="body-text text-sm md:text-base">
+            {t(translations.system.pool.body, locale)}
+          </p>
+          <ul className="mt-3 space-y-1 list-disc list-inside body-text text-sm md:text-base">
+            {translations.system.pool.bullets.map((b, i) => (
+              <li key={i}>{t(b, locale)}</li>
+            ))}
+          </ul>
+          <p className="body-text text-sm md:text-base mt-3">
+            {t(translations.system.pool.footer, locale)}
+          </p>
+        </motion.div>
       </div>
     </section>
   );

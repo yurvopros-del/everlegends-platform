@@ -65,29 +65,62 @@ export const translations = {
     steps: [
       {
         number: "01",
-        title: { en: "SUBMIT RESULTS", ru: "ПРЕДСТАВЬ РЕЗУЛЬТАТ" },
+        title: { en: "DIGITAL ANALYSIS", ru: "ЦИФРОВОЙ АНАЛИЗ" },
         description: {
-          en: "Submit materials for analytical evaluation of a physical performance result.",
-          ru: "Покажи, на что способен! Отправь свой результат на проверку и закрепись в рейтинге.",
+          en: "Each test is processed automatically using computer vision and measurable parameters.",
+          ru: "Каждый тест проходит автоматизированную обработку на основе компьютерного зрения и измеряемых параметров.",
         },
+        bullets: [
+          { en: "biomechanical correctness", ru: "биомеханическая корректность" },
+          { en: "tempo stability", ru: "темповая стабильность" },
+          { en: "technical variation", ru: "техническая вариативность" },
+          { en: "weak-foot usage", ru: "использование слабой ноги" },
+          { en: "dynamic resilience", ru: "динамическая устойчивость" },
+        ],
       },
       {
         number: "02",
-        title: { en: "TECH VERIFICATION", ru: "ТЕХНОЛОГИЧЕСКАЯ ПРОВЕРКА" },
+        title: { en: "EXPERT VALIDATION", ru: "ЭКСПЕРТНАЯ ВАЛИДАЦИЯ" },
         description: {
-          en: "Results undergo technological verification and are included in the ranking.",
-          ru: "Каждый результат проходит независимую проверку.",
+          en: "The system uses a two-layer verification process for results.",
+          ru: "Система использует двухконтурную проверку результатов.",
         },
+        bullets: [
+          { en: "anti-fraud analysis (editing, speed changes, digital manipulation)", ru: "антифрод-анализ (монтаж, ускорение, цифровые вмешательства)" },
+          { en: "professional referee validation for rating-eligible results", ru: "профессиональная судейская верификация рейтинговых результатов" },
+        ],
+        footer: { en: "This builds trust in the final metric.", ru: "Это обеспечивает доверие к итоговому показателю." },
       },
       {
         number: "03",
-        title: { en: "GAIN RECOGNITION", ru: "ПОЛУЧАЙ ПРИЗНАНИЕ" },
+        title: { en: "ATTESTATION INDEX EVERLEGENDS", ru: "АТТЕСТАЦИОННЫЙ ИНДЕКС EVERLEGENDS" },
         description: {
-          en: "Separate incentive programs may be offered at the Operator's discretion.",
-          ru: "Отдельные программы поощрения могут предоставляться Оператором.",
+          en: "The final index is calculated to 0.001 precision and is based on measurable performance indicators.",
+          ru: "Итоговый индекс рассчитывается с точностью до 0,001 и формируется на основе измеряемых параметров.",
         },
+        bullets: [
+          { en: "quantitative output", ru: "количественный результат" },
+          { en: "technical variation", ru: "техническая вариативность" },
+          { en: "tempo stability", ru: "стабильность темпа" },
+          { en: "fatigue resistance", ru: "устойчивость к утомлению" },
+          { en: "progress dynamics", ru: "динамика прогресса" },
+        ],
+        footer: { en: "The index can be used for independent selection and development monitoring.", ru: "Индекс используется для независимой селекции и мониторинга развития." },
       },
     ],
+    pool: {
+      title: { en: "ATTESTATION POOL", ru: "АТТЕСТАЦИОННЫЙ ПУЛ" },
+      body: { en: "Each attestation cycle is formed dynamically.", ru: "Каждый аттестационный цикл формируется динамически." },
+      bullets: [
+        { en: "one pool includes up to 500 participants", ru: "один пул включает до 500 участников" },
+        { en: "if exceeded, the next pool is created automatically", ru: "при превышении автоматически создается следующий пул" },
+        { en: "if underfilled, the cycle continues until the minimum threshold is reached", ru: "при недоборе цикл продолжается до достижения минимального порога" },
+      ],
+      footer: {
+        en: "Distribution is performed automatically under an approved rating algorithm, excluding subjective influence.",
+        ru: "Распределение происходит автоматически по утвержденному алгоритму расчета рейтинга, исключая субъективное влияние.",
+      },
+    },
   },
   rewards: {
     title: { en: "INCENTIVE PROGRAMS", ru: "ПООЩРИТЕЛЬНЫЕ ПРОГРАММЫ" },
