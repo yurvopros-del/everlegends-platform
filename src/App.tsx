@@ -10,6 +10,8 @@ import AppErrorBoundary from "@/components/AppErrorBoundary";
 import Index from "./pages/Index";
 import CookiePolicy from "./pages/CookiePolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import UserAgreement from "./pages/UserAgreement";
+import BetaTesting from "./pages/BetaTesting";
 import NotFound from "./pages/NotFound";
 import CookieBanner from "./components/CookieBanner";
 
@@ -50,10 +52,14 @@ export default function App() {
 <Route path="/" element={<Index />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="/user-agreement" element={<UserAgreement />} />
+                <Route path="/beta-testing" element={<BetaTesting />} />
 
                 <Route path="/ru" element={<RuProbe />} />
                 <Route path="/ru/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/ru/cookie-policy" element={<CookiePolicy />} />
+                <Route path="/ru/user-agreement" element={<UserAgreement />} />
+                <Route path="/ru/beta-testing" element={<BetaTesting />} />
                 <Route path="/ru/" element={<Navigate to="/ru" replace />} />
 
                 <Route path="*" element={<NotFound />} />

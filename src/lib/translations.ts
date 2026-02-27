@@ -172,6 +172,18 @@ export const translations = {
     ruVersion: { en: "Русская версия", ru: "Русская версия" },
     download: { en: "Download PDF", ru: "Скачать PDF" },
   },
+  userAgreementPage: {
+    title: { en: "User Agreement", ru: "Пользовательское соглашение" },
+    enVersion: { en: "English version", ru: "English version" },
+    ruVersion: { en: "Русская версия", ru: "Русская версия" },
+    download: { en: "Download PDF", ru: "Скачать PDF" },
+  },
+  betaTestingPage: {
+    title: { en: "Beta Testing", ru: "Бета-тестирование" },
+    enVersion: { en: "English version", ru: "English version" },
+    ruVersion: { en: "Русская версия", ru: "Русская версия" },
+    download: { en: "Download PDF", ru: "Скачать PDF" },
+  },
   privacyBanner: {
     text: {
       en: "We process personal data to operate the EverLegends platform, provide analytical services, and improve functionality.",
