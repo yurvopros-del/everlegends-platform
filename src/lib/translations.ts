@@ -80,20 +80,20 @@ export const translations = {
       },
       {
         number: "02",
-        title: { en: "EXPERT VALIDATION", ru: "ЭКСПЕРТНАЯ ВАЛИДАЦИЯ" },
+        title: { en: "EXPERT CONTROL", ru: "ЭКСПЕРТНЫЙ КОНТРОЛЬ" },
         description: {
           en: "The system uses a two-layer verification process for results.",
           ru: "Система использует двухконтурную проверку результатов.",
         },
         bullets: [
-          { en: "anti-fraud analysis (editing, speed changes, digital manipulation)", ru: "антифрод-анализ (монтаж, ускорение, цифровые вмешательства)" },
-          { en: "professional referee validation for rating-eligible results", ru: "профессиональная судейская верификация рейтинговых результатов" },
+          { en: "verification of video material authenticity (editing, speed manipulation, digital interference)", ru: "контроль достоверности видеоматериалов (монтаж, ускорение, цифровые вмешательства)" },
+          { en: "FixAct Sport aims for verification by certified sports referees and all-Russian category officials (VK) to ensure the highest level of trust and independence.", ru: "ФиксАкт Спорт стремится к верификации сертифицированными спортивными арбитрами и судьями всероссийских категорий (ВК) для обеспечения высшего уровня доверия и независимости." },
         ],
-        footer: { en: "This builds trust in the final metric.", ru: "Это обеспечивает доверие к итоговому показателю." },
+        footer: { en: "The final metric is formed in accordance with a regulated verification protocol.", ru: "Формирование итогового показателя осуществляется в соответствии с регламентированным протоколом проверки." },
       },
       {
         number: "03",
-        title: { en: "ATTESTATION INDEX — ФиксАкт Спорт", ru: "АТТЕСТАЦИОННЫЙ ИНДЕКС — ФиксАкт Спорт" },
+        title: { en: "ATTESTATION INDEX FIXACT SPORT", ru: "АТТЕСТАЦИОННЫЙ ИНДЕКС ФИКСАКТ СПОРТ" },
         description: {
           en: "The final index is calculated to 0.001 precision and is based on measurable performance indicators.",
           ru: "Итоговый индекс рассчитывается с точностью до 0,001 и формируется на основе измеряемых параметров.",
@@ -105,20 +105,20 @@ export const translations = {
           { en: "fatigue resistance", ru: "устойчивость к утомлению" },
           { en: "progress dynamics", ru: "динамика прогресса" },
         ],
-        footer: { en: "The index can be used for independent selection and development monitoring.", ru: "Индекс используется для независимой селекции и мониторинга развития." },
+        footer: { en: "The index is used for objective evaluation of training level and development monitoring.", ru: "Индекс используется для объективной оценки уровня подготовки и мониторинга развития." },
       },
     ],
     pool: {
-      title: { en: "ATTESTATION POOL", ru: "АТТЕСТАЦИОННЫЙ ПУЛ" },
-      body: { en: "Each attestation cycle is formed dynamically.", ru: "Каждый аттестационный цикл формируется динамически." },
+      title: { en: "REGULATIONS FOR FORMING THE ATTESTATION GROUP", ru: "РЕГЛАМЕНТ ФОРМИРОВАНИЯ АТТЕСТАЦИОННОЙ ГРУППЫ" },
+      body: { en: "Each attestation group is formed dynamically.", ru: "Каждая аттестационная группа формируется динамически." },
       bullets: [
-        { en: "one pool includes up to 500 participants", ru: "один пул включает до 500 участников" },
-        { en: "if exceeded, the next pool is created automatically", ru: "при превышении автоматически создается следующий пул" },
-        { en: "if underfilled, the cycle continues until the minimum threshold is reached", ru: "при недоборе цикл продолжается до достижения минимального порога" },
+        { en: "one group includes up to 500 participants", ru: "одна группа включает до 500 участников" },
+        { en: "if exceeded, the next group is formed automatically", ru: "при превышении автоматически формируется следующая группа" },
+        { en: "if underfilled, formation continues until the established minimum threshold is reached", ru: "при недоборе формирование продолжается до достижения установленного минимального порога" },
       ],
       footer: {
         en: "Distribution is performed automatically under an approved rating algorithm, excluding subjective influence.",
-        ru: "Распределение происходит автоматически по утвержденному алгоритму расчета рейтинга, исключая субъективное влияние.",
+        ru: "Распределение осуществляется автоматически по утвержденному алгоритму расчета рейтинга, исключающему субъективное влияние.",
       },
     },
   },
