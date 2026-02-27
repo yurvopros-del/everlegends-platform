@@ -3,12 +3,11 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
-
-const GH_BASE = "/everlegends-platform";
+import { BASE_PATH } from "@/lib/basePath";
 
 const BETA_TESTING_PDF = {
-  en: `${GH_BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES.pdf`,
-  ru: `${GH_BASE}/docs/EVERLEGENDS_BETA_TESTING_RULES_RU.pdf`,
+  en: `${BASE_PATH}/docs/EVERLEGENDS_BETA_TESTING_RULES.pdf`,
+  ru: `${BASE_PATH}/docs/EVERLEGENDS_BETA_TESTING_RULES_RU.pdf`,
 } as const;
 
 export default function BetaTesting() {
