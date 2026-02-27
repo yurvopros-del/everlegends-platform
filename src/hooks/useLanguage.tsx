@@ -30,14 +30,14 @@ function writeStoredLocale(locale: Locale) {
   } catch {}
 }
 
-const LanguageContext = createContext<Locale>("en");
+const LanguageContext = createContext<Locale>("ru");
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const [locale, setLocale] = useState<Locale>(() => readStoredLocale() ?? "en");
+  const [locale, setLocale] = useState<Locale>(() => readStoredLocale() ?? "ru");
 
   const derived = useMemo<Locale>(() => {
-    // 1) explicit ?lang=ru|en (from 404.html redirect)
+    // 1) explicit ?lang=ru|en
     try {
       const params = new URLSearchParams(location.search);
       const q = normalizeLocale(params.get("lang"));
@@ -48,11 +48,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const stored = readStoredLocale();
     if (stored) return stored;
 
-    // 3) path fallback only
+    // 3) path fallback (/ru)
     const p = location.pathname || "";
     if (p === "/ru" || p.startsWith("/ru/")) return "ru";
 
-    return "en";
+    // 4) default on first visit
+    return "ru";
   }, [location.pathname, location.search]);
 
   useEffect(() => {

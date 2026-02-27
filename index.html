@@ -2,6 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
+    <script>
+      (function () {
+        var host = location.hostname || "";
+        var path = location.pathname || "/";
+        if (host.endsWith("github.io") && path.startsWith("/everlegends-platform/")) {
+          var target =
+            "https://everlegends.com" +
+            path.replace("/everlegends-platform", "") +
+            location.search +
+            location.hash;
+          location.replace(target);
+        }
+      })();
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EVERLEGENDS — Where Merit Is The Only Currency</title>
     <link rel="icon" href="/favicon.ico?v=2" />
