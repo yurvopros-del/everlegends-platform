@@ -19,28 +19,27 @@ const Navigation = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Always build absolute in-site URLs from Vite BASE_URL (GitHub Pages project subpath safe)
-  const base = import.meta.env.BASE_URL; // e.g. "/everlegends-platform/"
-  const homeHref = locale === "ru" ? `${base}ru/` : base;
+  // GitHub Pages safe base, e.g. "/everlegends-platform/"
+  const base = import.meta.env.BASE_URL;
 
   const goHome = () => {
-    // Use hard navigation for RU to avoid SPA /ru route issues entirely.
+    // RU must hard-navigate to avoid SPA /ru black route history
     if (locale === "ru") {
       window.location.assign(`${base}ru/`);
       return;
     }
-    // EN can safely SPA-navigate to "/"
+    // EN can SPA-navigate
     navigate("/");
   };
 
   const jumpTo = (id: "system" | "rewards") => {
-    // If we're not on the home route, go home first then apply hash.
-    // For RU we hard-navigate to /ru/ (server fallback does the right thing); for EN we SPA.
     const isHomeEn = location.pathname === "/";
     const isHomeRu = location.pathname === "/ru" || location.pathname === "/ru/";
 
+    // If not on a home route, go home first then apply hash
     if (!isHomeEn && !isHomeRu) {
       if (locale === "ru") {
+        // hard-nav so the server entry path works deterministically
         window.location.assign(`${base}ru/#${id}`);
       } else {
         navigate("/");
@@ -56,13 +55,13 @@ const Navigation = () => {
   };
 
   const switchLang = () => {
-    // Deterministic fix:
-    // - Switching to RU must be a HARD navigation to /ru/ so server-side 404 fallback handles it.
-    // - Switching back to EN goes to BASE_URL (root).
+    // Deterministic persistence in BOTH directions:
+    // - EN -> RU: go to /ru/ (server fallback redirects to /?lang=ru and main.tsx stores it)
+    // - RU -> EN: go to /?lang=en so main.tsx stores "en" and cleans URL
     if (locale === "en") {
       window.location.assign(`${base}ru/`);
     } else {
-      window.location.assign(base);
+      window.location.assign(`${base}?lang=en`);
     }
   };
 
