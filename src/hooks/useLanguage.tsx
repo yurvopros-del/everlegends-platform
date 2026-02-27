@@ -5,11 +5,20 @@ export type Locale = "en" | "ru";
 
 const STORAGE_KEYS = ["locale", "lang", "i18nextLng"] as const;
 
+function normalizeLocale(value: string | null): Locale | null {
+  if (!value) return null;
+  const v = value.toLowerCase();
+  if (v === "ru" || v.startsWith("ru")) return "ru";
+  if (v === "en" || v.startsWith("en")) return "en";
+  return null;
+}
+
 function readStoredLocale(): Locale | null {
   try {
     for (const k of STORAGE_KEYS) {
       const v = localStorage.getItem(k);
-      if (v === "ru" || v === "en") return v;
+      const n = normalizeLocale(v);
+      if (n) return n;
     }
   } catch {}
   return null;
@@ -21,31 +30,23 @@ function writeStoredLocale(locale: Locale) {
   } catch {}
 }
 
-function normalizeLocale(value: string | null): Locale | null {
-  if (!value) return null;
-  const v = value.toLowerCase();
-  if (v === "ru" || v.startsWith("ru")) return "ru";
-  if (v === "en" || v.startsWith("en")) return "en";
-  return null;
-}
-
 export function useLanguage(): Locale {
   const location = useLocation();
-  const [stored, setStored] = useState<Locale>(() => readStoredLocale() ?? "en");
+  const [locale, setLocale] = useState<Locale>(() => readStoredLocale() ?? "en");
 
-  // Determine locale in a stable, deterministic order:
-  // 1) explicit ?lang=ru|en (if present)
-  // 2) stored locale (localStorage)
-  // 3) path prefix (/ru...) as fallback only
-  // 4) default en
   const derived = useMemo<Locale>(() => {
-    const url = new URL(window.location.href);
-    const q = normalizeLocale(url.searchParams.get("lang"));
-    if (q) return q;
+    // 1) ?lang=ru|en
+    try {
+      const params = new URLSearchParams(location.search);
+      const q = normalizeLocale(params.get("lang"));
+      if (q) return q;
+    } catch {}
 
-    const fromStore = readStoredLocale();
-    if (fromStore) return fromStore;
+    // 2) localStorage
+    const stored = readStoredLocale();
+    if (stored) return stored;
 
+    // 3) path prefix fallback
     const p = location.pathname || "";
     if (p === "/ru" || p.startsWith("/ru/")) return "ru";
 
@@ -53,13 +54,11 @@ export function useLanguage(): Locale {
   }, [location.pathname, location.search]);
 
   useEffect(() => {
-    if (derived !== stored) {
-      setStored(derived);
-    }
+    if (derived !== locale) setLocale(derived);
     writeStoredLocale(derived);
-  }, [derived, stored]);
+  }, [derived, locale]);
 
-  return stored;
+  return locale;
 }
 
 export default useLanguage;
