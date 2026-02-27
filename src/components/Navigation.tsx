@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 import { useNavigate, useLocation } from "react-router-dom";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/fixact-sport-logo.png";
 import { BETA_FORM_URL } from "@/lib/constants";
 
 const Navigation = () => {
@@ -78,9 +78,9 @@ const Navigation = () => {
           type="button"
           onClick={goHome}
           className="flex items-center gap-3"
-          aria-label="EverLegends home"
+          aria-label="FixAct Sport home"
         >
-          <img src={logo} alt="EverLegends" className="h-7 w-auto" />
+          <img src={logo} alt="FixAct Sport" className="h-7 w-auto" />
         </button>
 
         <nav className="hidden md:flex items-center gap-6">
