@@ -55,8 +55,8 @@ export const translations = {
     headline1: { en: "MASTERY. WORK. RESULTS.", ru: "МАСТЕРСТВО. ТРУД. РЕЗУЛЬТАТ." },
     headline2: { en: "", ru: "" },
     body: {
-      en: "EVERLEGENDS is a digital environment where submitted results are recorded, technologically verified, and compared based on objective data. Only confirmed results are reflected in the ranking.",
-      ru: "EVERLEGENDS создан как цифровая среда, где результаты фиксируются, проверяются и сравниваются на основе объективных данных. Здесь значение имеет только подтверждённый результат.",
+      en: "ФиксАкт Спорт is a digital environment where submitted results are recorded, technologically verified, and compared based on objective data. Only confirmed results are reflected in the ranking.",
+      ru: "ФиксАкт Спорт создан как цифровая среда, где результаты фиксируются, проверяются и сравниваются на основе объективных данных. Здесь значение имеет только подтверждённый результат.",
     },
   },
   system: {
@@ -93,7 +93,7 @@ export const translations = {
       },
       {
         number: "03",
-        title: { en: "ATTESTATION INDEX EVERLEGENDS", ru: "АТТЕСТАЦИОННЫЙ ИНДЕКС EVERLEGENDS" },
+        title: { en: "ATTESTATION INDEX — ФиксАкт Спорт", ru: "АТТЕСТАЦИОННЫЙ ИНДЕКС — ФиксАкт Спорт" },
         description: {
           en: "The final index is calculated to 0.001 precision and is based on measurable performance indicators.",
           ru: "Итоговый индекс рассчитывается с точностью до 0,001 и формируется на основе измеряемых параметров.",
@@ -187,8 +187,8 @@ export const translations = {
   },
   cookieBanner: {
     text: {
-      en: "This website uses cookies to ensure platform functionality and analytics. By continuing to use EverLegends, you consent to cookie use.",
-      ru: "Этот сайт использует файлы cookie для обеспечения работы платформы и аналитики. Продолжая использовать EverLegends, вы соглашаетесь на использование cookie.",
+      en: "This website uses cookies to ensure platform functionality and analytics. By continuing to use ФиксАкт Спорт, you consent to cookie use.",
+      ru: "Этот сайт использует файлы cookie для обеспечения работы платформы и аналитики. Продолжая использовать ФиксАкт Спорт, вы соглашаетесь на использование cookie.",
     },
     learnMore: { en: "Learn more", ru: "Подробнее" },
     ok: { en: "OK", ru: "OK" },
@@ -219,8 +219,8 @@ export const translations = {
   },
   privacyBanner: {
     text: {
-      en: "We process personal data to operate the EverLegends platform, provide analytical services, and improve functionality.",
-      ru: "Мы обрабатываем персональные данные для работы платформы EverLegends, предоставления аналитических сервисов и улучшения функциональности.",
+      en: "We process personal data to operate the ФиксАкт Спорт platform, provide analytical services, and improve functionality.",
+      ru: "Мы обрабатываем персональные данные для работы платформы ФиксАкт Спорт, предоставления аналитических сервисов и улучшения функциональности.",
     },
     privacyLink: { en: "Privacy Policy", ru: "Политикой конфиденциальности" },
     and: { en: "and", ru: "и" },
