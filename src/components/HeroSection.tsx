@@ -4,14 +4,14 @@ import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
 import { BETA_FORM_URL } from "@/lib/constants";
-import slide1 from "@/assets/hero/iStock-599713470.jpg";
-import slide2 from "@/assets/hero/iStock-601369426.jpg";
-import slide3 from "@/assets/hero/iStock-618624716.jpg";
-import slide4 from "@/assets/hero/iStock-637772392.jpg";
-import slide5 from "@/assets/hero/iStock-687124332.jpg";
-import slide6 from "@/assets/hero/iStock-698615450.jpg";
-import slide7 from "@/assets/hero/iStock-918580062.jpg";
-import slide8 from "@/assets/hero/iStock-966297686.jpg";
+import slide1 from "@/assets/hero/hero_01.avif";
+import slide2 from "@/assets/hero/hero_02.avif";
+import slide3 from "@/assets/hero/hero_03.avif";
+import slide4 from "@/assets/hero/hero_04.avif";
+import slide5 from "@/assets/hero/hero_05.avif";
+import slide6 from "@/assets/hero/hero_06.avif";
+import slide7 from "@/assets/hero/hero_07.avif";
+import slide8 from "@/assets/hero/hero_08.avif";
 
 const SLIDE_IMAGES = [slide1, slide2, slide3, slide4, slide5, slide6, slide7, slide8];
 
