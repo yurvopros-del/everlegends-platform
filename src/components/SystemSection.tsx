@@ -1,83 +1,74 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
+type SystemCard = {
+  title: any;
+  body: any;
+  bullets?: any[];
+  footer?: any;
+};
+
 const SystemSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const locale = useLanguage();
-  const steps = translations.system.steps;
+
+  const steps = translations.system.steps as SystemCard[];
+  const pool = translations.system.pool as SystemCard;
+
+  // 01–03 (steps) + 04 (pool)
+  const cards: SystemCard[] = [...steps, pool];
 
   return (
-    <section id="system" className="section-padding" ref={ref}>
-      <div className="content-max">
-        <motion.p
-          className="text-xs font-medium tracking-[0.3em] uppercase text-muted-foreground mb-4 text-center"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6 }}
-        >
+    <section id="system" className="content-max py-24">
+      <div className="text-center">
+        <div className="text-xs tracking-[0.1em] uppercase text-muted-foreground">
           {t(translations.system.label, locale)}
-        </motion.p>
-        <motion.h2
-          className="heading-lg text-foreground mb-20 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-        >
-          {t(translations.system.title, locale)}
-        </motion.h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-          {steps.map((step, i) => (
-            <motion.div
-              key={step.number}
-              className={`py-8 md:py-0 md:px-10 ${
-                i < steps.length - 1 ? "border-b md:border-b-0 md:border-r border-border" : ""
-              }`}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.2 + i * 0.15 }}
-            >
-              <span className="text-xs font-medium tracking-[0.2em] text-muted-foreground mb-4 block">
-                {step.number}
-              </span>
-              <h3 className="text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-[-0.02em] gradient-text mb-4">{t(step.title, locale)}</h3>
-              <p className="body-text text-sm md:text-base">{t(step.description, locale)}</p>
-              {step.bullets && (
-                <ul className="mt-3 space-y-1 list-disc list-inside body-text text-sm md:text-base">
-                  {step.bullets.map((b, j) => <li key={j}>{t(b, locale)}</li>)}
-                </ul>
-              )}
-              {'footer' in step && step.footer && (
-                <p className="body-text text-sm md:text-base mt-3">{t(step.footer, locale)}</p>
-              )}
-            </motion.div>
-          ))}
         </div>
 
-        <motion.div
-          className="mt-16 md:mt-20 md:px-10"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.7 }}
-        >
-          <h3 className="text-lg md:text-xl lg:text-2xl font-bold uppercase tracking-[-0.02em] gradient-text mb-4">
-            {t(translations.system.pool.title, locale)}
-          </h3>
-          <p className="body-text text-sm md:text-base">
-            {t(translations.system.pool.body, locale)}
-          </p>
-          <ul className="mt-3 space-y-1 list-disc list-inside body-text text-sm md:text-base">
-            {translations.system.pool.bullets.map((b, i) => (
-              <li key={i}>{t(b, locale)}</li>
-            ))}
-          </ul>
-          <p className="body-text text-sm md:text-base mt-3">
-            {t(translations.system.pool.footer, locale)}
-          </p>
-        </motion.div>
+        <h2 className="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight">
+          {t(translations.system.title, locale)}
+        </h2>
+      </div>
+
+      <div className="mt-14 grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
+        {cards.map((s, i) => (
+          <div
+            key={i}
+            className={[
+              "relative",
+              "xl:pl-10",
+              i > 0 ? "xl:border-l xl:border-border/40" : "",
+            ].join(" ")}
+          >
+            <div className="text-xs tracking-[0.12em] uppercase text-muted-foreground">
+              {(i + 1).toString().padStart(2, "0")}
+            </div>
+
+            <div className="mt-3 text-lg font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500">
+              {t(s.title, locale)}
+            </div>
+
+            <div className="mt-4 text-sm leading-6 text-muted-foreground">
+              {t(s.body, locale)}
+            </div>
+
+            {Array.isArray(s.bullets) && s.bullets.length > 0 && (
+              <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
+                {s.bullets.map((b, bi) => (
+                  <li key={bi} className="flex gap-3">
+                    <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-muted-foreground/70 shrink-0" />
+                    <span>{t(b, locale)}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {s.footer && (
+              <div className="mt-5 text-sm leading-6 text-muted-foreground">
+                {t(s.footer, locale)}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </section>
   );
