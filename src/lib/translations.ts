@@ -55,7 +55,7 @@ export const translations = {
     headline1: { en: "MASTERY. WORK. RESULTS.", ru: "МАСТЕРСТВО. ТРУД. РЕЗУЛЬТАТ." },
     headline2: { en: "", ru: "" },
     body: {
-      en: "ФиксАкт Спорт is a digital environment where submitted results are recorded, technologically verified, and compared based on objective data. Only confirmed results are reflected in the ranking.",
+      en: "Fixact Sport is a digital environment where submitted results are recorded, technologically verified, and compared based on objective data. Only confirmed results are reflected in the ranking.",
       ru: "ФиксАкт Спорт создан как цифровая среда, где результаты фиксируются, проверяются и сравниваются на основе объективных данных. Здесь значение имеет только подтверждённый результат.",
     },
   },
@@ -187,7 +187,7 @@ export const translations = {
   },
   cookieBanner: {
     text: {
-      en: "This website uses cookies to ensure platform functionality and analytics. By continuing to use ФиксАкт Спорт, you consent to cookie use.",
+      en: "This website uses cookies to ensure platform functionality and analytics. By continuing to use Fixact Sport, you consent to cookie use.",
       ru: "Этот сайт использует файлы cookie для обеспечения работы платформы и аналитики. Продолжая использовать ФиксАкт Спорт, вы соглашаетесь на использование cookie.",
     },
     learnMore: { en: "Learn more", ru: "Подробнее" },
@@ -219,7 +219,7 @@ export const translations = {
   },
   privacyBanner: {
     text: {
-      en: "We process personal data to operate the ФиксАкт Спорт platform, provide analytical services, and improve functionality.",
+      en: "We process personal data to operate the Fixact Sport platform, provide analytical services, and improve functionality.",
       ru: "Мы обрабатываем персональные данные для работы платформы ФиксАкт Спорт, предоставления аналитических сервисов и улучшения функциональности.",
     },
     privacyLink: { en: "Privacy Policy", ru: "Политикой конфиденциальности" },
