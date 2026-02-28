@@ -55,7 +55,7 @@ const Footer = () => {
         </div>
 
         <span className="text-xs font-medium tracking-[0.15em] uppercase text-muted-foreground">
-          © {new Date().getFullYear()} ФиксАкт Спорт. {t(translations.footer.rights, locale)}
+© {new Date().getFullYear()} {locale === "en" ? "Fixact Sport" : "ФиксАкт Спорт"}. {t(translations.footer.rights, locale)}
         </span>
       </div>
     </footer>
