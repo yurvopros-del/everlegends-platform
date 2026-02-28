@@ -1,31 +1,34 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 
-type SystemCard = {
-  title: any;
-  body: any;
-  bullets?: any[];
-  footer?: any;
-};
-
 const SystemSection = () => {
   const locale = useLanguage();
 
-  const steps = translations.system.steps as SystemCard[];
-  const pool = translations.system.pool as SystemCard;
+  // Safe translator:
+  // - supports {en,ru} objects via t()
+  // - supports plain strings
+  // - guards undefined/null to avoid runtime crashes
+  const tx = (v: any) => {
+    if (v === null || v === undefined) return "";
+    if (typeof v === "string") return v;
+    return t(v, locale);
+  };
+
+  const steps = translations.system.steps as any[];
+  const pool = translations.system.pool as any;
 
   // 01–03 (steps) + 04 (pool)
-  const cards: SystemCard[] = [...steps, pool];
+  const cards = [...steps, pool];
 
   return (
     <section id="system" className="content-max py-24">
       <div className="text-center">
         <div className="text-xs tracking-[0.1em] uppercase text-muted-foreground">
-          {t(translations.system.label, locale)}
+          {tx(translations.system.label)}
         </div>
 
         <h2 className="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight">
-          {t(translations.system.title, locale)}
+          {tx(translations.system.title)}
         </h2>
       </div>
 
@@ -44,27 +47,31 @@ const SystemSection = () => {
             </div>
 
             <div className="mt-3 text-lg font-extrabold leading-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500">
-              {t(s.title, locale)}
+              {tx(s?.title)}
             </div>
 
             <div className="mt-4 text-sm leading-6 text-muted-foreground">
-              {t(s.body, locale)}
+              {tx(s?.body)}
             </div>
 
-            {Array.isArray(s.bullets) && s.bullets.length > 0 && (
+            {Array.isArray(s?.bullets) && s.bullets.length > 0 && (
               <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
-                {s.bullets.map((b, bi) => (
-                  <li key={bi} className="flex gap-3">
-                    <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-muted-foreground/70 shrink-0" />
-                    <span>{t(b, locale)}</span>
-                  </li>
-                ))}
+                {s.bullets.map((b: any, bi: number) => {
+                  const line = tx(b);
+                  if (!line) return null;
+                  return (
+                    <li key={bi} className="flex gap-3">
+                      <span className="mt-[7px] h-1.5 w-1.5 rounded-full bg-muted-foreground/70 shrink-0" />
+                      <span>{line}</span>
+                    </li>
+                  );
+                })}
               </ul>
             )}
 
-            {s.footer && (
+            {s?.footer && (
               <div className="mt-5 text-sm leading-6 text-muted-foreground">
-                {t(s.footer, locale)}
+                {tx(s.footer)}
               </div>
             )}
           </div>
