@@ -122,42 +122,72 @@ export const translations = {
       },
     },
   },
-  rewards: {
-    title: { en: "INCENTIVE PROGRAMS", ru: "ПООЩРИТЕЛЬНЫЕ ПРОГРАММЫ" },
-    positions: [
+  allocation: {
+    kicker: { en: "SUPPORT FUND & RANKING STRUCTURE", ru: "ФОНД ПОДДЕРЖКИ И РЕЙТИНГОВАЯ СТРУКТУРА" },
+    title: { en: "FINAL ALLOCATION", ru: "ИТОГОВОЕ РАСПРЕДЕЛЕНИЕ" },
+    tiers: [
       {
-        position: { en: "1ST PLACE", ru: "1-Е МЕСТО" },
-        prize: "$2,500",
-        winners: { en: "One winner", ru: "Один победитель" },
+        title: { en: "Absolute Leader (1st Place)", ru: "Абсолютный лидер (1 место)" },
+        amount: "50 000 ₽",
+        sublabel: { en: "RANK PEAK", ru: "ПИК РЕЙТИНГА" },
+        descriptor: { en: "Top-tier recognition & development grant", ru: "Высшее признание и грант на развитие" },
+        detail: {
+          lines: [
+            { label: { en: "STATUS", ru: "СТАТУС" }, value: { en: "Absolute Leader", ru: "Абсолютный лидер" } },
+            { label: { en: "REWARD", ru: "ВЫИГРЫШ" }, value: { en: "Grant + recognition", ru: "Грант + признание" } },
+            { label: { en: "VERIFICATION", ru: "ПРОВЕРКА" }, value: { en: "AI + expert", ru: "ИИ + эксперт" } },
+          ],
+        },
       },
       {
-        position: { en: "TOP 2", ru: "ТОП-2" },
-        prize: "$1,000",
-        winners: { en: "Two winners", ru: "Два победителя" },
+        title: { en: "Gold Standard (Top 5)", ru: "Золотой стандарт (2–5 места)" },
+        amount: "25 000 ₽",
+        sublabel: { en: "", ru: "" },
+        descriptor: { en: "Verification of elite technical mastery", ru: "Подтверждение элитного уровня техники" },
+        detail: {
+          lines: [
+            { label: { en: "DISTRIBUTION", ru: "РАСПРЕДЕЛЕНИЕ" }, value: { en: "Automatic distribution by rating", ru: "Автоматическое распределение по рейтингу" } },
+          ],
+        },
       },
       {
-        position: { en: "TOP 3", ru: "ТОП-3" },
-        prize: "$500",
-        winners: { en: "Three winners", ru: "Три победителя" },
+        title: { en: "Pro Tier (Top 20)", ru: "Профессиональный зачет (6–20 места)" },
+        amount: "10 000 ₽",
+        sublabel: { en: "", ru: "" },
+        descriptor: { en: "Dedicated support for your progress", ru: "Целевая поддержка вашего прогресса" },
+        detail: {
+          lines: [
+            { label: { en: "DISTRIBUTION", ru: "РАСПРЕДЕЛЕНИЕ" }, value: { en: "Automatic distribution by rating", ru: "Автоматическое распределение по рейтингу" } },
+          ],
+        },
       },
       {
-        position: { en: "TOP 100", ru: "ТОП-100" },
-        prize: "$20",
-        winners: { en: "Hundred winners", ru: "Сто победителей" },
-      },
-    ],
-    total: {
-      value: "$7,500",
-      label: { en: "Per Event", ru: "За Событие" },
-    },
-    specs: [
-      {
-        label: { en: "Eligibility", ru: "Участие" },
-        value: { en: "Open to all athletes worldwide", ru: "Открыто для всех атлетов мира" },
+        title: { en: "Rising Talent (Top 50)", ru: "Резерв мастерства (21–50 места)" },
+        amount: "5 000 ₽",
+        sublabel: { en: "", ru: "" },
+        descriptor: { en: "Reward for high technical proficiency", ru: "Поощрение за высокий технический балл" },
+        detail: {
+          lines: [
+            { label: { en: "DISTRIBUTION", ru: "РАСПРЕДЕЛЕНИЕ" }, value: { en: "Automatic distribution by rating", ru: "Автоматическое распределение по рейтингу" } },
+          ],
+        },
       },
       {
-        label: { en: "Integrity", ru: "Контроль достоверности" },
-        value: { en: "AI-powered anti-fraud detection", ru: "Антифрод-система на основе ИИ" },
+        title: { en: "For Partner Organizations (B2B)", ru: "Информация для партнерских организаций (B2B)" },
+        amount: "20%",
+        sublabel: { en: "B2B", ru: "B2B" },
+        descriptor: { en: "Institutional collaboration & structured revenue participation", ru: "Институциональное сотрудничество и участие в доходах" },
+        detail: {
+          lines: [
+            {
+              label: { en: "PARTNER REWARDS", ru: "ПАРТНЕРСКОЕ ВОЗНАГРАЖДЕНИЕ" },
+              value: {
+                en: "Football clubs and academies receive 20% of the fee for each completed assessment of their players. These funds are allocated to the development of the club's infrastructure.",
+                ru: "Футбольные клубы и академии получают 20% от стоимости каждой проведенной аттестации своих воспитанников. Данные средства направляются на развитие материально-технической базы клуба.",
+              },
+            },
+          ],
+        },
       },
     ],
     disclaimer: {

@@ -14,7 +14,7 @@ const SystemSection = () => {
     return t(v, locale);
   };
 
-  const steps = translations.system.steps as any[];
+  const steps = [...translations.system.steps] as any[];
   const pool = translations.system.pool as any;
 
   // 01–03 (steps) + 04 (pool)
