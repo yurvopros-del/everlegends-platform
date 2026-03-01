@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
@@ -8,19 +8,19 @@ import medalGold from "@/assets/medal-gold.png";
 import medalSilver from "@/assets/medal-silver.png";
 import medalBronze from "@/assets/medal-bronze.png";
 
-const DISPLAY_ORDER = [3, 1, 0, 2, 4];
-const PILLAR_HEIGHTS = { 0: 480, 1: 384, 2: 384, 3: 288, 4: 288 };
-const MEDAL_IMAGES = [medalGold, medalSilver, medalBronze];
-const MEDAL_SIZES = { 0: 64, 1: 52, 2: 52 };
+const DISPLAY_ORDER = [3, 1, 0, 2, 4]; // [tier4, tier2, tier1, tier3, tier5]
+const PILLAR_HEIGHTS: Record<number, number> = { 0: 480, 1: 384, 2: 384, 3: 288, 4: 288 };
 
-const SLAB_BG = `linear-gradient(180deg, #141414 0%, #0f0f0f 100%), repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px)`;
+const MEDAL_IMAGES = [medalGold, medalSilver, medalBronze];
+const MEDAL_SIZES: Record<number, number> = { 0: 64, 1: 52, 2: 52 };
+
+const SLAB_BG =
+  "linear-gradient(180deg, #141414 0%, #0f0f0f 100%), repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px)";
 const SLAB_SHADOW = "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.6)";
 
 /* ─── Cup with parallax (HARDENED: null-safe + rAF-cancel + no pooled event usage) ─── */
 function GoldCup() {
-  const [transform, setTransform] = useState(
-    "perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)"
-  );
+  const [transform, setTransform] = useState("perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)");
   const [canHover, setCanHover] = useState(false);
 
   const rafIdRef = useRef<number | null>(null);
@@ -46,21 +46,17 @@ function GoldCup() {
     (e: React.MouseEvent<HTMLDivElement>) => {
       if (!canHover) return;
 
-      // IMPORTANT: capture everything synchronously (Lovable/preview can remount mid-frame)
+      // capture sync (Lovable preview can remount mid-frame)
       const target = e.currentTarget as HTMLDivElement | null;
       const clientX = e.clientX;
       const clientY = e.clientY;
 
       if (!target) return;
 
-      // Cancel any pending frame to avoid stale callbacks
       if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current);
 
       rafIdRef.current = requestAnimationFrame(() => {
         if (!mountedRef.current) return;
-
-        // Target may be detached/null in preview/remount scenarios
-        // (this is the root cause of your Lovable crash)
         if (!target || !target.isConnected) return;
 
         const rect = target.getBoundingClientRect();
@@ -69,22 +65,20 @@ function GoldCup() {
         const cx = (clientX - rect.left) / rect.width - 0.5;
         const cy = (clientY - rect.top) / rect.height - 0.5;
 
-        const rotX = (cy * -8).toFixed(2); // max ±4deg (cy ∈ [-0.5, 0.5])
-        const rotY = (cx * 12).toFixed(2); // max ±6deg
-        const tY = (cy * -6).toFixed(2);   // max ±3px (negative is "up" depending on cy)
+        // max ±4deg X, ±6deg Y, and up to ~3px translateY
+        const rotX = (cy * -8).toFixed(2);
+        const rotY = (cx * 12).toFixed(2);
+        const tY = (cy * -6).toFixed(2);
 
-        setTransform(
-          `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(${tY}px)`
-        );
+        setTransform(`perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(${tY}px)`);
       });
     },
-    [canHover]
+    [canHover],
   );
 
   const handleMouseLeave = useCallback(() => {
     if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current);
     rafIdRef.current = null;
-
     setTransform("perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)");
   }, []);
 
@@ -108,55 +102,23 @@ function GoldCup() {
           className="max-w-[180px] md:max-w-[280px] h-auto select-none"
           draggable={false}
         />
-        {/* Base shadow */}
-        {/* ... keep your existing shadow markup here ... */}
-      </div>
-    </div>
-  );
-}
 
-  const handleMouseLeave = useCallback(() => {
-    setTransform("perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)");
-  }, []);
-
-  return (
-    <div
-      className="flex justify-center mb-12 md:mb-16"
-      onMouseMove={canHover ? handleMouseMove : undefined}
-      onMouseLeave={canHover ? handleMouseLeave : undefined}
-    >
-      <div
-        className="relative"
-        style={{
-          transform,
-          transition: "transform 200ms ease-out",
-          willChange: "transform",
-        }}
-      >
-        <img
-          src={cupGold}
-          alt="Gold trophy"
-          className="max-w-[180px] md:max-w-[280px] h-auto select-none"
-          draggable={false}
-        />
         {/* Base shadow */}
         <div
-          className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-6"
+          className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-6 pointer-events-none"
           style={{
             background: "radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, transparent 70%)",
           }}
         />
-        {/* Reflection band */}
-        <div
-          className="absolute inset-0 overflow-hidden pointer-events-none"
-          style={{ borderRadius: 2 }}
-        >
+
+        {/* Reflection band (static; can be animated via CSS later) */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ borderRadius: 2 }}>
           <div
             className="absolute inset-0"
             style={{
               background: "linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.06) 50%, transparent 70%)",
-              transform: "translateX(-100%)",
-              transition: "transform 600ms ease-out",
+              transform: "translateX(-35%)",
+              opacity: 0.65,
             }}
           />
         </div>
@@ -167,17 +129,13 @@ function GoldCup() {
 
 /* ─── Medal with embedded depth ─── */
 function MedalImage({ tierIndex }: { tierIndex: number }) {
-  const size = MEDAL_SIZES[tierIndex as keyof typeof MEDAL_SIZES] ?? 52;
+  const size = MEDAL_SIZES[tierIndex] ?? 52;
   const src = MEDAL_IMAGES[tierIndex];
   if (!src) return null;
 
   return (
     <div className="relative flex flex-col items-center mb-4">
-      {/* Medal */}
-      <div
-        className="relative group/medal"
-        style={{ width: size, height: size }}
-      >
+      <div className="relative group/medal" style={{ width: size, height: size }}>
         <img
           src={src}
           alt={`Rank ${tierIndex + 1} medal`}
@@ -188,7 +146,8 @@ function MedalImage({ tierIndex }: { tierIndex: number }) {
           }}
           draggable={false}
         />
-        {/* Light sweep overlay — desktop only via CSS media query */}
+
+        {/* Light sweep overlay — hover-only */}
         <div
           className="absolute inset-0 overflow-hidden rounded-full pointer-events-none opacity-0 group-hover/medal:opacity-100"
           style={{ transition: "opacity 150ms ease-out" }}
@@ -203,9 +162,10 @@ function MedalImage({ tierIndex }: { tierIndex: number }) {
           />
         </div>
       </div>
+
       {/* Embedded shadow beneath medal */}
       <div
-        className="mt-1"
+        className="mt-1 pointer-events-none"
         style={{
           width: size * 0.8,
           height: 8,
@@ -228,7 +188,7 @@ function SlabContent({
   isActive: boolean;
   onClick: () => void;
 }) {
-  const tier = translations.allocation.tiers[tierIndex] as any;
+  const tier = (translations as any).allocation.tiers[tierIndex] as any;
   const isRank1 = tierIndex === 0;
   const isTier5 = tierIndex === 4;
 
@@ -240,9 +200,7 @@ function SlabContent({
         borderRadius: 2,
         borderTop: "1px solid #505050",
         boxShadow: SLAB_SHADOW,
-        border: isRank1
-          ? "none"
-          : `1px solid ${isTier5 ? "#2a2a2a" : isActive ? "#505050" : "#404040"}`,
+        border: isRank1 ? "none" : `1px solid ${isTier5 ? "#2a2a2a" : isActive ? "#505050" : "#404040"}`,
         borderTopColor: "#505050",
       }}
       onClick={onClick}
@@ -268,14 +226,14 @@ function SlabContent({
         {t(tier.title, locale)}
       </h3>
 
-      {t(tier.sublabel, locale) && (
+      {tier.sublabel ? (
         <span
           className="mt-2 text-center uppercase"
           style={{ fontSize: 10, letterSpacing: "0.12em", color: "#606060" }}
         >
           {t(tier.sublabel, locale)}
         </span>
-      )}
+      ) : null}
 
       <span
         className="mt-4 font-black"
@@ -288,31 +246,21 @@ function SlabContent({
         {tier.amount}
       </span>
 
-      <p
-        className="mt-3 text-center leading-snug"
-        style={{ fontSize: 11, color: "#707070", maxWidth: 180 }}
-      >
+      <p className="mt-3 text-center leading-snug" style={{ fontSize: 11, color: "#707070", maxWidth: 180 }}>
         {t(tier.descriptor, locale)}
       </p>
 
-      {isTier5 && (
-        <div className="mt-auto w-3/4 mx-auto" style={{ borderTop: "1px solid #2a2a2a" }} />
-      )}
+      {isTier5 ? <div className="mt-auto w-3/4 mx-auto" style={{ borderTop: "1px solid #2a2a2a" }} /> : null}
     </div>
   );
 }
 
 /* ─── Detail panel ─── */
-function DetailPanel({
-  tierIndex,
-  locale,
-  className,
-}: {
-  tierIndex: number;
-  locale: "en" | "ru";
-  className?: string;
-}) {
-  const tier = translations.allocation.tiers[tierIndex] as any;
+function DetailPanel({ tierIndex, locale, className }: { tierIndex: number; locale: "en" | "ru"; className?: string }) {
+  const tier = (translations as any).allocation.tiers[tierIndex] as any;
+
+  // Defensive: if detail is missing, don’t crash.
+  const lines: any[] = Array.isArray(tier?.detail?.lines) ? tier.detail.lines : [];
 
   return (
     <motion.div
@@ -326,12 +274,9 @@ function DetailPanel({
     >
       <div className="px-6 py-5 md:py-8">
         <div className="flex flex-wrap gap-x-16 gap-y-4">
-          {(tier.detail.lines as any[]).map((line: any, li: number) => (
+          {lines.map((line: any, li: number) => (
             <div key={li}>
-              <span
-                className="text-[10px] uppercase tracking-[0.15em] block"
-                style={{ color: "#505050" }}
-              >
+              <span className="text-[10px] uppercase tracking-[0.15em] block" style={{ color: "#505050" }}>
                 {t(line.label, locale)}
               </span>
               <span className="text-sm mt-1 block" style={{ color: "#a0a0a0" }}>
@@ -350,15 +295,24 @@ const AllocationSection = () => {
   const locale = useLanguage();
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+
   const [selectedTier, setSelectedTier] = useState<number | null>(null);
   const [hoveredTier, setHoveredTier] = useState<number | null>(null);
   const [canHover, setCanHover] = useState(false);
 
   useEffect(() => {
-    setCanHover(window.matchMedia("(hover:hover)").matches);
+    if (typeof window !== "undefined" && window.matchMedia) {
+      setCanHover(window.matchMedia("(hover:hover)").matches);
+    } else {
+      setCanHover(false);
+    }
   }, []);
 
-  const { kicker, title, subtitle, tiers, disclaimer } = translations.allocation;
+  const allocation: any = (translations as any).allocation;
+  const kicker = allocation.kicker;
+  const title = allocation.title;
+  const subtitle = allocation.subtitle;
+  const disclaimer = allocation.disclaimer;
 
   const handleClick = (i: number) => setSelectedTier((p) => (p === i ? null : i));
   const disclaimerText = t(disclaimer, locale)?.trim();
@@ -366,7 +320,8 @@ const AllocationSection = () => {
   /* ─── Desktop pillar ─── */
   const renderPillar = (tierIndex: number, displayIndex: number) => {
     const isRank1 = tierIndex === 0;
-    const height = PILLAR_HEIGHTS[tierIndex as keyof typeof PILLAR_HEIGHTS];
+    const height = PILLAR_HEIGHTS[tierIndex] ?? 288;
+
     const isHovered = hoveredTier === tierIndex;
     const someoneHovered = hoveredTier !== null;
 
@@ -453,10 +408,9 @@ const AllocationSection = () => {
         ) : (
           inner
         )}
-        <AnimatePresence>
-          {selectedTier === tierIndex && (
-            <DetailPanel tierIndex={tierIndex} locale={locale} />
-          )}
+
+        <AnimatePresence initial={false} mode="sync">
+          {selectedTier === tierIndex ? <DetailPanel tierIndex={tierIndex} locale={locale} /> : null}
         </AnimatePresence>
       </motion.div>
     );
@@ -484,6 +438,7 @@ const AllocationSection = () => {
         >
           {t(kicker, locale)}
         </motion.div>
+
         <motion.h2
           className="mt-4 text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-wide"
           style={{ color: "#ffffff" }}
@@ -493,6 +448,7 @@ const AllocationSection = () => {
         >
           {t(title, locale)}
         </motion.h2>
+
         <motion.p
           className="mt-4 text-base md:text-lg mx-auto"
           style={{ color: "#808080", maxWidth: 720 }}
@@ -507,21 +463,15 @@ const AllocationSection = () => {
       {/* Desktop pyramidal layout */}
       <div className="content-max">
         <div className="hidden md:flex items-end justify-center gap-4">
-          {DISPLAY_ORDER.map((tierIndex, displayIndex) =>
-            renderPillar(tierIndex, displayIndex)
-          )}
+          {DISPLAY_ORDER.map((tierIndex, displayIndex) => renderPillar(tierIndex, displayIndex))}
         </div>
       </div>
 
       {/* Desktop detail panel */}
-      <AnimatePresence>
-        {selectedTier !== null && (
-          <DetailPanel
-            tierIndex={selectedTier}
-            locale={locale}
-            className="hidden md:block content-max"
-          />
-        )}
+      <AnimatePresence initial={false} mode="sync">
+        {selectedTier !== null ? (
+          <DetailPanel tierIndex={selectedTier} locale={locale} className="hidden md:block content-max" />
+        ) : null}
       </AnimatePresence>
 
       {/* Mobile layout */}
@@ -530,7 +480,7 @@ const AllocationSection = () => {
       </div>
 
       {/* Disclaimer */}
-      {disclaimerText && (
+      {disclaimerText ? (
         <motion.p
           className="content-max text-center mt-12"
           style={{ fontSize: 11, color: "#505050", letterSpacing: "0.03em" }}
@@ -540,7 +490,7 @@ const AllocationSection = () => {
         >
           {disclaimerText}
         </motion.p>
-      )}
+      ) : null}
     </section>
   );
 };
