@@ -124,7 +124,11 @@ export const translations = {
   },
   allocation: {
     kicker: { en: "SUPPORT FUND & RANKING STRUCTURE", ru: "ФОНД ПОДДЕРЖКИ И РЕЙТИНГОВАЯ СТРУКТУРА" },
-    title: { en: "FINAL ALLOCATION", ru: "ИТОГОВОЕ РАСПРЕДЕЛЕНИЕ" },
+    title: { en: "FixAct Sport Grant & Incentive Program", ru: "Программа грантовой поддержки ФиксАкт Спорт" },
+    subtitle: {
+      en: "For every group of 500 participants, the system unlocks a dedicated support fund. Your technical mastery is an asset that translates into tangible rewards.",
+      ru: "Каждые 500 участников система формирует целевой фонд. Ваша техническая подготовка — это ваш актив, который конвертируется в реальную поддержку.",
+    },
     tiers: [
       {
         title: { en: "Absolute Leader (1st Place)", ru: "Абсолютный лидер (1 место)" },
