@@ -16,33 +16,104 @@ const MEDAL_SIZES = { 0: 64, 1: 52, 2: 52 };
 const SLAB_BG = `linear-gradient(180deg, #141414 0%, #0f0f0f 100%), repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px)`;
 const SLAB_SHADOW = "inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.6)";
 
-/* ─── Cup with parallax ─── */
+/* ─── Cup with parallax (HARDENED: null-safe + rAF-cancel + no pooled event usage) ─── */
 function GoldCup() {
-  const [transform, setTransform] = useState("perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)");
+  const [transform, setTransform] = useState(
+    "perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)"
+  );
   const [canHover, setCanHover] = useState(false);
-  const rafRef = useRef(false);
+
+  const rafIdRef = useRef<number | null>(null);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    setCanHover(window.matchMedia("(hover:hover)").matches);
+    mountedRef.current = true;
+
+    if (typeof window !== "undefined" && window.matchMedia) {
+      setCanHover(window.matchMedia("(hover:hover)").matches);
+    } else {
+      setCanHover(false);
+    }
+
+    return () => {
+      mountedRef.current = false;
+      if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    };
   }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!canHover || rafRef.current) return;
-      rafRef.current = true;
-      requestAnimationFrame(() => {
-        const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
-        const cx = (e.clientX - rect.left) / rect.width - 0.5;
-        const cy = (e.clientY - rect.top) / rect.height - 0.5;
-        const rotX = (cy * -8).toFixed(2);  // max ±4
-        const rotY = (cx * 12).toFixed(2);  // max ±6
-        const tY = (cy * -6).toFixed(2);    // max -3
-        setTransform(`perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(${tY}px)`);
-        rafRef.current = false;
+      if (!canHover) return;
+
+      // IMPORTANT: capture everything synchronously (Lovable/preview can remount mid-frame)
+      const target = e.currentTarget as HTMLDivElement | null;
+      const clientX = e.clientX;
+      const clientY = e.clientY;
+
+      if (!target) return;
+
+      // Cancel any pending frame to avoid stale callbacks
+      if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current);
+
+      rafIdRef.current = requestAnimationFrame(() => {
+        if (!mountedRef.current) return;
+
+        // Target may be detached/null in preview/remount scenarios
+        // (this is the root cause of your Lovable crash)
+        if (!target || !target.isConnected) return;
+
+        const rect = target.getBoundingClientRect();
+        if (!rect || rect.width <= 0 || rect.height <= 0) return;
+
+        const cx = (clientX - rect.left) / rect.width - 0.5;
+        const cy = (clientY - rect.top) / rect.height - 0.5;
+
+        const rotX = (cy * -8).toFixed(2); // max ±4deg (cy ∈ [-0.5, 0.5])
+        const rotY = (cx * 12).toFixed(2); // max ±6deg
+        const tY = (cy * -6).toFixed(2);   // max ±3px (negative is "up" depending on cy)
+
+        setTransform(
+          `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(${tY}px)`
+        );
       });
     },
     [canHover]
   );
+
+  const handleMouseLeave = useCallback(() => {
+    if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current);
+    rafIdRef.current = null;
+
+    setTransform("perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)");
+  }, []);
+
+  return (
+    <div
+      className="flex justify-center mb-12 md:mb-16"
+      onMouseMove={canHover ? handleMouseMove : undefined}
+      onMouseLeave={canHover ? handleMouseLeave : undefined}
+    >
+      <div
+        className="relative"
+        style={{
+          transform,
+          transition: "transform 220ms ease-out",
+          willChange: "transform",
+        }}
+      >
+        <img
+          src={cupGold}
+          alt="Gold trophy"
+          className="max-w-[180px] md:max-w-[280px] h-auto select-none"
+          draggable={false}
+        />
+        {/* Base shadow */}
+        {/* ... keep your existing shadow markup here ... */}
+      </div>
+    </div>
+  );
+}
 
   const handleMouseLeave = useCallback(() => {
     setTransform("perspective(800px) rotateX(0deg) rotateY(0deg) translateY(0px)");
