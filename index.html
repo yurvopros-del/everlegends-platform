@@ -1,48 +1,20 @@
 ﻿<!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
-
-    <script>
-      (function () {
-        var host = location.hostname || "";
-        var path = location.pathname || "/";
-        if (host.endsWith("github.io") && path.startsWith("/everlegends-platform/")) {
-          var target =
-            "https://everlegends.com" +
-            path.replace("/everlegends-platform", "") +
-            location.search +
-            location.hash;
-          location.replace(target);
-        }
-      })();
-    </script>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>ФиксАкт Спорт — Where Merit Is The Only Currency</title>
 
-    <!-- Default favicon (EN) -->
-    <link id="favicon" rel="icon" type="image/png" href="/faviconeng.png" />
-    <link id="apple-touch-icon" rel="apple-touch-icon" href="/faviconeng.png" />
+    <!-- Canonical favicons (cache-busted to avoid stale browser caches) -->
+    <link rel="icon" href="/favicon.ico?v=001" sizes="any" />
+    <link rel="icon" href="/favicon.svg?v=001" type="image/svg+xml" />
 
-    <!-- Early locale-based favicon switch -->
-    <script>
-      (function () {
-        try {
-          var lang = localStorage.getItem("lang") || "en";
-          var icon = document.getElementById("favicon");
-          var apple = document.getElementById("apple-touch-icon");
-
-          if (lang === "ru") {
-            if (icon) icon.href = "/faviconru.png";
-            if (apple) apple.href = "/faviconru.png";
-          } else {
-            if (icon) icon.href = "/faviconeng.png";
-            if (apple) apple.href = "/faviconeng.png";
-          }
-        } catch (e) {}
-      })();
-    </script>
+    <!-- Optional: if you later add apple-touch-icon.png and a manifest, enable these:
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=001" />
+    <link rel="manifest" href="/site.webmanifest?v=001" />
+    <meta name="theme-color" content="#0b0b0f" />
+    -->
 
     <meta property="og:title" content="ФиксАкт Спорт — Where Merit Is The Only Currency" />
     <meta property="og:description" content="Athletic talent verified, ranked, and rewarded." />
