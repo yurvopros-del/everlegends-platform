@@ -1,0 +1,30 @@
+﻿<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ФиксАкт Спорт</title>
+    <script>
+      (function () {
+        var l = window.location;
+        var base = "/everlegends-platform";
+
+        // If served on a custom domain/root, keep base empty.
+        if (!l.pathname.startsWith(base)) base = "";
+
+        // HARD FIX: /ru should NEVER become an SPA route. Send it to / with lang=ru.
+        var p = l.pathname;
+        if (p === base + "/ru" || p === base + "/ru/") {
+          l.replace(base + "/?lang=ru");
+          return;
+        }
+
+        // Default GH Pages SPA fallback: redirect any deep link into /?p=...
+        l.replace(base + "/?p=" + encodeURIComponent(l.pathname + l.search + l.hash));
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
+
+<!-- BUILD_MARK_404_RU_20260226_220234 -->

@@ -59,26 +59,58 @@
     @apply border-border;
   }
 
-  /* === FRAME / MISMATCH HARD FIX === */
+  /*
+    === FRAME / COLOR MISMATCH HARD FIX (GLOBAL CLAMP) ===
+    Objective: prevent any visible "frame" by ensuring the entire document + app root
+    share one identical background and no layout wrapper can introduce a different surface.
+
+    This does NOT change your design tokens; it just enforces consistent rendering.
+  */
+
   html,
   body,
   #root {
+    min-height: 100%;
     height: 100%;
-    background: hsl(var(--background));
+    background-color: hsl(var(--background)) !important;
   }
 
   html {
     scroll-behavior: smooth;
     color-scheme: dark;
+    /* Prevent default UA background bleed on overscroll/viewport edges */
+    background-color: hsl(var(--background)) !important;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: hsl(var(--background)) !important;
   }
 
+  /* Root must not paint a different surface via child layout wrappers */
+  #root {
+    background-color: hsl(var(--background)) !important;
+  }
+
+  /* Many “frames” are actually wrapper backgrounds or shadows. Neutralize top-level wrappers. */
+  #root > * {
+    background-color: transparent !important;
+  }
+
+  /* Remove browser focus outlines that can look like a 1px frame in dark UI */
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+
+  /* RU typography invariants */
   :lang(ru) {
     word-break: keep-all;
     overflow-wrap: normal;
@@ -149,6 +181,24 @@
 
   .content-max {
     @apply max-w-[1200px] mx-auto px-6 md:px-8;
+  }
+
+  /*
+    Optional: surface clamps for any section that must be guaranteed "flat"
+    Use on problematic wrappers if needed:
+    - className="surface-clamp"
+    - className="surface-flat"
+  */
+  .surface-clamp {
+    background-color: hsl(var(--background)) !important;
+  }
+
+  .surface-flat {
+    background-color: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    ring: 0 !important;
   }
 
   .gold-metallic {

@@ -3,7 +3,7 @@ export type Locale = "en" | "ru";
 export const translations = {
   nav: {
     system: { en: "The System", ru: "Система" },
-    rewards: { en: "Rewards", ru: "Награды" },
+rewards: { en: "Grants", ru: "Гранты" },
     cta: { en: "Request Beta Access", ru: "ЗАПРОСИТЬ Beta ДОСТУП" },
     joinMobile: { en: "Request Beta Access", ru: "Запросить доступ" },
   },

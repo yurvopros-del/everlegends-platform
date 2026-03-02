@@ -1,4 +1,4 @@
-import { useLanguage } from "@/hooks/useLanguage";
+﻿import { useLanguage } from "@/hooks/useLanguage";
 import { translations, t } from "@/lib/translations";
 import podiumAvif from "@/assets/podium.avif";
 
@@ -7,7 +7,7 @@ const RewardsSection = () => {
   const tr = translations.rewards;
 
   return (
-    <section id="rewards" className="section-padding bg-surface">
+    <section id="rewards" className="section-padding bg-background">
       <div className="content-max">
         <div className="text-center">
           <div className="text-xs md:text-sm font-semibold tracking-[0.22em] uppercase text-muted-foreground">
@@ -23,13 +23,13 @@ const RewardsSection = () => {
 
         <div className="mt-8 md:mt-10 flex justify-center">
           <div className="w-full max-w-[900px]">
-            <div className="w-full aspect-[16/10] rounded-2xl bg-[#0f0f0f] border border-border overflow-hidden flex items-center justify-center">
+            <div className="w-full aspect-[16/10] rounded-2xl overflow-hidden flex items-center justify-center">
               <img
                 src={podiumAvif}
                 alt=""
                 decoding="async"
                 loading="lazy"
-                className="block w-full h-full object-contain"
+               className="block w-full h-full object-contain"
                 />
             </div>
           </div>
@@ -71,7 +71,7 @@ const RewardsSection = () => {
           </table>
         </div>
 
-        <div className="mt-10 md:mt-12 rounded-2xl bg-[#0f0f0f] border border-border p-6 md:p-8">
+       <div className="mt-10 md:mt-12 rounded-2xl p-6 md:p-8">
           <div className="flex items-start gap-5">
             <div className="shrink-0">
               <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#0f0f0f] border-2 border-[#00E0C6] flex items-center justify-center">
@@ -93,7 +93,7 @@ const RewardsSection = () => {
         </div>
 
         <p className="mt-8 text-sm md:text-base text-muted-foreground leading-relaxed max-w-4xl">
-          <trim>{t(tr.voluntary, locale)}</trim>
+         <span>{t(tr.voluntary, locale)}</span>
         </p>
 
         <div className="mt-10">
@@ -118,3 +118,4 @@ const RewardsSection = () => {
 };
 
 export default RewardsSection;
+
